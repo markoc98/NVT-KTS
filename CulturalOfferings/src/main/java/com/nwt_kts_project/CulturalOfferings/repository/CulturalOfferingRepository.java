@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 @Repository
-public class CulturalOfferingRepository /* extends JpaRepository<CulturalOffering, Long> */{
+public interface CulturalOfferingRepository extends JpaRepository<CulturalOffering, Long> {
 
 
 }
