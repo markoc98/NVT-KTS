@@ -5,11 +5,11 @@ import com.nwt_kts_project.CulturalOfferings.repository.ReviewRepository;
 import com.nwt_kts_project.CulturalOfferings.service.ReviewService;
 
 @RestController
-public class NewsletterController {
+public class ReviewController {
 
-    @Autowired
-    ReviewRepository reviewRepo;
+    //@Autowired
+    //ReviewRepository reviewRepo;
 
-    @Autowired
-    private ReviewService reviewService;
+    //@Autowired
+    //private ReviewService reviewService;
 }
