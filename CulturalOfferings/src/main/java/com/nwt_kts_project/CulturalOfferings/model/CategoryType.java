@@ -1,6 +1,8 @@
 package com.nwt_kts_project.CulturalOfferings.model;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.*;
 
 @Entity
@@ -14,7 +16,7 @@ public class CategoryType {
     private String name;
     
     @OneToMany(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
-    private ArrayList<CulturalOffering>culturalOfferings;
+    private Set<CulturalOffering> culturalOfferings = new HashSet<>();
     
     @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
     private Category category;
@@ -23,7 +25,7 @@ public class CategoryType {
 	public CategoryType() {
 	}
 
-	public CategoryType(Long id, String name, ArrayList<CulturalOffering> culturalOfferings, Category category) {
+	public CategoryType(Long id, String name, Set<CulturalOffering> culturalOfferings, Category category) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -48,11 +50,11 @@ public class CategoryType {
 		this.name = name;
 	}
 
-	public ArrayList<CulturalOffering> getCulturalOfferings() {
+	public Set<CulturalOffering> getCulturalOfferings() {
 		return culturalOfferings;
 	}
 
-	public void setCulturalOfferings(ArrayList<CulturalOffering> culturalOfferings) {
+	public void setCulturalOfferings(Set<CulturalOffering> culturalOfferings) {
 		this.culturalOfferings = culturalOfferings;
 	}
 
