@@ -18,18 +18,20 @@ public class User {
     private String email;
 
     @Column(nullable = false)
-
     private String password;
 
+    @Column(nullable = false)
     private String name;
 
+    @Column(nullable = false)
     private String last_name;
 
+    @Column(unique = true, nullable = false)
     private String username;
 
+    @Column(nullable = false)
     private String role;
 
-    private String location;
 
     @OneToMany(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
     private Set<Review> reviews = new HashSet<>();
@@ -40,14 +42,14 @@ public class User {
     public User() {
     }
 
-    public User(String email, String password, String name, String last_name, String username, String role, String location, Set<Review> reviews, Set<CulturalOffering> subscribedTo) {
+    public User(String email, String password, String name, String last_name, String username, String role,
+                Set<Review> reviews, Set<CulturalOffering> subscribedTo) {
         this.email = email;
         this.password = password;
         this.name = name;
         this.last_name = last_name;
         this.username = username;
         this.role = role;
-        this.location = location;
         this.reviews = reviews;
         this.subscribedTo = subscribedTo;
     }
@@ -106,14 +108,6 @@ public class User {
 
     public void setRole(String role) {
         this.role = role;
-    }
-
-    public String getLocation() {
-        return location;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
     }
 
     public Set<Review> getReviews() {

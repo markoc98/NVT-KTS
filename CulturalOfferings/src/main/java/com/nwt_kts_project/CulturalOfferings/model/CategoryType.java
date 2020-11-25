@@ -1,6 +1,5 @@
 package com.nwt_kts_project.CulturalOfferings.model;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.*;
@@ -13,6 +12,7 @@ public class CategoryType {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+	@Column(unique = true, nullable = false)
     private String name;
     
     @OneToMany(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)

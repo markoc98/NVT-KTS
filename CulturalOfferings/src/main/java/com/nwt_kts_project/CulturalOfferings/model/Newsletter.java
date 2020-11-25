@@ -10,21 +10,34 @@ public class Newsletter {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(nullable = false)
     private String title;
+
+    @Column(nullable = false)
     private String content;
+
+    @Column(nullable = false)
     private Date date;
+
     private String pictures;
 
-    public Newsletter(Long id, String title, String content, Date date, String pictures) {
+    @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
+    private CulturalOffering CulturalOffering;
+
+
+    public Newsletter() {
+        super();
+    }
+
+    public Newsletter(Long id, String title, String content, Date date,
+                      String pictures, CulturalOffering culturalOffering) {
         this.id = id;
         this.title = title;
         this.content = content;
         this.date = date;
         this.pictures = pictures;
-    }
-
-    public Newsletter() {
-        super();
+        this.CulturalOffering = culturalOffering;
     }
 
     public Long getId() {
