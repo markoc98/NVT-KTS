@@ -23,7 +23,8 @@ public class CulturalOffering {
 
     private double rating;
 
-    private String pictures;
+    @OneToMany(mappedBy = "culturalOffering",cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
+    private Set<Picture> pictures = new HashSet<>();
 
     @ManyToMany(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
     private Set<User> subscribedUsers = new HashSet<>();
@@ -40,12 +41,11 @@ public class CulturalOffering {
     @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
     private CategoryType categoryType;
 
-
     public CulturalOffering() {
     }
 
     public CulturalOffering(Long id, String location, String name, String description, double rating,
-                            String pictures, Set<User> subscribedUsers, Set<Review> reviews, Set<Newsletter> newsletter,
+                            Set<Picture> pictures, Set<User> subscribedUsers, Set<Review> reviews, Set<Newsletter> newsletter,
                             Category category, CategoryType categoryType) {
         this.id = id;
         this.location = location;
@@ -100,12 +100,12 @@ public class CulturalOffering {
         this.categoryType = categoryType;
     }
 
-    public String getPictures() {
-        return pictures;
+    public void setPictures(Set<Picture> pictures) {
+        this.pictures = pictures;
     }
 
-    public void setPictures(String pictures) {
-        this.pictures = pictures;
+    public Set<Picture> getPictures() {
+        return pictures;
     }
 
     public Long getId() {

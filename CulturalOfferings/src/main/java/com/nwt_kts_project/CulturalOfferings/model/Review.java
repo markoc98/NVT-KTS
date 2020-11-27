@@ -1,6 +1,8 @@
 package com.nwt_kts_project.CulturalOfferings.model;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "reviews")
@@ -19,14 +21,15 @@ public class Review {
     @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
     private CulturalOffering CulturalOffering ;
 
-    private String pictures;
+    @OneToMany(mappedBy = "review",cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
+    private Set<Picture> pictures = new HashSet<>();
 
     @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
     private User user;
 
     public Review() {}
 
-    public Review(Long id, String comment, double rating, CulturalOffering culturalOffering, String pictures, User user) {
+    public Review(Long id, String comment, double rating, CulturalOffering culturalOffering, Set<Picture> pictures, User user) {
         this.id = id;
         this.comment = comment;
         this.rating = rating;
@@ -59,11 +62,11 @@ public class Review {
         this.rating = rating;
     }
 
-    public String getPictures() {
-        return pictures;
+    public void setPictures(Set<Picture> pictures) {
+        this.pictures = pictures;
     }
 
-    public void setPictures(String pictures) {
-        this.pictures = pictures;
+    public Set<Picture> getPictures() {
+        return pictures;
     }
 }
