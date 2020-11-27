@@ -1,9 +1,10 @@
 package com.nwt_kts_project.CulturalOfferings.service;
 
 import com.nwt_kts_project.CulturalOfferings.model.User;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
-
+@Service
 public class UserService implements ServiceInterface<User> {
 
     @Override

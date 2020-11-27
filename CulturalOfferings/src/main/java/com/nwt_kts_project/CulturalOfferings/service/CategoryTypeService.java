@@ -3,7 +3,9 @@ package com.nwt_kts_project.CulturalOfferings.service;
 import java.util.List;
 
 import com.nwt_kts_project.CulturalOfferings.model.CategoryType;
+import org.springframework.stereotype.Service;
 
+@Service
 public class CategoryTypeService implements ServiceInterface<CategoryType>{
 
 	public List<CategoryType> findAll() {

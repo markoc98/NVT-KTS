@@ -1,7 +1,9 @@
 package com.nwt_kts_project.CulturalOfferings.service;
 
-import java.util.List;
+import org.springframework.stereotype.Service;
 
+import java.util.List;
+@Service
 public interface ServiceInterface<T> {
     List<T> findAll();
 

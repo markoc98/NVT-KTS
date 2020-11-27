@@ -1,9 +1,10 @@
 package com.nwt_kts_project.CulturalOfferings.service;
 
 import com.nwt_kts_project.CulturalOfferings.model.CulturalOffering;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
-
+@Service
 public class CulturalOfferingService implements ServiceInterface<CulturalOffering> {
     //Prazne implementacije metoda
     @Override
