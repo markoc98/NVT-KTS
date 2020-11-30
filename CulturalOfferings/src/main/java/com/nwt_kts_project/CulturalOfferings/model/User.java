@@ -20,12 +20,6 @@ public class User {
     @Column(nullable = false)
     private String password;
 
-    @Column(nullable = false)
-    private String name;
-
-    @Column(nullable = false)
-    private String last_name;
-
     @Column(unique = true, nullable = false)
     private String username;
 
@@ -42,17 +36,24 @@ public class User {
     public User() {
     }
 
-    public User(String email, String password, String name, String last_name, String username, String role,
+    public User(String email, String password, String username, String role,
                 Set<Review> reviews, Set<CulturalOffering> subscribedTo) {
         this.email = email;
         this.password = password;
-        this.name = name;
-        this.last_name = last_name;
         this.username = username;
         this.role = role;
         this.reviews = reviews;
         this.subscribedTo = subscribedTo;
     }
+
+    public User(String email, String password, String username) {
+        this.email = email;
+        this.password = password;
+        this.username = username;
+        this.role = "CUSTOMER";
+
+    }
+
 
     public Long getId() {
         return id;
@@ -76,22 +77,6 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getLast_name() {
-        return last_name;
-    }
-
-    public void setLast_name(String last_name) {
-        this.last_name = last_name;
     }
 
     public String getUsername() {
@@ -124,6 +109,19 @@ public class User {
 
     public void setSubscribedTo(Set<CulturalOffering> subscribedTo) {
         this.subscribedTo = subscribedTo;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", username='" + username + '\'' +
+                ", role='" + role + '\'' +
+                ", reviews=" + reviews +
+                ", subscribedTo=" + subscribedTo +
+                '}';
     }
 }
 
