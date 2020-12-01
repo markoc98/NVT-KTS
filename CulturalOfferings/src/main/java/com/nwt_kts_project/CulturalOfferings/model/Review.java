@@ -1,30 +1,50 @@
 package com.nwt_kts_project.CulturalOfferings.model;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
-@Table(name = "review")
+@Table(name = "reviews")
 public class Review {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(nullable = true)
     private String comment;
+
+    @Column(nullable = false)
     private double rating;
-    private String pictures;
 
-    public Review() {
-        super();
-    }
+    @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
+    private CulturalOffering CulturalOffering ;
 
-    public Review(Long id, String comment, double rating, String pictures) {
+    @OneToMany(mappedBy = "review",cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
+    private Set<Picture> pictures = new HashSet<>();
+
+    @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
+    private User user;
+
+    public Review() {}
+
+    public Review(Long id, String comment, double rating, CulturalOffering culturalOffering, Set<Picture> pictures, User user) {
         this.id = id;
         this.comment = comment;
         this.rating = rating;
+        this.CulturalOffering = culturalOffering;
         this.pictures = pictures;
+        this.user = user;
     }
 
-    public Long getId() {
+    public Review(Long id2, String comment2, double rating2,
+			com.nwt_kts_project.CulturalOfferings.model.CulturalOffering culutralOffering, Set<Picture> pictures2,
+			Long user2) {
+		// TODO Auto-generated constructor stub
+	}
+
+	public Long getId() {
         return id;
     }
 
@@ -48,11 +68,24 @@ public class Review {
         this.rating = rating;
     }
 
-    public String getPictures() {
+    public void setPictures(Set<Picture> pictures) {
+        this.pictures = pictures;
+    }
+
+    public Set<Picture> getPictures() {
         return pictures;
     }
 
-    public void setPictures(String pictures) {
-        this.pictures = pictures;
-    }
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public com.nwt_kts_project.CulturalOfferings.model.CulturalOffering getCulutralOffering() {
+		// TODO Auto-generated method stub
+		return CulturalOffering;
+	}
 }

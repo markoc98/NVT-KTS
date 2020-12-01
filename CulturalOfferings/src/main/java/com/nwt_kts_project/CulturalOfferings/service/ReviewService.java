@@ -1,6 +1,8 @@
 package com.nwt_kts_project.CulturalOfferings.service;
 
 import com.nwt_kts_project.CulturalOfferings.model.Review;
+import com.nwt_kts_project.CulturalOfferings.repository.ReviewRepository;
+import com.nwt_kts_project.CulturalOfferings.repository.UserRepository;
 
 import java.util.List;
 
