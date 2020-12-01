@@ -6,7 +6,7 @@ import java.util.Set;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "categories")
+@Table(name = "category_table")
 public class Category {
 	
 	@Id
@@ -33,6 +33,10 @@ public class Category {
 		this.name = name;
 		this.culturalOfferings = culturalOfferings;
 		this.categoryTypes = categoryTypes;
+	}
+	
+	public Category(String name) {
+		this.name = name;
 	}
 	
 
@@ -66,6 +70,16 @@ public class Category {
 
 	public void setCategoryTypes(Set<CategoryType> categoryTypes) {
 		this.categoryTypes = categoryTypes;
+	}
+
+	@Override
+	public String toString() {
+		return "Category{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", culturalOfferings='" + culturalOfferings + '\'' +
+                ", categoryTypes='" + categoryTypes + '\'' +
+                '}';
 	}
     
     
