@@ -5,7 +5,7 @@ import java.util.Set;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "category_types")
+@Table(name = "category_type_table")
 public class CategoryType {
 	
 	@Id
@@ -31,6 +31,10 @@ public class CategoryType {
 		this.name = name;
 		this.culturalOfferings = culturalOfferings;
 		this.category = category;
+	}
+	
+	public CategoryType(String name) {
+		this.name = name;
 	}
 	
 

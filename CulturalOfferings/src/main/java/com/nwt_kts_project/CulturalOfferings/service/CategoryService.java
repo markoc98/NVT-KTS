@@ -3,29 +3,52 @@ package com.nwt_kts_project.CulturalOfferings.service;
 import java.util.List;
 
 import com.nwt_kts_project.CulturalOfferings.model.Category;
+import com.nwt_kts_project.CulturalOfferings.repository.CategoryRepository;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class CategoryService implements ServiceInterface<Category>{
+	
+	@Autowired
+	private CategoryRepository categoryRepository;
 
+	@Override
 	public List<Category> findAll() {
-		return null;
+		return categoryRepository.findAll();
 	}
 
+	@Override
 	public Category findOne(Long id) {
-		return null;
+		return categoryRepository.findById(id).orElse(null);
 	}
 
-	public Category create(Category entity) throws Exception {
-		return null;
+	@Override
+	public Category create(Category category) throws Exception {
+		if(categoryRepository.findByName(category.getName()) != null){
+            throw new Exception("Category with given name already exists");
+        }
+        return categoryRepository.save(category);
 	}
 
-	public Category update(Category entity, Long id) throws Exception {
-		return null;
+	@Override
+	public Category update(Category category, Long id) throws Exception {
+		Category existingCat =  categoryRepository.findById(id).orElse(null);
+        if(existingCat == null){
+            throw new Exception("Category with given id doesn't exist");
+        }
+        existingCat.setName(category.getName());
+        return categoryRepository.save(existingCat);
 	}
 
+	@Override
 	public void delete(Long id) throws Exception {
-		
+		Category existingCat = categoryRepository.findById(id).orElse(null);
+        if(existingCat == null){
+            throw new Exception("Category with given id doesn't exist");
+        }
+        categoryRepository.delete(existingCat);
 	}
 
 }
