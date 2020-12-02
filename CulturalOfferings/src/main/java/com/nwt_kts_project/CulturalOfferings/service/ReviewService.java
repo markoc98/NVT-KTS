@@ -4,7 +4,7 @@ import com.nwt_kts_project.CulturalOfferings.model.Review;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-
+@Service
 public class ReviewService implements ServiceInterface<Review> {
 
     @Override
