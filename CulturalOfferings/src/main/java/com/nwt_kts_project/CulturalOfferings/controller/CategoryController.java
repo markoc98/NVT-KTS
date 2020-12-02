@@ -86,7 +86,7 @@ public class CategoryController {
         return new ResponseEntity<>(catMapper.toDto(cat), HttpStatus.OK);
     }
     
-    //DELETE ZAHTEV BRISANEJ POSTOJECE KATEGORIJE
+    //DELETE ZAHTEV BRISANJE POSTOJECE KATEGORIJE
     @RequestMapping(value="/delete/{id}", method=RequestMethod.DELETE)
     public ResponseEntity<Void> deleteCategory(@PathVariable Long id){
         try {
@@ -97,5 +97,6 @@ public class CategoryController {
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
+    
 
 }
