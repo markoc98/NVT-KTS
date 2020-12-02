@@ -27,7 +27,7 @@ public class CategoryService implements ServiceInterface<Category>{
 	@Override
 	public Category create(Category category) throws Exception {
 		if(categoryRepository.findByName(category.getName()) != null){
-            throw new Exception("Category with given name address already exists");
+            throw new Exception("Category with given name already exists");
         }
         return categoryRepository.save(category);
 	}
