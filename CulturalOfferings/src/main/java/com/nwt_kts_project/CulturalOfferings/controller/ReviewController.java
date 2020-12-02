@@ -55,6 +55,7 @@ public class ReviewController {
 
     		
     		reviewService.create(r);
+    		reviewRepo.save(r);
     	}catch (Exception e) {
     		System.out.println(e.getMessage());
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);

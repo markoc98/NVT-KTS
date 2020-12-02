@@ -34,13 +34,13 @@ public class Newsletter {
     }
 
     public Newsletter(Long id, String title, String content, Date date,
-                      Set<Picture> pictures, com.nwt_kts_project.CulturalOfferings.model.CulturalOffering culturalOffering) {
+                      Set<Picture> pictures, CulturalOffering culturalOffering) {
         this.id = id;
         this.title = title;
         this.content = content;
         this.date = date;
         this.pictures = pictures;
-        CulturalOffering = culturalOffering;
+        CulturalOffering = culturalOffering;	
     }
 
     public Long getId() {
@@ -90,4 +90,12 @@ public class Newsletter {
     public CulturalOffering getCulturalOffering() {
         return CulturalOffering;
     }
+
+	@Override
+	public String toString() {
+		return "Newsletter [id=" + id + ", title=" + title + ", content=" + content + ", date=" + date + ", pictures="
+				+ pictures + ", CulturalOffering=" + CulturalOffering + "]";
+	}
+    
+    
 }
