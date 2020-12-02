@@ -2,6 +2,8 @@ package com.nwt_kts_project.CulturalOfferings.model;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "newsletter")
@@ -10,21 +12,35 @@ public class Newsletter {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String title;
-    private String content;
-    private Date date;
-    private String pictures;
 
-    public Newsletter(Long id, String title, String content, Date date, String pictures) {
+    @Column(nullable = false)
+    private String title;
+
+    @Column(nullable = false)
+    private String content;
+
+    @Column(nullable = false)
+    private Date date;
+
+    @OneToMany(mappedBy = "newsletter",cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
+    private Set<Picture> pictures = new HashSet<>();
+
+    @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
+    private CulturalOffering CulturalOffering;
+
+
+    public Newsletter() {
+        super();
+    }
+
+    public Newsletter(Long id, String title, String content, Date date,
+                      Set<Picture> pictures, com.nwt_kts_project.CulturalOfferings.model.CulturalOffering culturalOffering) {
         this.id = id;
         this.title = title;
         this.content = content;
         this.date = date;
         this.pictures = pictures;
-    }
-
-    public Newsletter() {
-        super();
+        CulturalOffering = culturalOffering;
     }
 
     public Long getId() {
@@ -59,11 +75,19 @@ public class Newsletter {
         this.date = date;
     }
 
-    public String getPictures() {
+    public Set<Picture> getPictures() {
         return pictures;
     }
 
-    public void setPictures(String pictures) {
+    public void setPictures(Set<Picture> pictures) {
         this.pictures = pictures;
+    }
+
+    public void setCulturalOffering(CulturalOffering culturalOffering) {
+        CulturalOffering = culturalOffering;
+    }
+
+    public CulturalOffering getCulturalOffering() {
+        return CulturalOffering;
     }
 }
