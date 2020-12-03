@@ -50,7 +50,7 @@ public class ReviewController {
     	try {
     		User u = new User(reviewDTO.getUser());
     		
-    		Review r = new Review(reviewDTO.getId(), reviewDTO.getComment(), reviewDTO.getRating(), reviewDTO.getCulutralOffering(), reviewDTO.getPictures(), u);
+    		Review r = new Review(reviewDTO.getId(), reviewDTO.getComment(), reviewDTO.getRating(), reviewDTO.getCulturalOffering(), reviewDTO.getPictures(), u);
     		
 
     		

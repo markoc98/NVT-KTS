@@ -8,7 +8,7 @@ public class ReviewMapper implements MapperInterface <Review, ReviewDTO>{
 
     @Override
     public Review toEntity(ReviewDTO dto) {
-        return new Review(dto.getId(), dto.getComment(), dto.getRating(), dto.getCulutralOffering(), dto.getPictures(), dto.getUser());
+        return new Review(dto.getId(), dto.getComment(), dto.getRating(), dto.getCulturalOffering(), dto.getPictures(), dto.getUser());
     }
 
     @Override

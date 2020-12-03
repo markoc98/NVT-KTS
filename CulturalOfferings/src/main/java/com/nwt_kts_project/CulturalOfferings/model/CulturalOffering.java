@@ -44,6 +44,13 @@ public class CulturalOffering {
     public CulturalOffering() {
     }
 
+    public CulturalOffering(Long id, String location, String name, String description) {
+        this.id = id;
+        this.location = location;
+        this.name = name;
+        this.description = description;
+    }
+
     public CulturalOffering(Long id, String location, String name, String description, double rating,
                             Set<Picture> pictures, Set<User> subscribedUsers, Set<Review> reviews, Set<Newsletter> newsletter,
                             Category category, CategoryType categoryType) {
