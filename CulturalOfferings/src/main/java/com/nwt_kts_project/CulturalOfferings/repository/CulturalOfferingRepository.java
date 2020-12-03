@@ -9,6 +9,7 @@ import java.util.List;
 @Repository
 public interface CulturalOfferingRepository extends JpaRepository<CulturalOffering, Long> {
 
+    CulturalOffering findByName(String name);
 
 }
 
