@@ -46,9 +46,9 @@ public class User {
         this.subscribedTo = subscribedTo;
     }
 
-    public User(String email, String password, String username) {
+    public User(String email, String username) {
         this.email = email;
-        this.password = password;
+
         this.username = username;
         this.role = "CUSTOMER";
 

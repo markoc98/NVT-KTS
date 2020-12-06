@@ -12,8 +12,6 @@ public class UserDTO {
     @Email(message = "Email format is not valid.")
     private String email;
 
-    @NotBlank(message = "Password cannot be empty.")
-    private String password;
 
 
     @NotBlank(message = "Username cannot be empty.")
@@ -25,11 +23,9 @@ public class UserDTO {
     }
 
     public UserDTO(Long id, @NotBlank(message = "Email cannot be empty.") @Email(message = "Email format is not valid.") String email,
-                   @NotBlank(message = "Password cannot be empty.") String password,
                    @NotBlank(message = "Username cannot be empty.")String username) {
         this.id = id;
         this.email = email;
-        this.password = password;
         this.username = username;
     }
 
@@ -49,14 +45,6 @@ public class UserDTO {
         this.email = email;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
     public String getUsername() {
         return username;
     }
@@ -70,7 +58,7 @@ public class UserDTO {
         return "UserDTO{" +
                 "id=" + id +
                 ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
+
                 ", username='" + username + '\'' +
                 '}';
     }
