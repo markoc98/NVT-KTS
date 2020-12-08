@@ -7,7 +7,6 @@ import javax.validation.constraints.NotBlank;
 import com.nwt_kts_project.CulturalOfferings.model.CulturalOffering;
 import com.nwt_kts_project.CulturalOfferings.model.Picture;
 
-
 public class ReviewDTO {
 	
 	private Long id;
@@ -15,12 +14,17 @@ public class ReviewDTO {
 	
 	@NotBlank(message = "Rating cannot be empty.")
 	private double rating;
+
 	private String comment;
 	private CulturalOffering culutralOffering;
+
+	private CulturalOffering culturalOffering;
+
 	private Set<Picture> pictures;
 	private Long user;
 	
 	public ReviewDTO() {}
+
 
 	public ReviewDTO(Long id, String comment,@NotBlank(message = "Rating cannot be empty.") double rating, CulturalOffering culutralOffering, Set<Picture> pictures,
 			Long user) {
@@ -28,7 +32,7 @@ public class ReviewDTO {
 		this.id = id;
 		this.comment = comment;
 		this.rating = rating;
-		this.culutralOffering = culutralOffering;
+		this.culturalOffering = culturalOffering;
 		this.pictures = pictures;
 		this.user = user;
 	}
@@ -57,12 +61,12 @@ public class ReviewDTO {
 		this.rating = rating;
 	}
 
-	public CulturalOffering getCulutralOffering() {
-		return culutralOffering;
+	public CulturalOffering getCulturalOffering() {
+		return culturalOffering;
 	}
 
-	public void setCulutralOffering(CulturalOffering culutralOffering) {
-		this.culutralOffering = culutralOffering;
+	public void setCulturalOffering(CulturalOffering culturalOffering) {
+		this.culturalOffering = culturalOffering;
 	}
 
 	public Set<Picture> getPictures() {
@@ -80,7 +84,4 @@ public class ReviewDTO {
 	public void setUser(Long user) {
 		this.user = user;
 	}
-
-	
-
 }

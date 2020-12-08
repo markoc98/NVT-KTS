@@ -10,6 +10,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -59,7 +60,7 @@ public class UserController {
 
     //POST ZAHTEV KREIRANJE NOVOG USERA
     @RequestMapping(method=RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<UserDTO> createUser(@RequestBody UserDTO userDTO){
+    public ResponseEntity<UserDTO> createUser(@RequestBody @Valid UserDTO userDTO){
         User user;
         try {
             user = userService.create(userMapper.toEntity(userDTO));
@@ -72,7 +73,7 @@ public class UserController {
 
     ///PUT ZAHTEV UPDATE POSTOJECEG USERA
     @RequestMapping(value="/update/{id}", method=RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<UserDTO> updateUser(@RequestBody UserDTO userDTO, @PathVariable Long id){
+    public ResponseEntity<UserDTO> updateUser(@RequestBody @Valid UserDTO userDTO, @PathVariable Long id){
         User user;
         try {
             user = userService.update(userMapper.toEntity(userDTO), id);

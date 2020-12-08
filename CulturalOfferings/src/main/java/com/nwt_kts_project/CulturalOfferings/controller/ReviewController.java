@@ -53,10 +53,12 @@ public class ReviewController {
     	try {
     		User u = new User(reviewDTO.getUser());
     		
-    		Review r = new Review(reviewDTO.getId(), reviewDTO.getComment(), reviewDTO.getRating(), reviewDTO.getCulutralOffering(), reviewDTO.getPictures(), u);
-
-    		reviewService.create(r);
+    		Review r = new Review(reviewDTO.getId(), reviewDTO.getComment(), reviewDTO.getRating(), reviewDTO.getCulturalOffering(), reviewDTO.getPictures(), u);
     		
+
+    		
+    		reviewService.create(r);
+    		reviewRepo.save(r);
     	}catch (Exception e) {
     		System.out.println(e.getMessage());
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -94,12 +96,11 @@ public class ReviewController {
     }
     
     @RequestMapping(value="/update/{id}", method=RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ReviewDTO> updateReview(@RequestBody @Valid ReviewDTO reviewDTO, @PathVariable Long id){
+    public ResponseEntity<ReviewDTO> updateReview(@RequestBody ReviewDTO reviewDTO, @PathVariable Long id){
         Review review;
         try {
         	
             review = reviewService.update(reviewMapper.toEntity(reviewDTO), id);
-           
             System.out.println(review.toString());
         } catch (Exception e) {
         	System.out.println(e.getMessage());
