@@ -26,9 +26,6 @@ public class User implements UserDetails {
     @Column(unique = true, nullable = false)
     private String username;
 
-    @Column(nullable = false)
-    private String role;
-
 
     @OneToMany(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
     private Set<Review> reviews = new HashSet<>();
@@ -49,12 +46,11 @@ public class User implements UserDetails {
     public User() {
     }
 
-    public User(String email, String password, String username, String role,
+    public User(String email, String password, String username,
                 Set<Review> reviews, Set<CulturalOffering> subscribedTo) {
         this.email = email;
         this.password = password;
         this.username = username;
-        this.role = role;
         this.reviews = reviews;
         this.subscribedTo = subscribedTo;
     }
@@ -112,13 +108,6 @@ public class User implements UserDetails {
         return this.authorities;
     }
 
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
-    }
 
     public Set<Review> getReviews() {
         return reviews;
@@ -143,7 +132,6 @@ public class User implements UserDetails {
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
                 ", username='" + username + '\'' +
-                ", role='" + role + '\'' +
                 ", reviews=" + reviews +
                 ", subscribedTo=" + subscribedTo +
                 '}';

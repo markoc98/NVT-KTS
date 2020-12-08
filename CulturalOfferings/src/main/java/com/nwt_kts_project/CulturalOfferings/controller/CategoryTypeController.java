@@ -1,22 +1,18 @@
 package com.nwt_kts_project.CulturalOfferings.controller;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
-
 import com.nwt_kts_project.CulturalOfferings.dto.CategoryTypeDTO;
 import com.nwt_kts_project.CulturalOfferings.model.CategoryType;
 import com.nwt_kts_project.CulturalOfferings.service.CategoryTypeService;
 import com.nwt_kts_project.CulturalOfferings.utility.CategoryTypeMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequestMapping(value = "/api/categoryTypes", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -61,6 +57,7 @@ public class CategoryTypeController {
     }
     
     //POST ZAHTEV KREIRANJE NOVOG TIPA KATEGORIJE
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping(value="/catId/{categoryId}",method=RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<CategoryTypeDTO> createCategoryType(@RequestBody CategoryTypeDTO categoryTypeDTO, @PathVariable Long categoryId){
         CategoryType categoryType;

@@ -66,13 +66,14 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 // sve neautentifikovane zahteve obradi uniformno i posalji 401 gresku
                 .exceptionHandling().authenticationEntryPoint(restAuthenticationEntryPoint).and()
 
-                // svim korisnicima dopusti da pristupe putanji /auth/**
-                .authorizeRequests().antMatchers("/users/**").permitAll()
+                // svim korisnicima dopusti da pristupe ovimn putanjama (npr /auth/** gde se nalaze login i register)
+                .authorizeRequests().antMatchers("/api/users/**").permitAll()
+                //ovo ne treba ovako, napravljeno je za test ^
 
                 // umesto anotacija iznad svake metode, mogu i ovde da se proveravaju prava pristupa za odredjeni URL
                 //.antMatchers(HttpMethod.GET, "/api/cultural-content-category").hasRole("ROLE_ADMIN")
 
-//ovo odraditi
+
                 // za svaki drugi zahtev korisnik mora biti autentifikovan
                 .anyRequest().authenticated().and()
                 // za development svrhe ukljuci konfiguraciju za CORS iz WebConfig klase
