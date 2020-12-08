@@ -1,6 +1,9 @@
 package com.nwt_kts_project.CulturalOfferings.controller;
 
 import java.util.List;
+
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -36,12 +39,13 @@ public class NewsletterController {
     }
     
     @RequestMapping(value = "/create", method = RequestMethod.POST)
-    public ResponseEntity<List<Newsletter>> createNewsletter(@RequestBody NewsletterDTO newsletterDTO){
-  
+    public ResponseEntity<List<Newsletter>> createNewsletter(@RequestBody @Valid NewsletterDTO newsletterDTO){
+    	//fix
+    	//umesto liste objekat
     	try {
     		Newsletter nl = new Newsletter(newsletterDTO.getId(),newsletterDTO.getTitle(),newsletterDTO.getContent(),newsletterDTO.getDate(),newsletterDTO.getPictures(),newsletterDTO.getCulturalOffering());
     		newsletterService.create(nl);
-    		newsletterRepo.save(nl);
+    		//newsletterRepo.save(nl);
     		System.out.println("EVO MI ID: " + nl.getId());
     		System.out.println(nl.toString());
     	}catch (Exception e) {
@@ -91,7 +95,7 @@ public class NewsletterController {
     }
     
     @RequestMapping(value="/update/{id}", method=RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<NewsletterDTO> updateNewsletter(@RequestBody NewsletterDTO newsletterDTO, @PathVariable Long id){
+    public ResponseEntity<NewsletterDTO> updateNewsletter(@RequestBody @Valid NewsletterDTO newsletterDTO, @PathVariable Long id){
     	Newsletter nl;
         try {
         	

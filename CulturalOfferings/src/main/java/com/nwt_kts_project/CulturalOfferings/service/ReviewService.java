@@ -14,21 +14,31 @@ public class ReviewService implements ServiceInterface<Review> {
 	private ReviewRepository reviewRepo;
     @Override
     public List<Review> findAll() {
-        return null;
+        return reviewRepo.findAll();
     }
     @Override
     public Review findOne(Long id) {
-        return null;
+        return reviewRepo.findById(id).orElse(null);
     }
 
     @Override
     public Review create(Review r) throws Exception {
-        return null;
+       if(reviewRepo.findByComment(r.getComment()) != null) {
+    	   throw new Exception("Review already exists.");
+       }
+       return reviewRepo.save(r);
     }
 
     @Override
     public Review update(Review r, Long id) throws Exception {
-        return null;
+        Review r2 = reviewRepo.findById(id).orElse(null);
+        if(r2 == null) {
+        	throw new Exception("Review doesn't exists.");
+        }
+        r2.setComment(r.getComment());
+        r2.setRating(r.getRating());
+        
+        return reviewRepo.saveAndFlush(r2);
     }
 
     @Override

@@ -4,21 +4,26 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.validation.constraints.NotBlank;
+
 import com.nwt_kts_project.CulturalOfferings.model.CulturalOffering;
 import com.nwt_kts_project.CulturalOfferings.model.Picture;
 
 public class NewsletterDTO {
 	
 	private Long id;
+	@NotBlank(message = "Title cannot be empty.")
 	private String title;
+	@NotBlank(message = "Content cannot be empty.")
 	private String content;
+	@NotBlank(message = "Date cannot be empty.")
 	private Date date;
 	private Set<Picture> pictures = new HashSet<>();
-	private CulturalOffering culturalOffering;
+	private CulturalOffering culturalOffering;//treba validacija
 	
 	public NewsletterDTO() {}
 
-	public NewsletterDTO(Long id, String title, String content, Date date, Set<Picture> pictures,
+	public NewsletterDTO(Long id,@NotBlank(message = "Title cannot be empty.") String title,@NotBlank(message = "Content cannot be empty.") String content,@NotBlank(message = "Date cannot be empty.") Date date, Set<Picture> pictures,
 			CulturalOffering culturalOffering) {
 		super();
 		this.id = id;
