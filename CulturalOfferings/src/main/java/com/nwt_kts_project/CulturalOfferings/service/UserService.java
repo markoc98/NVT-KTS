@@ -18,7 +18,7 @@ public class UserService implements ServiceInterface<User> {
     private PasswordEncoder passwordEncoder;
 
     @Autowired
-    private  AuthorityService authorityService;
+    private  AuthorityService authService;
 
     @Override
     public List<User> findAll() {
@@ -45,7 +45,7 @@ public class UserService implements ServiceInterface<User> {
         u.setUsername(entity.getUsername());
         u.setEmail(entity.getEmail());
 
-        List<Authority> auth = authorityService.findByName("ROLE_USER");
+        List<Authority> auth = authService.findByName("ROLE_USER");
         u.setAuthorities(auth);
 
         u = this.userRepository.save(u);

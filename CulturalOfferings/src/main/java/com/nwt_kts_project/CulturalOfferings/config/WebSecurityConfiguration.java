@@ -1,5 +1,6 @@
-package com.nwt_kts_project.CulturalOfferings.security;
+package com.nwt_kts_project.CulturalOfferings.config;
 
+import com.nwt_kts_project.CulturalOfferings.security.TokenUtils;
 import com.nwt_kts_project.CulturalOfferings.security.auth.RestAuthenticationEntryPoint;
 import com.nwt_kts_project.CulturalOfferings.security.auth.TokenAuthenticationFilter;
 import com.nwt_kts_project.CulturalOfferings.service.CustomUserDetailsService;

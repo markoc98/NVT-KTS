@@ -1,4 +1,4 @@
-package com.nwt_kts_project.CulturalOfferings.security;
+package com.nwt_kts_project.CulturalOfferings.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
