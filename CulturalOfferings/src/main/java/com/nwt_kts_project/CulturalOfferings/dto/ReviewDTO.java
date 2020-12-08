@@ -16,8 +16,6 @@ public class ReviewDTO {
 	private double rating;
 
 	private String comment;
-	private CulturalOffering culutralOffering;
-
 	private CulturalOffering culturalOffering;
 
 	private Set<Picture> pictures;

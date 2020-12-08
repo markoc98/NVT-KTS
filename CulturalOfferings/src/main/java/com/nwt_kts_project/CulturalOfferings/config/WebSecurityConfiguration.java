@@ -68,7 +68,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .exceptionHandling().authenticationEntryPoint(restAuthenticationEntryPoint).and()
 
                 // svim korisnicima dopusti da pristupe ovimn putanjama (npr /auth/** gde se nalaze login i register)
-                .authorizeRequests().antMatchers("/api/users/**").permitAll()
+                .authorizeRequests().antMatchers("/api/auth/sign-up").permitAll()
                 //ovo ne treba ovako, napravljeno je za test ^
 
                 // umesto anotacija iznad svake metode, mogu i ovde da se proveravaju prava pristupa za odredjeni URL

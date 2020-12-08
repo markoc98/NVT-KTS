@@ -61,6 +61,10 @@ public class User implements UserDetails {
         this.password = password;
 
     }
+    public User(String email,String username) {
+    	this.email = email;
+    	this.username = username;
+    }
 
     public User(Long userId) {
         this.id = userId;

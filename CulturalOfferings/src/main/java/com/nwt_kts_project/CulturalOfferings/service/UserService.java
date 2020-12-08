@@ -49,6 +49,8 @@ public class UserService implements ServiceInterface<User> {
         u.setAuthorities(auth);
 
         u = this.userRepository.save(u);
+        
+        
         return u;
     }
 

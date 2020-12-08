@@ -8,7 +8,7 @@ public class UserMapper implements MapperInterface <User, UserDTO>{
 
     @Override
     public User toEntity(UserDTO dto) {
-        return new User(dto.getEmail(),dto.getUsername(),dto.getUsername());
+        return new User(dto.getEmail(),dto.getUsername(),dto.getPassword());
     }
 
     @Override

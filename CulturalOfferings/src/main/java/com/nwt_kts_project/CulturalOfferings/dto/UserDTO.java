@@ -16,8 +16,9 @@ public class UserDTO {
 
     @NotBlank(message = "Username cannot be empty.")
     private String username;
-
-
+    
+    @NotBlank(message = "Password cannot be empty")
+    private String password;
 
     public UserDTO() {
     }
@@ -52,8 +53,17 @@ public class UserDTO {
     public void setUsername(String username) {
         this.username = username;
     }
+    
 
-    @Override
+    public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	@Override
     public String toString() {
         return "UserDTO{" +
                 "id=" + id +

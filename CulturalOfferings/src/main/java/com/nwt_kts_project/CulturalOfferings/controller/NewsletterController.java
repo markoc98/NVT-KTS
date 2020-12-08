@@ -39,7 +39,7 @@ public class NewsletterController {
     }
     
     @RequestMapping(value = "/create", method = RequestMethod.POST)
-    public ResponseEntity<List<Newsletter>> createNewsletter(@RequestBody @Valid NewsletterDTO newsletterDTO){
+    public ResponseEntity<Newsletter> createNewsletter(@RequestBody @Valid NewsletterDTO newsletterDTO){
     	//fix
     	//umesto liste objekat
     	try {
