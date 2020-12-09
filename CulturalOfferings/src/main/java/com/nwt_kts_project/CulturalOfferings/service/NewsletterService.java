@@ -15,22 +15,32 @@ public class NewsletterService implements ServiceInterface<Newsletter> {
 	private NewsletterRepository newsRepo;
     @Override
     public List<Newsletter> findAll() {
-        return null;
+        return newsRepo.findAll();
     }
     @Override
     public Newsletter findOne(Long id) {
-    	 return null;
+    	 return newsRepo.findById(id).orElse(null);
     }
 
     @Override
     public Newsletter create(Newsletter n) throws Exception {
-        
-    	 return null;
+        if(newsRepo.findByTitle(n.getTitle()) != null) {
+        	throw new Exception("Newsletter already exists.");
+        }
+    	 return newsRepo.save(n);
     }
 
     @Override
     public Newsletter update(Newsletter n, Long id) throws Exception {
-    	 return null;
+    	Newsletter n2 = newsRepo.findById(id).orElse(null);
+    	if(n2 == null) {
+    		throw new Exception("Newsletter doesn't exists.");
+    	}
+    	n2.setTitle(n.getTitle());
+    	n2.setContent(n.getContent());
+    	
+    	return newsRepo.saveAndFlush(n2);
+    	 
     }
 
     @Override

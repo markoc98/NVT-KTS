@@ -43,6 +43,12 @@ public class Review {
 			Long user2) {
 		// TODO Auto-generated constructor stub
 	}
+    
+    public Review(String comment,double rating) {
+    	this.comment = comment;
+    	this.rating = rating;
+    	
+    }
 
 	public Long getId() {
         return id;
@@ -84,8 +90,16 @@ public class Review {
 		this.user = user;
 	}
 
-	public com.nwt_kts_project.CulturalOfferings.model.CulturalOffering getCulutralOffering() {
+	public CulturalOffering getCulutralOffering() {
 		// TODO Auto-generated method stub
 		return CulturalOffering;
 	}
+
+	@Override
+	public String toString() {
+		return "Review [id=" + id + ", comment=" + comment + ", rating=" + rating + ", CulturalOffering="
+				+ CulturalOffering + ", pictures=" + pictures + ", user=" + user + "]";
+	}
+	
+	
 }

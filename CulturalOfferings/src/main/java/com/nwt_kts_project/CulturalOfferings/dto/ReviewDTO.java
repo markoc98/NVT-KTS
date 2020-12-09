@@ -1,6 +1,9 @@
 package com.nwt_kts_project.CulturalOfferings.dto;
 
 import java.util.Set;
+
+import javax.validation.constraints.NotBlank;
+
 import com.nwt_kts_project.CulturalOfferings.model.CulturalOffering;
 import com.nwt_kts_project.CulturalOfferings.model.Picture;
 
@@ -8,16 +11,21 @@ public class ReviewDTO {
 	
 	private Long id;
 	
-	private String comment;
+	
+	@NotBlank(message = "Rating cannot be empty.")
 	private double rating;
+
+	private String comment;
 	private CulturalOffering culturalOffering;
+
 	private Set<Picture> pictures;
 	private Long user;
 	
 	public ReviewDTO() {}
 
-	public ReviewDTO(Long id, String comment, double rating, CulturalOffering culturalOffering, Set<Picture> pictures,
-					 Long user) {
+
+	public ReviewDTO(Long id, String comment,@NotBlank(message = "Rating cannot be empty.") double rating, CulturalOffering culutralOffering, Set<Picture> pictures,
+			Long user) {
 		super();
 		this.id = id;
 		this.comment = comment;

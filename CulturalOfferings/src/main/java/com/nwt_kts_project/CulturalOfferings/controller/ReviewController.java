@@ -1,6 +1,9 @@
 package com.nwt_kts_project.CulturalOfferings.controller;
 
 import java.util.List;
+
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -45,7 +48,7 @@ public class ReviewController {
     }
     
     @RequestMapping(value = "/create", method = RequestMethod.POST)
-    public ResponseEntity<List<Review>> createReview(@RequestBody ReviewDTO reviewDTO){
+    public ResponseEntity<List<Review>> createReview(@RequestBody @Valid ReviewDTO reviewDTO){
     	
     	try {
     		User u = new User(reviewDTO.getUser());

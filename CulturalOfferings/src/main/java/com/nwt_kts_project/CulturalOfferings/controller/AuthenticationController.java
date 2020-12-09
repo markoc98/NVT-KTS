@@ -1,0 +1,105 @@
+package com.nwt_kts_project.CulturalOfferings.controller;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+
+import com.nwt_kts_project.CulturalOfferings.dto.UserDTO;
+import com.nwt_kts_project.CulturalOfferings.dto.UserLoginDTO;
+import com.nwt_kts_project.CulturalOfferings.dto.UserTokenStateDTO;
+import com.nwt_kts_project.CulturalOfferings.model.User;
+import com.nwt_kts_project.CulturalOfferings.repository.UserRepository;
+import com.nwt_kts_project.CulturalOfferings.security.TokenUtils;
+import com.nwt_kts_project.CulturalOfferings.service.CustomUserDetailsService;
+import com.nwt_kts_project.CulturalOfferings.service.UserService;
+import com.nwt_kts_project.CulturalOfferings.utility.UserMapper;
+
+//Kontroler zaduzen za autentifikaciju korisnika
+@RestController
+@RequestMapping(value = "/api/auth", produces = MediaType.APPLICATION_JSON_VALUE)
+public class AuthenticationController {
+	
+	@Autowired
+	private UserService userService;
+	@Autowired
+	private UserRepository userRepo;
+	private UserMapper userMapper = new UserMapper();
+	@Autowired
+    private AuthenticationManager authenticationManager;
+	@Autowired
+    private TokenUtils tokenUtils;
+	@Autowired
+    private CustomUserDetailsService userDetailsService;
+	
+	//endpoint za login
+	@PostMapping("/login")
+    public ResponseEntity<?> createAuthenticationToken(@RequestBody UserLoginDTO authenticationRequest,
+                                                                    HttpServletResponse response) {
+
+        Authentication authentication = authenticationManager
+                .authenticate(new UsernamePasswordAuthenticationToken(authenticationRequest.getUsername(),
+                        authenticationRequest.getPassword()));
+
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+
+        User user = (User) authentication.getPrincipal();
+        String jwt = tokenUtils.generateToken(user.getEmail()); 
+        int expiresIn = tokenUtils.getExpiredIn();
+
+        return ResponseEntity.ok(new UserTokenStateDTO(jwt, expiresIn));
+    }
+	
+	// endpoint koji se poziva da se token osvezi, u slucaju usteka vazenja JWT tokena
+    @PostMapping(value = "/refresh")
+    public ResponseEntity<UserTokenStateDTO> refreshAuthenticationToken(HttpServletRequest request) {
+
+        String token = tokenUtils.getToken(request);
+        String username = this.tokenUtils.getUsernameFromToken(token);
+        User user = (User) this.userDetailsService.loadUserByUsername(username);
+
+        if (this.tokenUtils.canTokenBeRefreshed(token, user.getLastPasswordResetDate())) {
+            String refreshedToken = tokenUtils.refreshToken(token);
+            int expiresIn = tokenUtils.getExpiredIn();
+
+            return ResponseEntity.ok(new UserTokenStateDTO(refreshedToken, expiresIn));
+        } else {
+            UserTokenStateDTO userTokenState = new UserTokenStateDTO();
+            return ResponseEntity.badRequest().body(userTokenState);
+        }
+    }
+	
+	 // Endpoint za registraciju novog korisnika
+    @PostMapping("/sign-up")
+    public ResponseEntity<?> addUser(@RequestBody UserDTO userRequest) throws Exception {
+    	System.out.println("usao u registraciju");
+        User existUser = userRepo.findByEmail(userRequest.getEmail());
+        if (existUser != null) {
+            throw new Exception("Username already exists");
+        }
+
+        try {
+            existUser = userService.create(userMapper.toEntity(userRequest));
+            //System.out.println(existUser.toString());
+        } catch (Exception e) {
+        	e.printStackTrace();
+            return new ResponseEntity<>(e, HttpStatus.BAD_REQUEST);
+        }
+        System.out.println(existUser.getPassword()+ "----------------------------");
+        
+        return new ResponseEntity<>(userMapper.toDto(existUser), HttpStatus.CREATED);
+    }
+
+}

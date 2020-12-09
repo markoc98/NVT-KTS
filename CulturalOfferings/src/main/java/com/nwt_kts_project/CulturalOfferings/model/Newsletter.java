@@ -27,7 +27,7 @@ public class Newsletter {
 
     @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
     private CulturalOffering CulturalOffering;
-
+    //validacija
 
     public Newsletter() {
         super();

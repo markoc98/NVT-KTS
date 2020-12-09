@@ -74,7 +74,7 @@ public class CategoryController {
     }
     
     ///PUT ZAHTEV UPDATE POSTOJECE KATEGORIJE
-    @RequestMapping(value="/update/{id}", method=RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value="/{id}", method=RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<CategoryDTO> updateCategory(@RequestBody CategoryDTO categoryDTO, @PathVariable Long id){
         Category cat;
         try {
@@ -87,7 +87,7 @@ public class CategoryController {
     }
     
     //DELETE ZAHTEV BRISANJE POSTOJECE KATEGORIJE
-    @RequestMapping(value="/delete/{id}", method=RequestMethod.DELETE)
+    @RequestMapping(value="/{id}", method=RequestMethod.DELETE)
     public ResponseEntity<Void> deleteCategory(@PathVariable Long id){
         try {
             catService.delete(id);

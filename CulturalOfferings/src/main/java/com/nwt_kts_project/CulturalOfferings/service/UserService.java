@@ -1,8 +1,10 @@
 package com.nwt_kts_project.CulturalOfferings.service;
 
+import com.nwt_kts_project.CulturalOfferings.model.Authority;
 import com.nwt_kts_project.CulturalOfferings.model.User;
 import com.nwt_kts_project.CulturalOfferings.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,6 +13,12 @@ public class UserService implements ServiceInterface<User> {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private  AuthorityService authService;
 
     @Override
     public List<User> findAll() {
@@ -23,14 +31,27 @@ public class UserService implements ServiceInterface<User> {
     }
 
     @Override
-    public User create(User user) throws Exception {
-        if(userRepository.findByEmail(user.getEmail()) != null){
+    public User create(User entity) throws Exception {
+        if(userRepository.findByEmail(entity.getEmail()) != null){
             throw new Exception("User with given email address already exists");
         }
-        if(userRepository.findByUsername(user.getUsername()) != null){
+        if(userRepository.findByUsername(entity.getUsername()) != null){
             throw new Exception("User with same username already exists");
         }
-        return userRepository.save(user);
+        User u = new User();
+        u.setUsername(entity.getUsername());
+        // pre nego sto postavimo lozinku u atribut hesiramo je
+        u.setPassword(passwordEncoder.encode(entity.getPassword()));
+        u.setUsername(entity.getUsername());
+        u.setEmail(entity.getEmail());
+
+        List<Authority> auth = authService.findByName("ROLE_USER");
+        u.setAuthorities(auth);
+
+        u = this.userRepository.save(u);
+        
+        
+        return u;
     }
 
     @Override
