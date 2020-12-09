@@ -20,7 +20,7 @@ public class CulturalOffering {
 
     @Column(nullable = false)
     private String description;
-
+    @Column(nullable = false)
     private double rating;
 
     @OneToMany(mappedBy = "culturalOffering",cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
@@ -49,6 +49,13 @@ public class CulturalOffering {
         this.location = location;
         this.name = name;
         this.description = description;
+    }
+
+    public CulturalOffering(String location, String name, String description, double rating) {
+        this.location = location;
+        this.name = name;
+        this.description = description;
+        this.rating = rating;
     }
 
     public CulturalOffering(Long id, String location, String name, String description, double rating,

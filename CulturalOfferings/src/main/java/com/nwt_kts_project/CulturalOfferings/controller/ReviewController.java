@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,7 +36,8 @@ public class ReviewController {
     public ReviewController() {
     	this.reviewMapper = new ReviewMapper();
     }
-    
+
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<Void> deleteReview(@PathVariable Long id){
     	
@@ -46,7 +48,7 @@ public class ReviewController {
 		}
     	return new ResponseEntity<>(HttpStatus.OK);
     }
-    
+	@PreAuthorize("hasRole('ROLE_USER')")
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     public ResponseEntity<List<Review>> createReview(@RequestBody @Valid ReviewDTO reviewDTO){
     	
@@ -65,8 +67,8 @@ public class ReviewController {
 		}
     	return new ResponseEntity<>(HttpStatus.OK);
     }
-    
-    
+
+	@PreAuthorize("hasRole('ROLE_USER')")
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public ResponseEntity<List<Review>> getReviews(){
     	
@@ -80,7 +82,7 @@ public class ReviewController {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
     }
-    
+	@PreAuthorize("hasRole('ROLE_USER')")
     @RequestMapping(value = "/{reviewId}", method = RequestMethod.GET)
     public ResponseEntity<Review> getReviews(@PathVariable Long reviewId){
     	

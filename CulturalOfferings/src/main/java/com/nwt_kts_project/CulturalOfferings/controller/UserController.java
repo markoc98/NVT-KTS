@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -31,6 +32,7 @@ public class UserController {
     }
 
     //GET ZAHTEV ZA DOBAVLJANJE JEDNOG USERA PO ID-u
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping(value="/{id}", method= RequestMethod.GET)
     public ResponseEntity<UserDTO> getUser(@PathVariable Long id){
 
@@ -45,6 +47,7 @@ public class UserController {
     }
 
     //GET ZAHTEV ZA DOBAVLJANJE SVIH USERA
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<List<UserDTO>> getAllUsers() {
         List<User> users = userService.findAll();
@@ -74,6 +77,7 @@ public class UserController {
     }
 
     ///PUT ZAHTEV UPDATE POSTOJECEG USERA
+    @PreAuthorize("hasRole('ROLE_USER')")
     @RequestMapping(value="/update/{id}", method=RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<UserDTO> updateUser(@RequestBody @Valid UserDTO userDTO, @PathVariable Long id){
         User user;
@@ -87,6 +91,7 @@ public class UserController {
     }
 
     //DELETE ZAHTEV BRISANEJ POSTOJECEG USERA
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping(value="/delete/{id}", method=RequestMethod.DELETE)
     public ResponseEntity<Void> deleteUser(@PathVariable Long id){
         try {

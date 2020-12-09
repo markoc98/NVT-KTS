@@ -28,6 +28,7 @@ public class CategoryTypeController {
 	}
 	
 	//GET ZAHTEV ZA DOBAVLJANJE JEDNOG TIPA KATEGORIJE PO ID-u
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping(value="/{id}", method= RequestMethod.GET)
     public ResponseEntity<CategoryTypeDTO> getCategoryType(@PathVariable Long id){
 
@@ -41,6 +42,7 @@ public class CategoryTypeController {
     }
 	
     //GET ZAHTEV ZA DOBAVLJANJE SVIH TIPOVA KATEGORIJA
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<List<CategoryTypeDTO>> getAllCategoryTypes() {
         List<CategoryType> categoryTypes = categoryTypeService.findAll();
@@ -71,6 +73,7 @@ public class CategoryTypeController {
     }
     
     //PUT ZAHTEV UPDATE POSTOJECEG TIPA KATEGORIJE
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping(value="/catId/{categoryId}/id/{id}", method=RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<CategoryTypeDTO> updateCategoryType(
             @RequestBody CategoryTypeDTO categoryTypeDTO,@PathVariable Long categoryId, @PathVariable Long id){
@@ -85,6 +88,7 @@ public class CategoryTypeController {
     }
     
     //DELETE ZAHTEV BRISANJE POSTOJECEG TIPA KATEGORIJE
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping(value="/{id}", method=RequestMethod.DELETE)
     public ResponseEntity<Void> deleteCategoryType(@PathVariable Long id){
         try {

@@ -38,7 +38,9 @@ public class AuthenticationController {
 	private UserService userService;
 	@Autowired
 	private UserRepository userRepo;
+
 	private UserMapper userMapper = new UserMapper();
+
 	@Autowired
     private AuthenticationManager authenticationManager;
 	@Autowired
@@ -64,7 +66,7 @@ public class AuthenticationController {
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         User user = (User) authentication.getPrincipal();
-        String jwt = tokenUtils.generateToken(user.getEmail()); 
+        String jwt = tokenUtils.generateToken(user.getUsername());
         int expiresIn = tokenUtils.getExpiredIn();
 
         return ResponseEntity.ok(new UserTokenStateDTO(jwt, expiresIn));
@@ -108,7 +110,7 @@ public class AuthenticationController {
             mailMessage.setSubject("Complete Registration!");
             mailMessage.setFrom("culturalofferings@gmail.com");
             mailMessage.setText("To confirm your account, please click here : "
-                    +"http://localhost:8082/confirm-account?token="+verificationToken.getToken();
+                    +"http://localhost:8080/api/auth/confirm-account?token="+verificationToken.getToken());
 
             emailSenderService.sendMail(mailMessage);
 
@@ -139,7 +141,7 @@ public class AuthenticationController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
-        return modelAndView;
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
     // get
 

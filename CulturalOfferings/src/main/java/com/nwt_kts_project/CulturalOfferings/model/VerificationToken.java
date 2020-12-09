@@ -26,6 +26,10 @@ public class VerificationToken {
         createdDate = new Date();
         this.token = UUID.randomUUID().toString();
     }
+    public VerificationToken()
+    {
+
+    }
 
     public long getId() {
         return id;

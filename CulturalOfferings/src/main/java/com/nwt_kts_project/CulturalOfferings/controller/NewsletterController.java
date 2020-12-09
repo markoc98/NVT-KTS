@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -37,7 +38,7 @@ public class NewsletterController {
     public NewsletterController() {
     	this.newsletterMapper = new NewsletterMapper();
     }
-    
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     public ResponseEntity<Newsletter> createNewsletter(@RequestBody @Valid NewsletterDTO newsletterDTO){
     	//fix
@@ -55,7 +56,7 @@ public class NewsletterController {
     	return new ResponseEntity<>(HttpStatus.OK);
     	
     }
-    
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<Void> deleteNewsletter(@PathVariable Long id){
     	
@@ -67,7 +68,7 @@ public class NewsletterController {
 		}
     	return new ResponseEntity<>(HttpStatus.OK);
     }
-    
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping(value = "/{newsletterId}", method = RequestMethod.GET)
     public ResponseEntity<Newsletter> getNewsletters(@PathVariable Long newsletterId){
     	
@@ -79,7 +80,7 @@ public class NewsletterController {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
     }
-    
+	@PreAuthorize("hasRole('ROLE_USER')")
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public ResponseEntity<List<Newsletter>> getNewsletters(){
     	
@@ -93,7 +94,7 @@ public class NewsletterController {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
     }
-    
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping(value="/update/{id}", method=RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<NewsletterDTO> updateNewsletter(@RequestBody @Valid NewsletterDTO newsletterDTO, @PathVariable Long id){
     	Newsletter nl;
