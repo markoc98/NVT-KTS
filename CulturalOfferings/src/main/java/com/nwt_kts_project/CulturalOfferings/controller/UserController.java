@@ -2,6 +2,8 @@ package com.nwt_kts_project.CulturalOfferings.controller;
 
 import com.nwt_kts_project.CulturalOfferings.dto.UserDTO;
 import com.nwt_kts_project.CulturalOfferings.model.User;
+import com.nwt_kts_project.CulturalOfferings.repository.VerificationTokenRepository;
+import com.nwt_kts_project.CulturalOfferings.service.EmailSenderService;
 import com.nwt_kts_project.CulturalOfferings.service.UserService;
 import com.nwt_kts_project.CulturalOfferings.utility.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,13 +13,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import javax.validation.constraints.Email;
 import java.util.ArrayList;
 import java.util.List;
 
 @RestController
 @RequestMapping(value = "/api/users", produces = MediaType.APPLICATION_JSON_VALUE)
 public class UserController {
-
     @Autowired
     private UserService userService;
 

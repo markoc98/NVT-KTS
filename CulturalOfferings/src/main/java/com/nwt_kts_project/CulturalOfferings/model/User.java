@@ -11,6 +11,7 @@ import java.util.*;
 @Table(name = "user_table")
 public class User implements UserDetails {
 
+    private boolean isEnabled;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -59,7 +60,6 @@ public class User implements UserDetails {
         this.email = email;
         this.username = username;
         this.password = password;
-
     }
     public User(String email,String username) {
     	this.email = email;
@@ -169,6 +169,8 @@ public class User implements UserDetails {
         return true;
     }
 
-
+    public void setEnabled(boolean enabled) {
+        isEnabled = enabled;
+    }
 }
 

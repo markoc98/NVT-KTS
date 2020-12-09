@@ -71,5 +71,4 @@ public class UserService implements ServiceInterface<User> {
             throw new Exception("User with given id doesn't exist");
         }
         userRepository.delete(existingUser);
-    }
 }

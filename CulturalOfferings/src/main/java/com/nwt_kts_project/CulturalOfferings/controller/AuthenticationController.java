@@ -3,16 +3,18 @@ package com.nwt_kts_project.CulturalOfferings.controller;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.nwt_kts_project.CulturalOfferings.model.VerificationToken;
+import com.nwt_kts_project.CulturalOfferings.repository.VerificationTokenRepository;
+import com.nwt_kts_project.CulturalOfferings.service.EmailSenderService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpMessage;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -43,6 +45,12 @@ public class AuthenticationController {
     private TokenUtils tokenUtils;
 	@Autowired
     private CustomUserDetailsService userDetailsService;
+
+    @Autowired
+    private EmailSenderService emailSenderService;
+
+    @Autowired
+    private VerificationTokenRepository verificationTokenRepository;
 	
 	//endpoint za login
 	@PostMapping("/login")
@@ -84,7 +92,6 @@ public class AuthenticationController {
 	 // Endpoint za registraciju novog korisnika
     @PostMapping("/sign-up")
     public ResponseEntity<?> addUser(@RequestBody UserDTO userRequest) throws Exception {
-    	System.out.println("usao u registraciju");
         User existUser = userRepo.findByEmail(userRequest.getEmail());
         if (existUser != null) {
             throw new Exception("Username already exists");
@@ -92,7 +99,19 @@ public class AuthenticationController {
 
         try {
             existUser = userService.create(userMapper.toEntity(userRequest));
-            //System.out.println(existUser.toString());
+
+            VerificationToken verificationToken = new VerificationToken(existUser);
+            verificationTokenRepository.save(verificationToken);
+
+            SimpleMailMessage mailMessage = new SimpleMailMessage();
+            mailMessage.setTo(existUser.getEmail());
+            mailMessage.setSubject("Complete Registration!");
+            mailMessage.setFrom("culturalofferings@gmail.com");
+            mailMessage.setText("To confirm your account, please click here : "
+                    +"http://localhost:8082/confirm-account?token="+verificationToken.getToken();
+
+            emailSenderService.sendMail(mailMessage);
+
         } catch (Exception e) {
         	e.printStackTrace();
             return new ResponseEntity<>(e, HttpStatus.BAD_REQUEST);
@@ -101,5 +120,27 @@ public class AuthenticationController {
         
         return new ResponseEntity<>(userMapper.toDto(existUser), HttpStatus.CREATED);
     }
+
+    @RequestMapping(value="/confirm-account", method= {RequestMethod.GET, RequestMethod.POST})
+    public ResponseEntity<?> confirmUserAccount(@RequestParam("token")String verificationToken)
+    {
+        VerificationToken token = verificationTokenRepository.findByToken(verificationToken);
+
+        if(token != null)
+        {
+            System.out.println("Verified!");
+            User user = userRepo.findByEmailIgnoreCase(token.getUser().getEmail());
+            user.setEnabled(true);
+            userRepo.save(user);
+        }
+        else
+        {
+            System.out.println("Link broken or invalid");
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        return modelAndView;
+    }
+    // get
 
 }
