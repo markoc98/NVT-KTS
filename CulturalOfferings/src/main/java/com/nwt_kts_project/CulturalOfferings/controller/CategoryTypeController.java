@@ -85,7 +85,7 @@ public class CategoryTypeController {
     }
     
     //DELETE ZAHTEV BRISANJE POSTOJECEG TIPA KATEGORIJE
-    @RequestMapping(value="/delete/{id}", method=RequestMethod.DELETE)
+    @RequestMapping(value="/{id}", method=RequestMethod.DELETE)
     public ResponseEntity<Void> deleteCategoryType(@PathVariable Long id){
         try {
             categoryTypeService.delete(id);
