@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,6 +33,7 @@ public class CategoryController {
 	}
 	
 	//GET ZAHTEV ZA DOBAVLJANJE JEDNE KATEGORIJE PO ID-u
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping(value="/{id}", method= RequestMethod.GET)
     public ResponseEntity<CategoryDTO> getCategory(@PathVariable Long id){
 
@@ -45,6 +47,7 @@ public class CategoryController {
     }
     
     //GET ZAHTEV ZA DOBAVLJANJE SVIH KATEGORIJA
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<List<CategoryDTO>> getAllCategories() {
         List<Category> categories = catService.findAll();
@@ -61,6 +64,7 @@ public class CategoryController {
     }
     
     //POST ZAHTEV KREIRANJE NOVE KATEGORIJE
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping(method=RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<CategoryDTO> createCategory(@RequestBody CategoryDTO categoryDTO){
         Category cat;
@@ -74,6 +78,7 @@ public class CategoryController {
     }
     
     ///PUT ZAHTEV UPDATE POSTOJECE KATEGORIJE
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping(value="/{id}", method=RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<CategoryDTO> updateCategory(@RequestBody CategoryDTO categoryDTO, @PathVariable Long id){
         Category cat;
@@ -87,6 +92,7 @@ public class CategoryController {
     }
     
     //DELETE ZAHTEV BRISANJE POSTOJECE KATEGORIJE
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping(value="/{id}", method=RequestMethod.DELETE)
     public ResponseEntity<Void> deleteCategory(@PathVariable Long id){
         try {

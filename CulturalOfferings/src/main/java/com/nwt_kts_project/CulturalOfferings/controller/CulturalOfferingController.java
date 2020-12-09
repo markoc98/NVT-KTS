@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -26,6 +27,7 @@ public class CulturalOfferingController {
         cultOffMapper = new CulturalOfferingMapper();
     }
 
+    @PreAuthorize("hasRole('ROLE_USER')")
     @RequestMapping(value="/{id}", method= RequestMethod.GET)
     public ResponseEntity<CulturalOfferingDTO> getCulturalOffering(@PathVariable Long id){
 
@@ -39,7 +41,7 @@ public class CulturalOfferingController {
         return new ResponseEntity<>(cultOffMapper.toDto(cultOff), HttpStatus.OK);
     }
 
-
+    @PreAuthorize("hasRole('ROLE_USER')")
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<List<CulturalOfferingDTO>> getAllCulturalOfferings() {
         List<CulturalOffering> cultOffs = cultOffService.findAll();
@@ -55,7 +57,7 @@ public class CulturalOfferingController {
         return cultOffDTOS;
     }
 
-
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping(method=RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<CulturalOfferingDTO> createCulturalOffering(@RequestBody CulturalOfferingDTO cultOffDTO){
         CulturalOffering cultOff;
@@ -69,7 +71,7 @@ public class CulturalOfferingController {
         return new ResponseEntity<>(cultOffMapper.toDto(cultOff), HttpStatus.CREATED);
     }
 
-
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping(value="/update/{id}", method=RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<CulturalOfferingDTO> updateCulturalOffering(@RequestBody CulturalOfferingDTO cultOffDTO, @PathVariable Long id){
         CulturalOffering cultOff;
@@ -82,7 +84,7 @@ public class CulturalOfferingController {
         return new ResponseEntity<>(cultOffMapper.toDto(cultOff), HttpStatus.OK);
     }
 
-
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping(value="/delete/{id}", method=RequestMethod.DELETE)
     public ResponseEntity<Void> deleteCulturalOffering(@PathVariable Long id){
         try {

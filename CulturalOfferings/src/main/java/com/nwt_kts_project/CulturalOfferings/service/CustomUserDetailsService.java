@@ -43,7 +43,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 
         // Ocitavamo trenutno ulogovanog korisnika
         Authentication currentUser = SecurityContextHolder.getContext().getAuthentication();
-        String username = ((User) currentUser.getPrincipal()).getEmail();
+        String username = ((User) currentUser.getPrincipal()).getUsername();
 
         if (authenticationManager != null) {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, oldPassword));

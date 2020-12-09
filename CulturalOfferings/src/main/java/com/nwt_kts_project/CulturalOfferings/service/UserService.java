@@ -44,7 +44,7 @@ public class UserService implements ServiceInterface<User> {
         u.setPassword(passwordEncoder.encode(entity.getPassword()));
         u.setUsername(entity.getUsername());
         u.setEmail(entity.getEmail());
-
+        u.setEnabled(false);
         List<Authority> auth = authService.findByName("ROLE_USER");
         u.setAuthorities(auth);
 
@@ -67,7 +67,7 @@ public class UserService implements ServiceInterface<User> {
     @Override
     public void delete(Long id) throws Exception {
         User existingUser = userRepository.findById(id).orElse(null);
-        if(existingUser == null){
+        if (existingUser == null) {
             throw new Exception("User with given id doesn't exist");
         }
         userRepository.delete(existingUser);

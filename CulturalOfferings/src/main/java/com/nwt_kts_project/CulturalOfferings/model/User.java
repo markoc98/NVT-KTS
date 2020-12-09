@@ -12,6 +12,7 @@ import java.util.*;
 public class User implements UserDetails {
 
 
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -19,6 +20,9 @@ public class User implements UserDetails {
 
     @Column(unique = true, nullable = false)
     private String email;
+
+    @Column(name = "isEnabled")
+    private boolean isEnabled;
 
     @Column(nullable = false)
     private String password;
@@ -59,11 +63,28 @@ public class User implements UserDetails {
         this.email = email;
         this.username = username;
         this.password = password;
-
+    }
+    public User(String email, String username, String password, boolean isEnabled) {
+        this.email = email;
+        this.username = username;
+        this.password = password;
+        this.isEnabled = isEnabled;
     }
     public User(String email,String username) {
     	this.email = email;
     	this.username = username;
+    }
+
+    public User(boolean isEnabled, Long id, String email, String password, String username, Set<Review> reviews, Set<CulturalOffering> subscribedTo, Timestamp lastPasswordResetDate, List<Authority> authorities) {
+        this.isEnabled = isEnabled;
+        this.id = id;
+        this.email = email;
+        this.password = password;
+        this.username = username;
+        this.reviews = reviews;
+        this.subscribedTo = subscribedTo;
+        this.lastPasswordResetDate = lastPasswordResetDate;
+        this.authorities = authorities;
     }
 
     public User(Long userId) {
@@ -166,9 +187,11 @@ public class User implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return isEnabled;
     }
 
-
+    public void setEnabled(boolean enabled) {
+        isEnabled = enabled;
+    }
 }
 
