@@ -1,16 +1,17 @@
 package com.nwt_kts_project.CulturalOfferings;
 
+import com.nwt_kts_project.CulturalOfferings.controller.UserController;
+import com.nwt_kts_project.CulturalOfferings.controller.UserControllerIntegrationTest;
 import com.nwt_kts_project.CulturalOfferings.repository.UserRepositoryIntegrationTest;
-import com.nwt_kts_project.CulturalOfferings.repository.UserRepositoryUnitTest;
-import org.junit.jupiter.api.Test;
+import com.nwt_kts_project.CulturalOfferings.service.UserServiceIntegrationTest;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestPropertySource;
 @RunWith(Suite.class)
 @SuiteClasses({//ovde idu sve ..Test klase
-		UserRepositoryIntegrationTest.class, UserRepositoryUnitTest.class
+		UserRepositoryIntegrationTest.class, UserServiceIntegrationTest.class, UserControllerIntegrationTest.class,
+
 
 	})
 @TestPropertySource("classpath:test.properties")

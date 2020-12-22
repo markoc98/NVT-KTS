@@ -15,4 +15,9 @@ public class UserMapper implements MapperInterface <User, UserDTO>{
     public UserDTO toDto(User entity) {
         return new UserDTO(entity.getId(), entity.getEmail(),entity.getUsername());
     }
+    public UserDTO toDto1(User entity) {
+        return new UserDTO(entity.getId(), entity.getEmail(),entity.getUsername(),entity.getPassword());
+    }
+
+
 }

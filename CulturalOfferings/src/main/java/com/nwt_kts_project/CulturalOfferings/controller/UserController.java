@@ -64,11 +64,14 @@ public class UserController {
     }
 
     //POST ZAHTEV KREIRANJE NOVOG USERA
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping(method=RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<UserDTO> createUser(@RequestBody @Valid UserDTO userDTO){
         User user;
         try {
             user = userService.create(userMapper.toEntity(userDTO));
+            user.setEnabled(true);
+            userService.update(user,user.getId());
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
@@ -77,7 +80,7 @@ public class UserController {
     }
 
     ///PUT ZAHTEV UPDATE POSTOJECEG USERA
-    @PreAuthorize("hasRole('ROLE_USER')")
+    @PreAuthorize("hasRole('ROLE_ADMIN')" + "|| hasRole('ROLE_USER')")
     @RequestMapping(value="/update/{id}", method=RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<UserDTO> updateUser(@RequestBody @Valid UserDTO userDTO, @PathVariable Long id){
         User user;
@@ -87,7 +90,7 @@ public class UserController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
-        return new ResponseEntity<>(userMapper.toDto(user), HttpStatus.OK);
+        return new ResponseEntity<>(userMapper.toDto1(user), HttpStatus.OK);
     }
 
     //DELETE ZAHTEV BRISANEJ POSTOJECEG USERA
