@@ -14,3 +14,8 @@ INSERT INTO user_table (email, username, password, is_enabled) VALUES ('userDELE
 
 insert into user_authority (user_id, authority_id) values (1, 1); -- admin has ROLE_ADMIN
 insert into user_authority (user_id, authority_id) values (2, 2); -- user has ROLE_USER
+
+INSERT INTO category_table (name) VALUES ('Events');
+INSERT INTO category_table (name) VALUES ('Cultural goods');
+INSERT INTO category_table (name) VALUES ('Institutions');
+INSERT INTO category_table (name) VALUES ('Category delete');
