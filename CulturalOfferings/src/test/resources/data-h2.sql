@@ -19,3 +19,7 @@ INSERT INTO category_table (name) VALUES ('Events');
 INSERT INTO category_table (name) VALUES ('Cultural goods');
 INSERT INTO category_table (name) VALUES ('Institutions');
 INSERT INTO category_table (name) VALUES ('Category delete');
+
+INSERT INTO category_type_table (name, category_id) VALUES ('Festivals', '1');
+INSERT INTO category_type_table (name, category_id) VALUES ('Monuments', '2');
+INSERT INTO category_type_table (name, category_id) VALUES ('Category type delete', '2');
