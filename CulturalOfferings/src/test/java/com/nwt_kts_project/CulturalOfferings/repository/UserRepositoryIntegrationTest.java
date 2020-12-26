@@ -10,6 +10,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import static com.nwt_kts_project.CulturalOfferings.constants.UserConstants.*;
 import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
@@ -24,5 +25,11 @@ public class UserRepositoryIntegrationTest {
         User found = userRepository.findByEmail(DB_USER_EMAIL);
 
         assertEquals(DB_USER_EMAIL, found.getEmail());
+    }
+    @Test
+    public void testFindByEmailDoesntExist() {
+        User found = userRepository.findByEmail("nonexistantemail@gmaill.com");
+
+        assertNull(found);
     }
 }
