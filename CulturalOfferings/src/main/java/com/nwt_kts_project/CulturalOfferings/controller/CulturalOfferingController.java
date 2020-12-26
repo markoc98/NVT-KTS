@@ -95,5 +95,25 @@ public class CulturalOfferingController {
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
+    
+    @PreAuthorize("hasRole('ROLE_USER')")
+    @RequestMapping(value="/getDataForMap/{location}", method=RequestMethod.GET, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<CulturalOfferingDTO>> getDataForMap(@PathVariable String location){
+
+    	List<CulturalOffering> cultOffs = cultOffService.findAll();
+    	
+    	List<CulturalOffering> found = new ArrayList<CulturalOffering>();
+    	
+    	for (CulturalOffering co : cultOffs) {
+    		if (co.getLocation().equals(location)) {
+    			found.add(co);
+    		}
+    	}
+    	
+    	List<CulturalOfferingDTO> foundDTO = toCultOffDTOList(found);
+    	
+    	return new ResponseEntity<>(foundDTO, HttpStatus.OK);
+    	
+    }
 
 }
