@@ -15,6 +15,7 @@ INSERT INTO user_table (email, username, password, is_enabled) VALUES ('userDELE
 insert into user_authority (user_id, authority_id) values (1, 1); -- admin has ROLE_ADMIN
 insert into user_authority (user_id, authority_id) values (2, 2); -- user has ROLE_USER
 
+<<<<<<< HEAD
 INSERT INTO category_table (name) VALUES ('Events');
 INSERT INTO category_table (name) VALUES ('Cultural goods');
 INSERT INTO category_table (name) VALUES ('Institutions');
@@ -23,3 +24,8 @@ INSERT INTO category_table (name) VALUES ('Category delete');
 INSERT INTO category_type_table (name, category_id) VALUES ('Festivals', '1');
 INSERT INTO category_type_table (name, category_id) VALUES ('Monuments', '2');
 INSERT INTO category_type_table (name, category_id) VALUES ('Category type delete', '2');
+=======
+insert into newsletter (title, content,date) values ('Test-Title1', 'Test-Title1', '2020-05-06');
+insert into reviews (comment,rating) values ('test123' , 5);
+insert into reviews (comment,rating) values ('NewTestComment' , 2.5);
+>>>>>>> refs/remotes/origin/Testing-Newsletter-Review-Controller-Repo
