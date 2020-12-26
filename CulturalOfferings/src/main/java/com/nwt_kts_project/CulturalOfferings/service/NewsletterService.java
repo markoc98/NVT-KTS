@@ -24,7 +24,7 @@ public class NewsletterService implements ServiceInterface<Newsletter> {
 
     @Override
     public Newsletter create(Newsletter n) throws Exception {
-        if(newsRepo.findByTitle(n.getTitle()) != null) {
+        if(n.getId() != null) {
         	throw new Exception("Newsletter already exists.");
         }
     	 return newsRepo.save(n);
@@ -39,7 +39,7 @@ public class NewsletterService implements ServiceInterface<Newsletter> {
     	n2.setTitle(n.getTitle());
     	n2.setContent(n.getContent());
     	
-    	return newsRepo.saveAndFlush(n2);
+    	return newsRepo.save(n2);
     	 
     }
 

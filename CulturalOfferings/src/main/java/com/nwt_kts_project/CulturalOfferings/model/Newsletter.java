@@ -42,6 +42,19 @@ public class Newsletter {
         this.pictures = pictures;
         CulturalOffering = culturalOffering;	
     }
+    
+    public Newsletter(String title,String content, Date date) {
+    	super();
+    	this.title = title;
+    	this.content = content;
+    	this.date = date;
+    }
+    public Newsletter(Long id,String title,String content,Date date) {
+    	this.id = id;
+    	this.title = title;
+    	this.content = content;
+    	this.date = date;
+    }
 
     public Long getId() {
         return id;

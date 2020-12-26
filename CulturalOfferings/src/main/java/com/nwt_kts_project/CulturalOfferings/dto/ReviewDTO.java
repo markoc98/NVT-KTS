@@ -34,6 +34,19 @@ public class ReviewDTO {
 		this.pictures = pictures;
 		this.user = user;
 	}
+	
+	public ReviewDTO(String comment,@NotBlank(message = "Rating cannot be empty.") double rating) {
+		super();
+		this.comment = comment;
+		this.rating = rating;
+	}
+
+	public ReviewDTO(Long id2, String comment2, double rating2) {
+		this.id = id2;
+		this.comment = comment2;
+		this.rating = rating2;
+	}
+
 
 	public Long getId() {
 		return id;
