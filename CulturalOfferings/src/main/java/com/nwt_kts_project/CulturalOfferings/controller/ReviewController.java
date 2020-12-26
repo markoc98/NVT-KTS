@@ -1,5 +1,6 @@
 package com.nwt_kts_project.CulturalOfferings.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -38,7 +39,7 @@ public class ReviewController {
     }
 
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
-    @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<Void> deleteReview(@PathVariable Long id){
     	
     	try {
@@ -48,56 +49,50 @@ public class ReviewController {
 		}
     	return new ResponseEntity<>(HttpStatus.OK);
     }
-	@PreAuthorize("hasRole('ROLE_USER')")
-    @RequestMapping(value = "/create", method = RequestMethod.POST)
-    public ResponseEntity<List<Review>> createReview(@RequestBody @Valid ReviewDTO reviewDTO){
-    	
-    	try {
-    		User u = new User(reviewDTO.getUser());
-    		
-    		Review r = new Review(reviewDTO.getId(), reviewDTO.getComment(), reviewDTO.getRating(), reviewDTO.getCulturalOffering(), reviewDTO.getPictures(), u);
-    		
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+    @RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ReviewDTO> createReview(@RequestBody @Valid ReviewDTO reviewDTO){
+    	Review r;
+    	try {	
+    		r = reviewService.create(reviewMapper.toEntity(reviewDTO));
 
-    		
-    		reviewService.create(r);
-    		reviewRepo.save(r);
     	}catch (Exception e) {
     		System.out.println(e.getMessage());
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
-    	return new ResponseEntity<>(HttpStatus.OK);
+    	return new ResponseEntity<> (reviewMapper.toDto(r), HttpStatus.CREATED);
     }
 
-	@PreAuthorize("hasRole('ROLE_USER')")
-    @RequestMapping(value = "/", method = RequestMethod.GET)
-    public ResponseEntity<List<Review>> getReviews(){
-    	
-    	try {
-    		
-    		List<Review> reviews = reviewService.findAll();
-    		System.out.println(reviews.size());
-    		return new ResponseEntity<>(reviews, HttpStatus.OK);
-    	}catch (Exception e) {
-    		System.out.println(e.getMessage());
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+    @RequestMapping(method = RequestMethod.GET)
+    public ResponseEntity<List<ReviewDTO>> getAllReviews(){
+		List<Review> reviews = reviewService.findAll();
+
+		return new ResponseEntity<>(toReviewDTOList(reviews), HttpStatus.OK);
     }
-	@PreAuthorize("hasRole('ROLE_USER')")
+	
+	private List<ReviewDTO> toReviewDTOList(List<Review> reviewList){
+		List<ReviewDTO> reviewsDTO = new ArrayList<>(); 
+		for(Review r : reviewList)
+		{
+			reviewsDTO.add(reviewMapper.toDto(r));
+		}
+		return reviewsDTO;
+	}
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping(value = "/{reviewId}", method = RequestMethod.GET)
-    public ResponseEntity<Review> getReviews(@PathVariable Long reviewId){
-    	
-    	try {
+    public ResponseEntity<ReviewDTO> getReviews(@PathVariable Long reviewId){
+  
+    	Review review = reviewService.findOne(reviewId);
     		
-    		Review review = reviewService.findOne(reviewId);
-    		
-    		return new ResponseEntity<>(review, HttpStatus.OK);
-    	}catch (Exception e) {
-    		System.out.println(e.getMessage());
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
+    	if(review == null) {
+    		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    	}
+    	return new ResponseEntity<>(reviewMapper.toDto(review),HttpStatus.OK);
     }
-    
-    @RequestMapping(value="/update/{id}", method=RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
+	
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+    @RequestMapping(value="/{id}", method=RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ReviewDTO> updateReview(@RequestBody ReviewDTO reviewDTO, @PathVariable Long id){
         Review review;
         try {
@@ -110,6 +105,19 @@ public class ReviewController {
         }
 
         return new ResponseEntity<>(reviewMapper.toDto(review), HttpStatus.OK);
+    }
+    
+    
+    @RequestMapping(value="/overall-rating", method=RequestMethod.GET, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Double> updateReview(){
+        Review review;
+        try {
+        	double a = 4.4;
+        	return new ResponseEntity<Double>(a, HttpStatus.BAD_REQUEST);
+        } catch (Exception e) {
+        	System.out.println(e.getMessage());
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 
 }

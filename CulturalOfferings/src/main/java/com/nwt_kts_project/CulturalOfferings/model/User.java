@@ -159,6 +159,7 @@ public class User implements UserDetails {
                 ", username='" + username + '\'' +
                 ", reviews=" + reviews +
                 ", subscribedTo=" + subscribedTo +
+                "authority " + authorities.toString()+
                 '}';
     }
 

@@ -75,7 +75,7 @@ public class UserDTO {
         return "UserDTO{" +
                 "id=" + id +
                 ", email='" + email + '\'' +
-
+                ", pass='" + password + '\'' +
                 ", username='" + username + '\'' +
                 '}';
     }
