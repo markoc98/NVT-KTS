@@ -23,3 +23,5 @@ INSERT INTO category_table (name) VALUES ('Category delete');
 INSERT INTO category_type_table (name, category_id) VALUES ('Festivals', '1');
 INSERT INTO category_type_table (name, category_id) VALUES ('Monuments', '2');
 INSERT INTO category_type_table (name, category_id) VALUES ('Category type delete', '2');
+
+INSERT INTO cultural_offerings (location, name, description, rating) VALUES ('Beograd', 'Exit festival', 'Najbolji exit festival', -11.0);

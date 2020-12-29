@@ -37,5 +37,4 @@ public class UserConstants {
     public static final int FIND_ALL_NUMBER_OF_USERS = 6;
 
 
-
 }
