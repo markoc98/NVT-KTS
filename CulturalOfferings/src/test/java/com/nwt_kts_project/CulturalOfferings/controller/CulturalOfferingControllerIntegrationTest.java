@@ -11,12 +11,12 @@ import org.springframework.http.*;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
-import com.nwt_kts_project.CulturalOfferings.dto.CulturalOfferingDTO;
+import com.nwt_kts_project.CulturalOfferings.dto.*;
 
 import javax.transaction.Transactional;
 
-import static com.nwt_kts_project.CulturalOfferings.constants.UserConstants.DB_ADMIN_PASSWORD;
-import static com.nwt_kts_project.CulturalOfferings.constants.UserConstants.DB_ADMIN_USERNAME;
+import static com.nwt_kts_project.CulturalOfferings.constants.UserConstants.*;
+import static com.nwt_kts_project.CulturalOfferings.constants.CulturalOfferingConstants.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
@@ -44,7 +44,7 @@ public class CulturalOfferingControllerIntegrationTest {
     @Test
     public void testGetCultOff()
     {
-        login(DB_ADMIN_USERNAME, DB_ADMIN_PASSWORD);
+        login(DB_USER_USERNAME, DB_USER_PASSWORD);
 
         HttpHeaders headers = new HttpHeaders();
         headers.add("Authorization", accessToken);
@@ -82,7 +82,7 @@ public class CulturalOfferingControllerIntegrationTest {
         login(DB_ADMIN_USERNAME, DB_ADMIN_PASSWORD);
         HttpHeaders headers = new HttpHeaders();
         headers.add("Authorization", accessToken);
-        HttpEntity<Object> httpEntity = new HttpEntity<Object>(new CulturalOfferingDTO(1L , DB_NEW_CULTOFF_LOCATION, DB_NEW_CULTOFF_NAME, DB_NEW_CULTOFF_DESCRIPTION));
+        HttpEntity<Object> httpEntity = new HttpEntity<Object>(new CulturalOfferingDTO(2L , DB_NEW_CULTOFF_LOCATION, DB_NEW_CULTOFF_NAME, DB_NEW_CULTOFF_DESCRIPTION));
 
         ResponseEntity<CulturalOfferingDTO> responseEntity = restTemplate.exchange("/api/cultural", HttpMethod.POST, httpEntity, CulturalOfferingDTO.class);
 
@@ -101,7 +101,7 @@ public class CulturalOfferingControllerIntegrationTest {
         login(DB_ADMIN_USERNAME, DB_ADMIN_PASSWORD);
         HttpHeaders headers = new HttpHeaders();
         headers.add("Authorization", accessToken);
-        HttpEntity<Object> httpEntity = new HttpEntity<Object>(new CulturalOfferingDTO(2L, DB_CULTOFF_LOCATION, DB_CULTOFF_NAME, DB_UPDATE_CULTOFF_DESCRIPTION));
+        HttpEntity<Object> httpEntity = new HttpEntity<Object>(new CulturalOfferingDTO(2L, DB_NEW_CULTOFF_LOCATION, DB_NEW_CULTOFF_NAME, DB_UPDATE_CULTOFF_DESCRIPTION));
 
         ResponseEntity<CulturalOfferingDTO> responseEntity = restTemplate.exchange("/api/cultural/update/2", HttpMethod.PUT, httpEntity, CulturalOfferingDTO.class);
 

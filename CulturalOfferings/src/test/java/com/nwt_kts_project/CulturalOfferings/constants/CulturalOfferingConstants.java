@@ -1,28 +1,20 @@
 package com.nwt_kts_project.CulturalOfferings.constants;
 
 public class CulturalOfferingConstants {
-    public static final String DB_CULTOFF_NAME;
-    public static final DB_CULTOFF_LOCATION;
+    public static final String DB_CULTOFF_NAME = "Exit festival";
+    public static final String DB_CULTOFF_LOCATION = "Beograd";
 
-    public static final int DB_CULTOFF_COUNT;
+    public static final int DB_CULTOFF_COUNT = 1;
 
-    public static final DB_NEW_CULTOFF_LOCATION;
-    public static final DB_NEW_CULTOFF_NAME;
-    public static final DB_NEW_CULTOFF_DESCRIPTION;
-    public static final DB_NEW_CULTOFF_RATING;
+    public static final String DB_NEW_CULTOFF_LOCATION = "Kragujevac";
+    public static final String DB_NEW_CULTOFF_NAME = "Festival";
+    public static final String DB_NEW_CULTOFF_DESCRIPTION = "Kragujevacki festival";
+    public static final double DB_NEW_CULTOFF_RATING = 4.5;
 
-    public static final DB_UPDATE_CULTOFF_DESCRIPTION;
+    public static final String DB_UPDATE_CULTOFF_DESCRIPTION = "Izmenjeno";
     public static final long DB_CULTOFF_ID = 2L;
+    public static final long DB_CULTOFF_ID_FINDONE = 1l;
 
-    public static final DB_DEL_CULTOFF_LOCATION;
-    public static final DB_DEL_CULTOFF_NAME;
-    public static final DB_DEL_CULTOFF_DESCRIPTION;
-    public static final DB_DEL_CULTOFF_RATING;
-    public static final DB_DEL_CULTOFF_ID;
+    public static final int DB_DELETE_CULTOFF_COUNT = 1;
 
-    public static final NEW_CULTOFF_LOCATION;
-    public static final NEW_CULTOFF_NAME;
-    public static final NEW_CULTOFF_DESCRIPTION;
-    public static final NEW_CULTOFF_RATING;
-    public static final UPDATE_CULTOFF_DESCRIPTION;
 }

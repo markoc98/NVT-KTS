@@ -8,6 +8,8 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 
+
+import static com.nwt_kts_project.CulturalOfferings.constants.CulturalOfferingConstants.DB_CULTOFF_NAME;
 import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringRunner.class)
