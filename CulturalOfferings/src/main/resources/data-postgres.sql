@@ -18,3 +18,5 @@ INSERT INTO category_type_table (name, category_id) VALUES ('Monuments', '2');
 INSERT INTO category_type_table (name, category_id) VALUES ('Museums', '3');
 
 INSERT INTO cultural_offerings (location, name, description, rating) VALUES ('Beograd', 'Exit festival', 'Najbolji exit festival', -11.0);
+
+insert into newsletter (title, content,date) values ('Test-Title1', 'Test-Title1', '2020-05-06');

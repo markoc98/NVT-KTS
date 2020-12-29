@@ -23,7 +23,7 @@ public class ReviewService implements ServiceInterface<Review> {
 
     @Override
     public Review create(Review r) throws Exception {
-       if(reviewRepo.findByComment(r.getComment()) != null) {
+       if(r.getId() != null) {
     	   throw new Exception("Review already exists.");
        }
        return reviewRepo.save(r);
@@ -43,6 +43,7 @@ public class ReviewService implements ServiceInterface<Review> {
 
     @Override
     public void delete(Long id) throws Exception {
+    	System.out.println(id);
     	Review r = reviewRepo.findById(id).orElse(null);
     	if(r == null) {
     		throw new Exception("Review doesn't exists.");

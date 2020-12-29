@@ -34,8 +34,17 @@ public class NewsletterDTO {
 		this.culturalOffering = culturalOffering;
 	}
 
-	public NewsletterDTO(Long id2, String title2, String content2, Date date2, Set<Picture> pictures2, Long id3) {
-		// TODO Auto-generated constructor stub
+	public NewsletterDTO(Long id2, String title2, String content2, Date date2) {
+		this.id = id2;
+		this.title = title2;
+		this.content = content2;
+		this.date = date2;
+	}
+
+	public NewsletterDTO(@NotBlank(message = "Title cannot be empty.")String title,@NotBlank(message = "Content cannot be empty.") String content, @NotBlank(message = "Date cannot be empty.")Date date) {
+		this.title = title;
+		this.content = content;
+		this.date = date;
 	}
 
 	public Long getId() {
