@@ -61,7 +61,7 @@ public class CulturalOfferingControllerIntegrationTest {
     @Test
     public void testGetAllCultOff()
     {
-        login(DB_ADMIN_USERNAME, DB_ADMIN_PASSWORD);
+        login(DB_USER_USERNAME, DB_USER_PASSWORD);
         HttpHeaders headers = new HttpHeaders();
         headers.add("Authorization", accessToken);
         HttpEntity<Object> httpEntity = new HttpEntity<Object>(headers);
