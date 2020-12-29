@@ -33,7 +33,7 @@ public class UserConstants {
     public static final String DB_USER_EMAIL = "user@gmail.com";
 
     public static final String DB_NEW_PASSWORD = "user1";
-
+    public static final String NEW_USER_PASSWORD1DB ="$2a$10$aNW3XAGRyBlbX8HP9HSBGOsniVcz6/VNOYfq8b7d0XvBSY/5AoT6G";
     public static final int FIND_ALL_NUMBER_OF_USERS = 6;
 
 

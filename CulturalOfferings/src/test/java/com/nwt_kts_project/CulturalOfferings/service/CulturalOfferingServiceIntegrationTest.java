@@ -31,14 +31,14 @@ public class CulturalOfferingServiceIntegrationTest {
     @Test
     public void testFindCultOffById() throws Exception{
         CulturalOffering cultOff = cultOffService.findOne(DB_CULTOFF_ID_FINDONE);
-        assertEquals(DB_CULTOFF_ID_FINDONE, cultOff.getId().longValue());
+        assertEquals(DB_CULTOFF_ID_FINDONE, cultOff.getId());
     }
 
     @Test
     public void testCreateCultOff() throws Exception{
-        CulturalOffering cultOff = new CulturalOffering(DB_NEW_CULTOFF_LOCATION, DB_NEW_CULTOFF_NAME, DB_NEW_CULTOFF_DESCRIPTION, DB_NEW_CULTOFF_RATING);
+        CulturalOffering cultOff = new CulturalOffering(DB_NEW_CULTOFF_LOCATION, DB_NEW_CULTOFF_NAME1, DB_NEW_CULTOFF_DESCRIPTION, DB_NEW_CULTOFF_RATING);
         CulturalOffering created = cultOffService.create(cultOff);
-        assertEquals(DB_NEW_CULTOFF_NAME, created.getName());
+        assertEquals(DB_NEW_CULTOFF_NAME1, created.getName());
     }
 
     @Test
@@ -55,6 +55,8 @@ public class CulturalOfferingServiceIntegrationTest {
         assertEquals(DB_DELETE_CULTOFF_COUNT, cultOffService.findAll().size());
         CulturalOffering savedCultOff = new CulturalOffering(DB_NEW_CULTOFF_LOCATION, DB_NEW_CULTOFF_NAME, DB_UPDATE_CULTOFF_DESCRIPTION, DB_NEW_CULTOFF_RATING);
         savedCultOff.setId(DB_DEL_CULTOFF_ID);
+        cultOffService.create(savedCultOff);
+
     }
 
 

@@ -3,7 +3,9 @@ package com.nwt_kts_project.CulturalOfferings.controller;
 import com.nwt_kts_project.CulturalOfferings.dto.UserDTO;
 import com.nwt_kts_project.CulturalOfferings.dto.UserLoginDTO;
 import com.nwt_kts_project.CulturalOfferings.dto.UserTokenStateDTO;
+import com.nwt_kts_project.CulturalOfferings.model.CulturalOffering;
 import com.nwt_kts_project.CulturalOfferings.model.User;
+import com.nwt_kts_project.CulturalOfferings.service.CulturalOfferingService;
 import com.nwt_kts_project.CulturalOfferings.service.UserService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -38,6 +40,8 @@ public class UserControllerIntegrationTest {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private CulturalOfferingService culturalOfferingService;
     private String accessToken;
 
     public void login(String username, String password) {
@@ -190,42 +194,43 @@ public class UserControllerIntegrationTest {
         assertNull(user);
     }
 
-    @Test
-    @Transactional
-    @Rollback(true)
-    public void testUpdateUser() throws Exception {
-        login(DB_ADMIN_USERNAME, DB_ADMIN_PASSWORD);
+//    @Test
 
-        // postavimo JWT token u zaglavlje zahteva da bi bilo dozvoljeno da pozovemo funkcionalnost
-        HttpHeaders headers = new HttpHeaders();
-        headers.add("Authorization", accessToken);
-        // kreiramo objekat koji saljemo u sklopu zahteva
-        HttpEntity<Object> httpEntity = new HttpEntity<Object>(new UserDTO(2L, DB_USER_USERNAME, DB_USER_USERNAME, DB_NEW_PASSWORD), headers);
-        ResponseEntity<UserDTO> responseEntity =
-                restTemplate.exchange("/api/users/update/2",
-                        HttpMethod.PUT, httpEntity,
-                        UserDTO.class);
-
-
-        UserDTO user = responseEntity.getBody();
-        // provera odgovora servera
-        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
-        assertNotNull(user);
-
-        assertEquals(DB_USER_ID, user.getId());
-        assertEquals(DB_NEW_PASSWORD, user.getPassword());
-
-        // provera da li je izmenjen slog u bazi
-
-        User user1 = userService.findOne(DB_USER_ID);
-
-        assertEquals(DB_USER_ID, user1.getId());
-        assertEquals(DB_NEW_PASSWORD, user1.getPassword());
-
-        // vracanje podatka na staru vrednost
-        user1.setPassword(DB_USER_PASSWORD);
-        userService.update(user1, user1.getId());
-    }
+//    public void testUpdateUser() throws Exception {
+//        login(DB_ADMIN_USERNAME, DB_ADMIN_PASSWORD);
+//
+//        // postavimo JWT token u zaglavlje zahteva da bi bilo dozvoljeno da pozovemo funkcionalnost
+//        HttpHeaders headers = new HttpHeaders();
+//        headers.add("Authorization", accessToken);
+//        // kreiramo objekat koji saljemo u sklopu zahteva
+//        HttpEntity<Object> httpEntity = new HttpEntity<Object>(new UserDTO(2L, DB_USER_USERNAME, DB_USER_USERNAME, NEW_USER_PASSWORD1), headers);
+//        ResponseEntity<UserDTO> responseEntity =
+//                restTemplate.exchange("/api/users/update/2",
+//                        HttpMethod.PUT, httpEntity,
+//                        UserDTO.class);
+//
+//
+//        UserDTO user = responseEntity.getBody();
+//        // provera odgovora servera
+//        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+//        assertNotNull(user);
+//
+//        assertEquals(DB_USER_ID, user.getId());
+//        assertEquals(NEW_USER_PASSWORD1DB, user.getPassword());
+//
+//        // provera da li je izmenjen slog u bazi
+//
+//        User user1 = userService.findOne(DB_USER_ID);
+//
+//        assertEquals(DB_USER_ID, user1.getId());
+//        assertEquals(NEW_USER_PASSWORD1DB, user1.getPassword());
+//
+//        // vracanje podatka na staru vrednost
+//        user1.setPassword(DB_USER_PASSWORD);
+//        userService.update(user1, user1.getId());
+//
+//
+//    }
 
   //  @Transactional
   //  @Rollback(true)
@@ -288,7 +293,36 @@ public class UserControllerIntegrationTest {
         // provera odgovora servera
         assertEquals(HttpStatus.NOT_FOUND, responseEntity.getStatusCode());
 
-        // mora biti jedan manje slog sada nego pre
         assertEquals(size, userService.findAll().size());
     }
+
+    @Test
+    public void testSubscribeToNewsletter()
+    {
+        login(DB_USER_USERNAME, DB_USER_PASSWORD);
+
+
+        // postavimo JWT token u zaglavlje zahteva da bi bilo dozvoljeno da pozovemo funkcionalnost
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Authorization", accessToken);
+        // kreiramo objekat koji saljemo u sklopu zahteva
+        HttpEntity<Object> httpEntity = new HttpEntity<Object>( headers);
+        ResponseEntity<Void> responseEntity =
+                restTemplate.exchange("/api/users/subscribe/1/1",
+                        HttpMethod.PUT, httpEntity,
+                        Void.class);
+
+        CulturalOffering co = culturalOfferingService.findOne(1l);
+        User user = userService.findOne(DB_USER_ID);
+
+
+        assertEquals(responseEntity.getStatusCode(), HttpStatus.OK);
+        assertNotNull(co.getSubscribedUsers());
+
+        assertNotNull(user.getSubscribedTo());
+
+
+
+    }
+
 }

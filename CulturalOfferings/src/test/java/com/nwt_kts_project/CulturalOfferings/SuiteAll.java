@@ -11,11 +11,14 @@ import org.springframework.test.context.TestPropertySource;
 @RunWith(Suite.class)
 @SuiteClasses({//ovde idu sve ..Test klase
 		UserRepositoryIntegrationTest.class, UserServiceIntegrationTest.class, UserControllerIntegrationTest.class,
+
+		CulturalOfferingServiceIntegrationTest.class, CulturalOfferingControllerIntegrationTest.class, CulturalOfferingRepositoryIntegrationTest.class,
 		CategoryServiceIntegrationTest.class,CategoryControllerIntegrationTest.class,CategoryRepositoryIntegrationTest.class,
 		CategoryTypeServiceIntegrationTest.class, CategoryTypeRepositoryIntegrationTest.class, CategoryTypeControllerIntegrationTest.class,
 		NewsletterControllerIntegrationTest.class, NewsletterRepositoryIntegrationTest.class, NewsletterServiceIntegrationTest.class,
-		ReviewServiceIntegrationTest.class,ReviewControllerIntegrationTest.class,  ReviewRepositoryIntegrationTest.class
-	})
+		ReviewServiceIntegrationTest.class,ReviewControllerIntegrationTest.class,  ReviewRepositoryIntegrationTest.class,
+
+})
 @TestPropertySource("classpath:test.properties")
 class SuiteAll {
 

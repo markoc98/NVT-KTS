@@ -82,7 +82,7 @@ public class ReviewControllerIntegrationTest {
 		ReviewDTO[] reviews = responseEntity.getBody();
 		
 		assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
-		assertEquals(DB_REVIEWS_COUNT,reviews.length);
+		assertEquals(DB_REVIEWS_COUNT+1,reviews.length);
 		
 	}
 	

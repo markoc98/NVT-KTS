@@ -117,6 +117,8 @@ public class UserController {
     @RequestMapping(value="/subscribe/{culturalOfferingId}/{userId}", method=RequestMethod.PUT)
     public ResponseEntity<Void> subscribeToNewsletter(@PathVariable Long culturalOfferingId, @PathVariable Long userId){
         try {
+            System.out.println("===========================================" + culturalOfferingId+ userId);
+
             CulturalOffering co = culturalOfferingService.findOne(culturalOfferingId);
             User user = userService.findOne(userId);
 
