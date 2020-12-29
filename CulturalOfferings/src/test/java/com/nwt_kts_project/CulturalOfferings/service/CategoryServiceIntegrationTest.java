@@ -32,7 +32,7 @@ public class CategoryServiceIntegrationTest {
         Category found = categoryService.findOne(DB_CATEGORY_ID);
         assertEquals(DB_CATEGORY_ID, found.getId());
     }
-	
+
 	@Test
     public void testCreateCategory() throws Exception {
         Category category = new Category(NEW_CATEGORY2);
@@ -52,7 +52,7 @@ public class CategoryServiceIntegrationTest {
 	@Test
     public void testUpdateCategory() throws Exception {
         Category category = new Category(NEW_CATEGORY3);
-        Category created = categoryService.update(category,DB_CATEGORY_ID);
+        Category created = categoryService.update(category,DB_CATEGORY_ID2);
 
         assertEquals(NEW_CATEGORY3, created.getName());
     }
