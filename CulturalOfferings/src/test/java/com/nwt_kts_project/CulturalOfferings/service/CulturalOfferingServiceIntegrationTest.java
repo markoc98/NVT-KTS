@@ -51,10 +51,10 @@ public class CulturalOfferingServiceIntegrationTest {
 
     @Test
     public void testDeleteCultOff() throws Exception{
-        cultOffService.delete(DB_CULTOFF_ID);
+        cultOffService.delete(DB_DEL_CULTOFF_ID);
         assertEquals(DB_DELETE_CULTOFF_COUNT, cultOffService.findAll().size());
         CulturalOffering savedCultOff = new CulturalOffering(DB_NEW_CULTOFF_LOCATION, DB_NEW_CULTOFF_NAME, DB_UPDATE_CULTOFF_DESCRIPTION, DB_NEW_CULTOFF_RATING);
-        savedCultOff.setId(DB_CULTOFF_ID);
+        savedCultOff.setId(DB_DEL_CULTOFF_ID);
     }
 
 

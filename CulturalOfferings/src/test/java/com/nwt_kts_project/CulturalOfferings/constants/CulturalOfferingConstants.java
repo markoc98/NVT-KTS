@@ -13,8 +13,9 @@ public class CulturalOfferingConstants {
 
     public static final String DB_UPDATE_CULTOFF_DESCRIPTION = "Izmenjeno";
     public static final long DB_CULTOFF_ID = 2L;
+    public static final long DB_DEL_CULTOFF_ID = 1l;
     public static final long DB_CULTOFF_ID_FINDONE = 1l;
 
-    public static final int DB_DELETE_CULTOFF_COUNT = 1;
+    public static final int DB_DELETE_CULTOFF_COUNT = 0;
 
 }
