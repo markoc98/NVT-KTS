@@ -1,11 +1,15 @@
 package com.nwt_kts_project.CulturalOfferings.service;
 
+import com.nwt_kts_project.CulturalOfferings.model.CulturalOffering;
 import com.nwt_kts_project.CulturalOfferings.model.Newsletter;
+import com.nwt_kts_project.CulturalOfferings.model.User;
 import com.nwt_kts_project.CulturalOfferings.repository.NewsletterRepository;
 
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -13,6 +17,13 @@ public class NewsletterService implements ServiceInterface<Newsletter> {
 	
 	@Autowired
 	private NewsletterRepository newsRepo;
+
+    @Autowired
+    private EmailSenderService emailSenderService;
+
+	@Autowired
+    private CulturalOfferingService culturalOfferingService;
+
     @Override
     public List<Newsletter> findAll() {
         return newsRepo.findAll();
@@ -24,10 +35,28 @@ public class NewsletterService implements ServiceInterface<Newsletter> {
 
     @Override
     public Newsletter create(Newsletter n) throws Exception {
-        if(newsRepo.findByTitle(n.getTitle()) != null) {
+        if(n.getId() != null) {
         	throw new Exception("Newsletter already exists.");
         }
-    	 return newsRepo.save(n);
+       // CulturalOffering culturalOffering = culturalOfferingService.findOne(n.getCulturalOffering().getId());
+
+       // sendMails(culturalOffering, n);
+
+        return newsRepo.save(n);
+    }
+
+    private void sendMails(CulturalOffering culturalOffering, Newsletter n) {
+        Set<User> subscribers = culturalOffering.getSubscribedUsers();
+
+        for(User subscriber : subscribers) {
+            SimpleMailMessage mailMessage = new SimpleMailMessage();
+            mailMessage.setTo(subscriber.getEmail());
+            mailMessage.setSubject(n.getTitle());
+            mailMessage.setFrom("culturalofferings@gmail.com");
+            mailMessage.setText(n.getContent());
+
+            emailSenderService.sendMail(mailMessage);
+        }
     }
 
     @Override
@@ -39,7 +68,7 @@ public class NewsletterService implements ServiceInterface<Newsletter> {
     	n2.setTitle(n.getTitle());
     	n2.setContent(n.getContent());
     	
-    	return newsRepo.saveAndFlush(n2);
+    	return newsRepo.save(n2);
     	 
     }
 

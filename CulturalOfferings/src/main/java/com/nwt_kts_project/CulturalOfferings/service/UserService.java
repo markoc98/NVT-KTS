@@ -42,7 +42,6 @@ public class UserService implements ServiceInterface<User> {
         u.setUsername(entity.getUsername());
         // pre nego sto postavimo lozinku u atribut hesiramo je
         u.setPassword(passwordEncoder.encode(entity.getPassword()));
-        u.setUsername(entity.getUsername());
         u.setEmail(entity.getEmail());
         u.setEnabled(false);
         List<Authority> auth = authService.findByName("ROLE_USER");

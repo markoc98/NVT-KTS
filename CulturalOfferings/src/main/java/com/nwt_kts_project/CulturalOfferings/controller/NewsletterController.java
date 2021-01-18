@@ -1,5 +1,6 @@
 package com.nwt_kts_project.CulturalOfferings.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -39,25 +40,19 @@ public class NewsletterController {
     	this.newsletterMapper = new NewsletterMapper();
     }
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
-    @RequestMapping(value = "/create", method = RequestMethod.POST)
-    public ResponseEntity<Newsletter> createNewsletter(@RequestBody @Valid NewsletterDTO newsletterDTO){
-    	//fix
-    	//umesto liste objekat
+    @RequestMapping(method = RequestMethod.POST)
+    public ResponseEntity<NewsletterDTO> createNewsletter(@RequestBody @Valid NewsletterDTO newsletterDTO){
+
+    	Newsletter newsL;
     	try {
-    		Newsletter nl = new Newsletter(newsletterDTO.getId(),newsletterDTO.getTitle(),newsletterDTO.getContent(),newsletterDTO.getDate(),newsletterDTO.getPictures(),newsletterDTO.getCulturalOffering());
-    		newsletterService.create(nl);
-    		//newsletterRepo.save(nl);
-    		System.out.println("EVO MI ID: " + nl.getId());
-    		System.out.println(nl.toString());
+    		newsL = newsletterService.create(newsletterMapper.toEntity(newsletterDTO));
     	}catch (Exception e) {
-    		System.out.println(e.getMessage());
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
-    	return new ResponseEntity<>(HttpStatus.OK);
-    	
+    	return new ResponseEntity<>(newsletterMapper.toDto(newsL),HttpStatus.CREATED);
     }
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
-    @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<Void> deleteNewsletter(@PathVariable Long id){
     	
     	try {
@@ -70,38 +65,38 @@ public class NewsletterController {
     }
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping(value = "/{newsletterId}", method = RequestMethod.GET)
-    public ResponseEntity<Newsletter> getNewsletters(@PathVariable Long newsletterId){
-    	
-    	try {
-    		Newsletter nl = newsletterService.findOne(newsletterId);
-    		return new ResponseEntity<>(nl,HttpStatus.OK);
-    	}catch (Exception e) {
-    		//System.out.println(e.getMessage());
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    public ResponseEntity<NewsletterDTO> getNewsletters(@PathVariable Long newsletterId){
+		
+		Newsletter n = newsletterService.findOne(newsletterId);
+		if(n == null) {
+			return new ResponseEntity<>(null,HttpStatus.NOT_FOUND);
 		}
-    }
-	@PreAuthorize("hasRole('ROLE_USER')")
-    @RequestMapping(value = "/", method = RequestMethod.GET)
-    public ResponseEntity<List<Newsletter>> getNewsletters(){
-    	
-    	try {
-    		
-    		List<Newsletter> newsletters = newsletterService.findAll();
-    		System.out.println(newsletters.size());
-    		return new ResponseEntity<>(newsletters, HttpStatus.OK);
-    	}catch (Exception e) {
-    		System.out.println(e.getMessage());
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
+		
+		return new ResponseEntity<>(newsletterMapper.toDto(n),HttpStatus.OK);
+  
     }
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
-    @RequestMapping(value="/update/{id}", method=RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<NewsletterDTO> updateNewsletter(@RequestBody @Valid NewsletterDTO newsletterDTO, @PathVariable Long id){
+    @RequestMapping(method = RequestMethod.GET)
+    public ResponseEntity<List<NewsletterDTO>> getAllNewsletters(){
+		List<Newsletter> newsletters = newsletterService.findAll();
+    	return new ResponseEntity<>(toNewsletterDTOList(newsletters),HttpStatus.OK);
+    }
+	
+	private List<NewsletterDTO> toNewsletterDTOList(List<Newsletter> newsList){
+		List<NewsletterDTO> newsDTO = new ArrayList<>(); 
+		for(Newsletter n : newsList)
+		{
+			newsDTO.add(newsletterMapper.toDto(n));
+		}
+		return newsDTO;
+	}
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+    @RequestMapping(value="/{id}", method=RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<NewsletterDTO> updateNewsletter(@RequestBody NewsletterDTO newsletterDTO, @PathVariable Long id){
     	Newsletter nl;
+    	
         try {
-        	
             nl = newsletterService.update(newsletterMapper.toEntity(newsletterDTO), id);
-            System.out.println(nl.toString());
         } catch (Exception e) {
         	System.out.println(e.getMessage());
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
