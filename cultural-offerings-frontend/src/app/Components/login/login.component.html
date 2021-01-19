@@ -1,14 +1,14 @@
 <div>
   <h1>Log in</h1>
-  <form class="form" (submit)="loginUser($event)">
+  <form class="form" (submit)="loginUser()">
     <mat-form-field class="formfield">
       <mat-label>Username</mat-label>
-      <input matInput placeholder="Enter your username" id="username">
+      <input matInput placeholder="Enter your username" [(ngModel)]="username" name="username" (input)="inputUsername($event)" required>
     </mat-form-field>
 
     <mat-form-field class="formfield">
       <mat-label>Password</mat-label>
-      <input type="password" matInput placeholder="Enter your password" id="password">
+      <input type="password" matInput placeholder="Enter your password" name="password"  [(ngModel)]="password" (input)="inputPassword($event)" required>
     </mat-form-field>
     <button type="submit" mat-button color="primary">Login</button>
   </form>
