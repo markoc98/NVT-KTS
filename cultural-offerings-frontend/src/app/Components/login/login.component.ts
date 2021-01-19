@@ -16,6 +16,9 @@ export class LoginComponent implements OnInit {
   }
 
   loginUser(event) {
+    event.preventDefault();
+    const target =event.target;
+
     console.log(event);
   }
 }
