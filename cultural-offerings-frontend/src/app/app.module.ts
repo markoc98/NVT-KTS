@@ -7,11 +7,13 @@ import {LoginModule} from "./Components/login/login.module";
 import {HomeModule} from "./Components/home/home.module";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatButtonModule} from "@angular/material/button";
+import { MapsComponent } from './Components/maps/maps.component';
 
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    MapsComponent
   ],
   imports: [
     BrowserModule,
