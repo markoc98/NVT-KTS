@@ -8,6 +8,8 @@ import {HomeModule} from "./Components/home/home.module";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatButtonModule} from "@angular/material/button";
 import { MapsComponent } from './Components/maps/maps.component';
+import { AgmCoreModule } from '@agm/core';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 @NgModule({
@@ -21,7 +23,15 @@ import { MapsComponent } from './Components/maps/maps.component';
     LoginModule,
     HomeModule,
     BrowserAnimationsModule,
-    MatButtonModule
+    MatButtonModule,
+    AgmCoreModule.forRoot({
+
+      apiKey: 'AIzaSyARCWiYLzvDkzssUFjXZs9i-OzetnexlV4',
+
+      libraries: ['places']
+
+    }),
+    NgbModule
   ],
   exports: [AppComponent],
   providers: [],

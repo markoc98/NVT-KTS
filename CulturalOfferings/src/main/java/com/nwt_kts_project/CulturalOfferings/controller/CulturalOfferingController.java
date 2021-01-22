@@ -5,6 +5,9 @@ import com.nwt_kts_project.CulturalOfferings.model.CulturalOffering;
 import com.nwt_kts_project.CulturalOfferings.service.CulturalOfferingService;
 import com.nwt_kts_project.CulturalOfferings.utility.CulturalOfferingMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -113,6 +116,23 @@ public class CulturalOfferingController {
     	List<CulturalOfferingDTO> foundDTO = toCultOffDTOList(found);
     	
     	return new ResponseEntity<>(foundDTO, HttpStatus.OK);
+    	
+    }
+    
+    @RequestMapping(value = "/search", method= RequestMethod.GET)
+    ResponseEntity<Page<CulturalOfferingDTO>> getCulturalOfferingByName(@RequestParam(value="name") String name,Pageable pageable){
+    	
+    	Page<CulturalOffering> page =cultOffService.findByName(name,pageable);
+    	
+    	if(page.isEmpty()) {
+    		return new ResponseEntity<>(null,HttpStatus.BAD_REQUEST);
+    	}
+    	List<CulturalOfferingDTO> cultOffDTOList = toCultOffDTOList(page.toList());
+    	Page<CulturalOfferingDTO> cultOffDTOPage = new PageImpl<>(cultOffDTOList,page.getPageable(),page.getTotalElements());
+    	
+    	System.out.println("Search result: " + cultOffDTOPage.getNumberOfElements() + "" + page.getTotalElements());
+    	
+    	return new ResponseEntity<>(cultOffDTOPage,HttpStatus.OK);
     	
     }
 

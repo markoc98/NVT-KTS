@@ -3,6 +3,8 @@ package com.nwt_kts_project.CulturalOfferings.service;
 import com.nwt_kts_project.CulturalOfferings.model.CulturalOffering;
 import com.nwt_kts_project.CulturalOfferings.repository.CulturalOfferingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -49,4 +51,11 @@ public class CulturalOfferingService implements ServiceInterface<CulturalOfferin
         }
         culturalOfferingRepository.delete(dbCultOff);
     }
+
+	public Page<CulturalOffering> findByName(String name,Pageable pageable) {
+		// TODO Auto-generated method stub
+		Page<CulturalOffering> cultOff = culturalOfferingRepository.findByNameContainingIgnoreCase(name, pageable);
+	
+		return cultOff;
+	}
 }
