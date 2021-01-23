@@ -5,6 +5,9 @@ import com.nwt_kts_project.CulturalOfferings.model.CulturalOffering;
 import com.nwt_kts_project.CulturalOfferings.service.CulturalOfferingService;
 import com.nwt_kts_project.CulturalOfferings.utility.CulturalOfferingMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -113,6 +116,15 @@ public class CulturalOfferingController {
     	List<CulturalOfferingDTO> foundDTO = toCultOffDTOList(found);
     	
     	return new ResponseEntity<>(foundDTO, HttpStatus.OK);
+    	
+    }
+    
+    @RequestMapping(value = "/search/{name}", method= RequestMethod.GET)
+    ResponseEntity<List<CulturalOffering>> getCulturalOfferingByName(@PathVariable String name){
+    	
+    	List<CulturalOffering> listDto = cultOffService.findByName(name);
+    	
+    	return new ResponseEntity<>(listDto,HttpStatus.OK);
     	
     }
 

@@ -18,5 +18,12 @@ INSERT INTO category_type_table (name, category_id) VALUES ('Monuments', '2');
 INSERT INTO category_type_table (name, category_id) VALUES ('Museums', '3');
 
 INSERT INTO cultural_offerings (location, name, description, rating) VALUES ('Beograd', 'Exit festival', 'Najbolji exit festival', -11.0);
+INSERT INTO cultural_offerings (location, name, description, rating) VALUES ('Beograd', 'Exit festival2', 'Najbolji exit festival', -11.0);
+INSERT INTO cultural_offerings (location, name, description, rating) VALUES ('Beograd', 'Exit festival3', 'Najbolji exit festival', -11.0);
+INSERT INTO cultural_offerings (location, name, description, rating) VALUES ('Beograd', 'Exit festival4', 'Najbolji exit festival', -11.0);
+INSERT INTO cultural_offerings (location, name, description, rating) VALUES ('Beograd', 'Exit festival5', 'Najbolji exit festival', -11.0);
+INSERT INTO cultural_offerings (location, name, description, rating) VALUES ('Beograd', 'Exit festival6', 'Najbolji exit festival', -11.0);
+INSERT INTO cultural_offerings (location, name, description, rating) VALUES ('Beograd', 'Exit festival7', 'Najbolji exit festival', -11.0);
+
 
 insert into newsletter (title, content,date) values ('Test-Title1', 'Test-Title1', '2020-05-06');
