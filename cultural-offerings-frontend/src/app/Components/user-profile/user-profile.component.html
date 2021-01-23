@@ -1,0 +1,62 @@
+<html>
+<body>
+    <div class="title">
+        <h1> {{ user.username | uppercase }}'S PROFILE</h1>
+    </div>
+
+    <div class="pp">
+        <img class="photo" src="nophoto.png" alt="Photo">
+    </div>
+
+    <div class="photo-btns">
+        <button class="photo-button">Add profile photo</button>
+        <button class="photo-button">Change profile photo</button>
+        <button class="photo-button">Remove profile photo</button>
+    </div>
+    <br>
+
+    <div class="edit-form">
+        <table class="edit-form-table">
+            <tr>
+                <td><label>Username: </label></td>
+                <td><input [(ngModel)]="user.username" placeholder="Username" /></td>
+            </tr>
+            <tr>
+                <td><label>Email: </label></td>
+                <td align="right"><input [(ngModel)]="user.email" placeholder="Email" /></td>
+            </tr>
+            <tr>
+                <td><label>Password: </label></td>
+                <td align="right"><input [(ngModel)]="user.password" placeholder="Password" /></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><button class="edit-button">Edit</button></td>
+            </tr>
+        </table>
+    </div>
+    <br>
+
+    <div class="newsletters">
+        <h2>NEWSLETTERS</h2>
+        <table border = "1" class="news-table">
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Address</th>
+                <th>Unsubscribe</th>
+            </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let newsletter of newsletters">
+                    <td>{{newsletter.name}}</td>
+                    <td>{{newsletter.address}}</td>
+                    <td><button class="unsub-btn">Unsubscribe</button></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
+
+// 

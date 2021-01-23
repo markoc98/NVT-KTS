@@ -13,13 +13,16 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FilterCulturalOfferingsComponent } from './Components/filter-cultural-offerings/filter-cultural-offerings.component';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
+import {UserProfileModule} from './Components/user-profile/user-profile.module';
+import { AdminHomepageComponent } from './admin-homepage/admin-homepage.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     MapsComponent,
-    FilterCulturalOfferingsComponent
+    FilterCulturalOfferingsComponent,
+    AdminHomepageComponent
   ],
   imports: [
     BrowserModule,
