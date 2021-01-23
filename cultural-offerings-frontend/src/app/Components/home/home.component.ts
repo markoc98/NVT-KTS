@@ -1,5 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import {User} from "../../model/User";
+import {TokenStorageService} from "../../Services/token-storage.service";
 
+
+const TOKEN_KEY = 'auth-token';
+const USER_KEY = 'auth-user';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -7,9 +12,20 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
 
-  constructor() { }
+  token: string;
+  userID: string;
+  constructor(private tokenStorageService: TokenStorageService) { }
 
   ngOnInit(): void {
+    this.token = window.sessionStorage.getItem(TOKEN_KEY);
+    this.userID = this.tokenStorageService.getUser();
+  }
+
+  signOut()
+  {
+    this.tokenStorageService.signOut();
+    this.token = window.sessionStorage.getItem(TOKEN_KEY);
+    this.userID = this.tokenStorageService.getUser();
   }
 
 }

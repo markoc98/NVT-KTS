@@ -1,7 +1,10 @@
 <div >
   <div>
     <button [routerLink]="['login']" >LOG IN</button>
-    <button>REGISTER</button>
+    <button [routerLink]="['register']">REGISTER</button>
+    <button (click)="signOut()">SIGN OUT</button>
+    <p *ngIf="userID"> user id: {{userID}}</p>
+
   </div>
 </div>
 <router-outlet></router-outlet>

@@ -9,7 +9,6 @@ export class AuthService {
 
   constructor(private http: HttpClient) { }
 
-
   login(username,password) {
     return this.http.post('/api/auth/login',
       {
@@ -19,5 +18,16 @@ export class AuthService {
       },
       ).toPromise()
   ;}
+
+  register(username,email,password) {
+    return this.http.post('/api/auth/sign-up',
+      {
+          username,
+          email,
+          password
+
+      },
+    ).toPromise()
+      ;}
 
 }
