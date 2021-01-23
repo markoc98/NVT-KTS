@@ -1,0 +1,38 @@
+
+<!-- <p>filter-cultural-offerings works!</p> -->
+<div id = "filterOffers" style="margin-left:10px">
+  <form class="row col-md-12" ngForm="filterForm" onsubmit="filterOffers()">
+    <div class="form-group col-md-5">
+      <div>
+        
+      </div>
+    </div>
+    <div class="form-group col-md-5">
+      <div>
+        <input class="form-control" type="text" name="expression" id="expression" placeholder="Search cultural offerings" [(ngModel)]="searchedName">
+      </div>
+    </div>
+    <div class="form-group col-md-2">
+      <div>
+        <button mat-raised-button color="primary" id="applyFilter" class="btn-block" (click)="searchCulturalOfferings()">Search</button>
+      </div>
+    </div>
+  </form>
+
+</div>
+
+<div id="map-mapBox"></div>
+<!-- <input
+      id="pac-input"
+      class="controls"
+      type="text"
+      placeholder="Search Box"
+    /> -->
+
+<div id="filterOffer"></div>
+ <div *ngFor="let entity of entities" >
+   <div><p>{{ entity.name }}</p></div>
+  
+  </div> 
+
+  
