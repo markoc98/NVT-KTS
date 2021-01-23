@@ -1,21 +1,27 @@
-<div>
+<div class="register">
   <h1>Register</h1>
-    <form class="form" (submit)="registerUser()">
+    <form class="register-form" (submit)="registerUser()">
       <mat-form-field class="formfield">
         <mat-label>Username</mat-label>
-        <input matInput placeholder="Enter your username" [(ngModel)]="username" name="username" (input)="inputUsername($event)" required>
+        <label>
+          <input matInput placeholder="Enter your username" [(ngModel)]="username" name="username" (input)="inputUsername($event)" required>
+        </label>
       </mat-form-field>
 
       <mat-form-field class="formfield">
         <mat-label>Email</mat-label>
-        <input type="text" matInput placeholder="Enter your email" name="email"  [(ngModel)]="email" (input)="inputEmail($event)" required>
+        <label>
+          <input type="text" matInput placeholder="Enter your email" name="email"  [(ngModel)]="email" (input)="inputEmail($event)" required>
+        </label>
       </mat-form-field>
 
       <mat-form-field class="formfield">
         <mat-label>Password</mat-label>
-        <input type="password" matInput placeholder="Enter your password" name="password"  [(ngModel)]="password" (input)="inputPassword($event)" required>
+        <label>
+          <input type="password" matInput placeholder="Enter your password" name="password"  [(ngModel)]="password" (input)="inputPassword($event)" required>
+        </label>
       </mat-form-field>
-      <button type="submit" mat-button color="primary">Login</button>
+      <button type="submit" mat-raised-button color="primary">Login</button>
     </form>
 
 </div>

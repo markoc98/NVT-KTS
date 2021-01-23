@@ -42,7 +42,7 @@ export class RegisterComponent implements OnInit {
   }
 
   public inputEmail(event) {
-    this.password = event.target.value;
+    this.email = event.target.value;
   }
 
   public async registerUser():Promise<void> {

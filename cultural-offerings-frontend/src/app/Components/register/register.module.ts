@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import {FormsModule} from "@angular/forms";
 import {RegisterComponent} from "./register.component";
 import {MatFormFieldModule} from "@angular/material/form-field";
+import {MatInputModule} from "@angular/material/input";
+import {MatButtonModule} from "@angular/material/button";
 
 
 @NgModule({
@@ -10,7 +12,9 @@ import {MatFormFieldModule} from "@angular/material/form-field";
   imports: [
     CommonModule,
     FormsModule,
-    MatFormFieldModule
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule
   ]
 })
 export class RegisterModule { }
