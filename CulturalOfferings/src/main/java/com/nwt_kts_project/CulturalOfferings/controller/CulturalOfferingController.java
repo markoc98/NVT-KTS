@@ -119,20 +119,12 @@ public class CulturalOfferingController {
     	
     }
     
-    @RequestMapping(value = "/search", method= RequestMethod.GET)
-    ResponseEntity<Page<CulturalOfferingDTO>> getCulturalOfferingByName(@RequestParam(value="name") String name,Pageable pageable){
+    @RequestMapping(value = "/search/{name}", method= RequestMethod.GET)
+    ResponseEntity<List<CulturalOffering>> getCulturalOfferingByName(@PathVariable String name){
     	
-    	Page<CulturalOffering> page =cultOffService.findByName(name,pageable);
+    	List<CulturalOffering> listDto = cultOffService.findByName(name);
     	
-    	if(page.isEmpty()) {
-    		return new ResponseEntity<>(null,HttpStatus.BAD_REQUEST);
-    	}
-    	List<CulturalOfferingDTO> cultOffDTOList = toCultOffDTOList(page.toList());
-    	Page<CulturalOfferingDTO> cultOffDTOPage = new PageImpl<>(cultOffDTOList,page.getPageable(),page.getTotalElements());
-    	
-    	System.out.println("Search result: " + cultOffDTOPage.getNumberOfElements() + "" + page.getTotalElements());
-    	
-    	return new ResponseEntity<>(cultOffDTOPage,HttpStatus.OK);
+    	return new ResponseEntity<>(listDto,HttpStatus.OK);
     	
     }
 

@@ -52,9 +52,9 @@ public class CulturalOfferingService implements ServiceInterface<CulturalOfferin
         culturalOfferingRepository.delete(dbCultOff);
     }
 
-	public Page<CulturalOffering> findByName(String name,Pageable pageable) {
+	public List<CulturalOffering> findByName(String name) {
 		// TODO Auto-generated method stub
-		Page<CulturalOffering> cultOff = culturalOfferingRepository.findByNameContainingIgnoreCase(name, pageable);
+		List<CulturalOffering> cultOff = culturalOfferingRepository.findByNameContainingIgnoreCase(name);
 	
 		return cultOff;
 	}

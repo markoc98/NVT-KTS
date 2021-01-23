@@ -13,7 +13,7 @@ import java.util.List;
 public interface CulturalOfferingRepository extends JpaRepository<CulturalOffering, Long> {
 
     CulturalOffering findByName(String name);
-    Page<CulturalOffering> findByNameContainingIgnoreCase(String name,Pageable pageable);
+    List<CulturalOffering> findByNameContainingIgnoreCase(String name);
 
 }
 
