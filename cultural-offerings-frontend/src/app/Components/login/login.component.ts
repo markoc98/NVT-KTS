@@ -30,7 +30,6 @@ export class LoginComponent implements OnInit {
   }
 
   public async loginUser():Promise<void> {
-    console.log(this.username,this.password);
 
     let response: IResponse;
 
