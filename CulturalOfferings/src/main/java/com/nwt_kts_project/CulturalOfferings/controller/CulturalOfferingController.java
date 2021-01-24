@@ -99,8 +99,8 @@ public class CulturalOfferingController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
     
-    @PreAuthorize("hasRole('ROLE_USER')")
-    @RequestMapping(value="/getDataForMap/{location}", method=RequestMethod.GET, consumes = MediaType.APPLICATION_JSON_VALUE)
+    //@PreAuthorize("hasRole('ROLE_USER')")
+    @RequestMapping(value="/getDataForMap/{location}", method=RequestMethod.GET)
     public ResponseEntity<List<CulturalOfferingDTO>> getDataForMap(@PathVariable String location){
 
     	List<CulturalOffering> cultOffs = cultOffService.findAll();
@@ -108,23 +108,29 @@ public class CulturalOfferingController {
     	List<CulturalOffering> found = new ArrayList<CulturalOffering>();
     	
     	for (CulturalOffering co : cultOffs) {
-    		if (co.getLocation().equals(location)) {
+    		if (co.getLocation().equalsIgnoreCase(location)) {
     			found.add(co);
     		}
     	}
     	
     	List<CulturalOfferingDTO> foundDTO = toCultOffDTOList(found);
+
+    	System.out.println(foundDTO.size());
     	
     	return new ResponseEntity<>(foundDTO, HttpStatus.OK);
     	
     }
     
     @RequestMapping(value = "/search/{name}", method= RequestMethod.GET)
-    ResponseEntity<List<CulturalOffering>> getCulturalOfferingByName(@PathVariable String name){
+    ResponseEntity<CulturalOfferingDTO> getCulturalOfferingByName(@PathVariable String name){
     	
-    	List<CulturalOffering> listDto = cultOffService.findByName(name);
+    	CulturalOffering cultOff = cultOffService.findByName(name);
     	
-    	return new ResponseEntity<>(listDto,HttpStatus.OK);
+    	if(cultOff == null){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    	
+    	return new ResponseEntity<>(cultOffMapper.toDto(cultOff), HttpStatus.OK);
     	
     }
 

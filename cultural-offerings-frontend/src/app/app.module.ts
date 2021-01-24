@@ -16,12 +16,16 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { RegisterComponent } from './Components/register/register.component';
 import {RegisterModule} from "./Components/register/register.module";
+import { EventEmitterService } from './event-emitter.service';
+import { MatDialogModule } from '@angular/material/dialog';
+import { DialogWindowComponent } from './Components/dialog-window/dialog-window.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     MapsComponent,
     FilterCulturalOfferingsComponent,
+    DialogWindowComponent
 
   ],
   imports: [
@@ -34,10 +38,12 @@ import {RegisterModule} from "./Components/register/register.module";
     HttpClientModule,
     FormsModule,
     NgbModule,
-    RegisterModule
+    RegisterModule,
+    MatDialogModule
   ],
   exports: [AppComponent],
-  providers: [HttpClient],
+  providers: [HttpClient,
+              EventEmitterService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

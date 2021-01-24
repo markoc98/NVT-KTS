@@ -1,6 +1,9 @@
 package com.nwt_kts_project.CulturalOfferings.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -20,6 +23,9 @@ public class CulturalOffering {
 
     @Column(nullable = false)
     private String description;
+    
+    @Min(value = 0, message = "Rating cannot be less than 0")
+    @Max(value = 5, message = "Rating cannot be more than 5")
     @Column(nullable = false)
     private double rating;
 
@@ -73,8 +79,34 @@ public class CulturalOffering {
         this.category = category;
         this.categoryType = categoryType;
     }
+    
+    public CulturalOffering(String location, String name, String description) {
+		super();
+		this.location = location;
+		this.name = name;
+		this.description = description;
+	}
 
-    public Set<User> getSubscribedUsers() {
+	public CulturalOffering(String location, String name, String description, double rating, Category category,
+			CategoryType categoryType) {
+		super();
+		this.location = location;
+		this.name = name;
+		this.description = description;
+		this.rating = rating;
+		this.category = category;
+		this.categoryType = categoryType;
+	}
+
+	public CulturalOffering(String name, String description, double rating, CategoryType categoryType) {
+		super();
+		this.name = name;
+		this.description = description;
+		this.rating = rating;
+		this.categoryType = categoryType;
+	}
+
+	public Set<User> getSubscribedUsers() {
         return subscribedUsers;
     }
 

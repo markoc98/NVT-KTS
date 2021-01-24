@@ -4,6 +4,10 @@ import * as Mapboxgl from 'mapbox-gl';
 import { MapService } from 'src/app/Services/map-service.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { stringify } from '@angular/compiler/src/util';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+import { EventEmitterService } from '../../event-emitter.service';  
+import { MatDialog } from '@angular/material/dialog';
+import {DialogWindowComponent} from '../dialog-window/dialog-window.component';
 
 @Component({
   selector: 'app-maps',
@@ -14,23 +18,46 @@ import { stringify } from '@angular/compiler/src/util';
 export class MapsComponent implements OnInit {
 
   //public name: string;
-  public searchedName;
+  public searchLocation;
   public entities;
+  public categoryName; 
 
+  items: any[] = [
+    { id: 1, name: 'Events' },
+    { id: 2, name: 'Cultural goods' },
+    { id: 3, name: 'Institutions' },
+  ];
+  selected: string = 'Events';
+  
   map: Mapboxgl.Map;
 
-  constructor(private mapService : MapService){
-    this.searchedName = '';
+  constructor(private mapService : MapService,
+      private eventEmitterService: EventEmitterService,
+      private dialog: MatDialog
+
+    ){
+    this.searchLocation = '';
     this.entities = [];
+    this.categoryName = this.selected;
+  }
+
+  selectOption(id: number){
+    console.log(this.selected)
+    this.categoryName = id;
+    console.log(this.categoryName)
+    if(this.searchLocation !== ''){
+      this.searchCulturalOfferings();
+    }
+    
   }
 
   searchCulturalOfferings(){
-    this.mapService.getCulturalOfferings(this.searchedName).subscribe((name) => {
-      console.log(name);
-      this.entities = name;
-
+    this.mapService.getCulturalOfferingForMap(this.searchLocation).subscribe((cultOffering) => {
+      const tempEntities = Object.values(cultOffering).filter((item) => item.categoryType.name == this.categoryName)
+      this.entities = tempEntities;
+      console.log(tempEntities);
     },(error : HttpErrorResponse) => {
-      alert("Culutral Offering with given name does not exist.")
+      alert("Culutral Offering with given location does not exist.")
     });
   }
 
@@ -43,10 +70,20 @@ export class MapsComponent implements OnInit {
       center: [19.8463064,45.2443501], // starting position
       zoom: 15 // starting zoom
     });
+  }
 
-
-
+  onClickTable(entity){
+    console.log(entity)
+    this.dialog.open(DialogWindowComponent,{width: '80%', height: '80%',data:{
+      name: entity.name,
+      location : entity.location,
+      rating: entity.rating,
+      description: entity.description
+    }});
 
 
   }
+
 }
+     
+    

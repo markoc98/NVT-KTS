@@ -11,6 +11,10 @@ public class CulturalOfferingDTO {
     private String name;
 
     private String description;
+    
+    private double rating;
+    
+    private Category categoryType;
 
 
     public CulturalOfferingDTO() {
@@ -22,8 +26,35 @@ public class CulturalOfferingDTO {
         this.name = name;
         this.description = description;
     }
+    
+    
 
-    public Long getId() {
+    public CulturalOfferingDTO(Long id2, String location2, String name2, String description2, Category category) {
+		super();
+    	this.id = id2;
+		this.location =location2;
+		this.name = name2;
+		this.description = description2;
+		this.categoryType = category;
+	}
+
+	public Category getCategoryType() {
+		return categoryType;
+	}
+
+	public void setCategoryType(Category categoryType) {
+		this.categoryType = categoryType;
+	}
+
+	public double getRating() {
+		return rating;
+	}
+
+	public void setRating(double rating) {
+		this.rating = rating;
+	}
+
+	public Long getId() {
         return id;
     }
 
