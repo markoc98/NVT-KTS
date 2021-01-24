@@ -11,8 +11,6 @@ import { MapsComponent } from './Components/maps/maps.component';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
-
-import { MapsComponent } from './Components/maps/maps.component';
 import { FilterCulturalOfferingsComponent } from './Components/filter-cultural-offerings/filter-cultural-offerings.component';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';

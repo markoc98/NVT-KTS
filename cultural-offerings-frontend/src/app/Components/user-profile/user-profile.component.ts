@@ -1,5 +1,18 @@
 import { Component, OnInit } from '@angular/core';
+import {User} from "../../model/User";
+import {Newsletter} from "../../model/Newsletter";
+import {IResponse} from "../login/login.component";
+import {UserServiceService} from "../../Services/user-service.service";
 
+const USER_KEY = 'auth-user';
+
+export interface UserResponse{
+  username: string,
+  password:string,
+  email: string,
+  id: number
+
+}
 @Component({
   selector: 'app-user-profile',
   templateUrl: './user-profile.component.html',
@@ -7,24 +20,35 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UserProfileComponent implements OnInit {
 
-  user: User = { username: 'Sara', email: 'sara@nesto.com', password: 'bla' };
+  user: UserResponse = {username:"", password:"", email:"",id: 0};
 
-  newsletters: Newsletter[] = [{name: 'Exit', address: 'Adresa'}];
+  subscribed: String[] = ["exit","novi exit", "svez exit"];
 
-  constructor() { }
+  constructor(private userService: UserServiceService) { }
 
   ngOnInit(): void {
+
+    this.getCurrentUser();
   }
 
+  public async getCurrentUser()
+  {
+
+    let response: UserResponse;
+    try{
+      response = await this.userService.getUserById(window.sessionStorage.getItem(USER_KEY)) as UserResponse;
+      this.user = response;
+    }
+    catch(error) {
+      console.error(error);
+    }
+  }
+
+  public async getSubscriptions(){
+
+  }
+
+
 }
 
-class User {
-  username: string;
-  email: string;
-  password: string;
-}
 
-class Newsletter{
-  name: string;
-  address: string;
-}

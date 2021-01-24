@@ -4,9 +4,6 @@
         <h1> {{ user.username | uppercase }}'S PROFILE</h1>
     </div>
 
-    <div class="pp">
-        <img class="photo" src="nophoto.png" alt="Photo">
-    </div>
 
     <div class="photo-btns">
         <button class="photo-button">Add profile photo</button>
@@ -18,20 +15,20 @@
     <div class="edit-form">
         <table class="edit-form-table">
             <tr>
-                <td><label>Username: </label></td>
-                <td><input [(ngModel)]="user.username" placeholder="Username" /></td>
+                <td><label>Username  : </label></td>
+                <td><label placeholder="Username :">{{user.username}} </label></td>
             </tr>
             <tr>
-                <td><label>Email: </label></td>
-                <td align="right"><input [(ngModel)]="user.email" placeholder="Email" /></td>
+                <td><label>Email  : </label></td>
+                <td align="right"><label  placeholder="Email">{{user.email}} </label></td>
             </tr>
             <tr>
-                <td><label>Password: </label></td>
-                <td align="right"><input [(ngModel)]="user.password" placeholder="Password" /></td>
+                <td><label>ID: </label></td>
+                <td align="right"><label  placeholder="Id" >{{user.id}} </label></td>
             </tr>
             <tr>
                 <td></td>
-                <td><button class="edit-button">Edit</button></td>
+                <td><button class="edit-button">NE RADIM NISTA</button></td>
             </tr>
         </table>
     </div>
@@ -43,14 +40,12 @@
             <thead>
             <tr>
                 <th>Name</th>
-                <th>Address</th>
                 <th>Unsubscribe</th>
             </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let newsletter of newsletters">
-                    <td>{{newsletter.name}}</td>
-                    <td>{{newsletter.address}}</td>
+                <tr *ngFor="let subscription of subscribed">
+                    <td>{{subscription}}</td>
                     <td><button class="unsub-btn">Unsubscribe</button></td>
                 </tr>
             </tbody>
@@ -59,4 +54,4 @@
 </body>
 </html>
 
-// 
+//

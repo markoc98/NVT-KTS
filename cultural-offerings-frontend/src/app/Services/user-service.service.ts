@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
+const TOKEN_KEY = 'auth-token';
 
-const httpOptions = {
-  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-};
+
 
 @Injectable({
   providedIn: 'root'
@@ -15,6 +14,14 @@ export class UserServiceService {
 
   getUserById(userID:string)
   {
-    return this.http.get("http://localhost:8080/user/" + userID, httpOptions);
+    let headers_object = new HttpHeaders().set("Authorization", "Bearer " + window.sessionStorage.getItem(TOKEN_KEY));
+
+    const httpOptions = {
+      headers: headers_object
+    };
+
+    return this.http.get("api/users/" + userID , httpOptions
+    ).toPromise()
   }
+
 }

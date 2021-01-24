@@ -19,9 +19,9 @@ export interface RegisterResponse {
   styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent implements OnInit {
-  public username: string ;
+  public username: string;
   public email: string;
-  public password: string ;
+  public password: string;
 
 
   constructor(private auth:AuthService, private tokenStorageService:TokenStorageService, private router:Router) { }
