@@ -1,0 +1,103 @@
+<html>
+    <body>
+
+        <div class="filters">
+            <input type="checkbox" id="events" value="events">
+            <label for="events"> Events</label>
+            <input type="checkbox" id="cgs" value="cgs">
+            <label for="cgs"> Cultural goods</label>
+            <input type="checkbox" id="insts" value="insts">
+            <label for="insts"> Institutions</label>
+        </div>
+
+        <div class = "add-btns1">
+            <button class="btn1">Add a cultural offering</button>
+            <button class = "btn2">Add a newsletter</button>
+        </div>
+
+        <div class = "add-btns2">
+            <button class = "btn3">Add a category</button>
+            <button class = "btn4">Add a category type</button>
+        </div>
+
+        <div class="search">
+            <input class="search-bar" type="text" placeholder="Search">
+            <button class="search-btn" type="submit" onclick=pretrazi()>Go</button>
+        </div>
+
+        <div class="t-btns">
+            <button class = "btns" onclick="showCO();">Cultural Offerings</button>
+            <button class = "btns" onclick="showN();">Newsletters</button>
+            <button class = "btns" onclick="showCT();">Categories & Category Types</button>
+        </div>
+
+        <div>
+            <table border = "1" class="co-table" id="co-table">
+                <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Address</th>
+                    <th>Category</th>
+                    <th>Category type</th>
+                    <th>Rating</th>
+                    <th>Description</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
+                </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let co of cos">
+                        <td>{{co.name}}</td>
+                        <td>{{co.address}}</td>
+                        <td>{{co.category}}</td>
+                        <td>{{co.type}}</td>
+                        <td>{{co.rating}}</td>
+                        <td>{{co.description}}</td>
+                        <td><button class="table-btn">Edit</button></td>
+                        <td><button class="table-btn">Delete</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div>
+            <table border = "1" class="n-table" id="n-table">
+                <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Address</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
+                </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let newsletter of newsletters">
+                        <td>{{newsletter.name}}</td>
+                        <td>{{newsletter.address}}</td>
+                        <td><button class="table-btn">Edit</button></td>
+                        <td><button class="table-btn">Delete</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div>
+            <table border = "1" class="ct-table" id="ct-table">
+                <thead>
+                <tr>
+                    <th>Category</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
+                    <th>Category Types</th>
+                </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let cat of cats">
+                        <td>{{cat.name}}</td>
+                        <td><button class="table-btn">Edit</button></td>
+                        <td><button class="table-btn">Delete</button></td>
+                        <td><button class="table-btn">View Category Types</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </body>
+</html>

@@ -320,9 +320,6 @@ public class UserControllerIntegrationTest {
         assertNotNull(co.getSubscribedUsers());
 
         assertNotNull(user.getSubscribedTo());
-
-
-
     }
 
 }

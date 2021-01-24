@@ -25,39 +25,37 @@ public class CulturalOfferingServiceIntegrationTest {
     @Test
     public void testFindAllCultOff() throws Exception{
         List<CulturalOffering> found = cultOffService.findAll();
-        assertEquals(DB_CULTOFF_COUNT, found.size());
+        assertEquals(SERVICE_FIND_ALL_COUNT, found.size());
     }
 
     @Test
     public void testFindCultOffById() throws Exception{
-        CulturalOffering cultOff = cultOffService.findOne(DB_CULTOFF_ID_FINDONE);
-        assertEquals(DB_CULTOFF_ID_FINDONE, cultOff.getId());
+        CulturalOffering cultOff = cultOffService.findOne(SERVICE_CULTOFF_ID_FINDONE);
+        assertEquals(SERVICE_CULTOFF_ID_FINDONE, cultOff.getId());
     }
 
     @Test
     public void testCreateCultOff() throws Exception{
-        CulturalOffering cultOff = new CulturalOffering(DB_NEW_CULTOFF_LOCATION, DB_NEW_CULTOFF_NAME1, DB_NEW_CULTOFF_DESCRIPTION, DB_NEW_CULTOFF_RATING);
+        CulturalOffering cultOff = new CulturalOffering(SERVICE_NEW_CULTOFF_LOCATION, SERVICE_NEW_CULTOFF_NAME1, SERVICE_NEW_CULTOFF_DESCRIPTION, SERVICE_NEW_CULTOFF_RATING);
         CulturalOffering created = cultOffService.create(cultOff);
-        assertEquals(DB_NEW_CULTOFF_NAME1, created.getName());
+        assertEquals(SERVICE_NEW_CULTOFF_NAME1, created.getName());
     }
 
     @Test
     public void testUpdateCultOff() throws Exception{
-        CulturalOffering cultOff = new CulturalOffering(DB_NEW_CULTOFF_LOCATION, DB_NEW_CULTOFF_NAME, DB_UPDATE_CULTOFF_DESCRIPTION, DB_NEW_CULTOFF_RATING);
-        CulturalOffering updated = cultOffService.update(cultOff, DB_CULTOFF_ID);
+        CulturalOffering cultOff = new CulturalOffering(SERVICE_NEW_CULTOFF_LOCATION, SERVICE_NEW_CULTOFF_NAME, SERVICE_UPDATE_CULTOFF_DESCRIPTION, SERVICE_NEW_CULTOFF_RATING);
+        CulturalOffering updated = cultOffService.update(cultOff, SERVICE_UPDATE_CULTOFF_ID);
 
-        assertEquals(DB_UPDATE_CULTOFF_DESCRIPTION, updated.getDescription());
+        assertEquals(SERVICE_UPDATE_CULTOFF_DESCRIPTION, updated.getDescription());
     }
 
     @Test
     public void testDeleteCultOff() throws Exception{
-        cultOffService.delete(DB_DEL_CULTOFF_ID);
-        assertEquals(DB_DELETE_CULTOFF_COUNT, cultOffService.findAll().size());
-        CulturalOffering savedCultOff = new CulturalOffering(DB_NEW_CULTOFF_LOCATION, DB_NEW_CULTOFF_NAME, DB_UPDATE_CULTOFF_DESCRIPTION, DB_NEW_CULTOFF_RATING);
-        savedCultOff.setId(DB_DEL_CULTOFF_ID);
+        cultOffService.delete(SERVICE_DEL_CULTOFF_ID);
+        assertEquals(SERVICE_COUNT_AFTER_DELETE, cultOffService.findAll().size());
+        CulturalOffering savedCultOff = new CulturalOffering(SERVICE_NEW_CULTOFF_LOCATION, SERVICE_NEW_CULTOFF_NAME, SERVICE_UPDATE_CULTOFF_DESCRIPTION, SERVICE_NEW_CULTOFF_RATING);
+        savedCultOff.setId(SERVICE_DEL_CULTOFF_ID);
         cultOffService.create(savedCultOff);
-
     }
-
 
 }
