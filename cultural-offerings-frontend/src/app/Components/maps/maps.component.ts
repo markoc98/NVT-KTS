@@ -38,12 +38,12 @@ export class MapsComponent implements OnInit {
     Mapboxgl.accessToken = environment.mapboxKey;
 
     this.map = new Mapboxgl.Map({
-      container: 'map-mapBox', 
+      container: 'map-mapBox',
       style: 'mapbox://styles/mapbox/streets-v11',
       center: [19.8463064,45.2443501], // starting position
       zoom: 15 // starting zoom
     });
-    
+
 
 
 

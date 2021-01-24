@@ -10,6 +10,9 @@ import {MatButtonModule} from "@angular/material/button";
 import { MapsComponent } from './Components/maps/maps.component';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+
+
+import { MapsComponent } from './Components/maps/maps.component';
 import { FilterCulturalOfferingsComponent } from './Components/filter-cultural-offerings/filter-cultural-offerings.component';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
@@ -17,12 +20,15 @@ import {UserProfileModule} from './Components/user-profile/user-profile.module';
 import { AdminHomepageComponent } from './Components/admin-homepage/admin-homepage.component';
 import { AdminHomepageModule } from './Components/admin-homepage/admin-homepage.module';
 
+import { RegisterComponent } from './Components/register/register.component';
+import {RegisterModule} from "./Components/register/register.module";
 
 @NgModule({
   declarations: [
     AppComponent,
     MapsComponent,
-    FilterCulturalOfferingsComponent
+    FilterCulturalOfferingsComponent,
+
   ],
   imports: [
     BrowserModule,
@@ -34,7 +40,8 @@ import { AdminHomepageModule } from './Components/admin-homepage/admin-homepage.
     HttpClientModule,
     FormsModule,
     NgbModule,
-    AdminHomepageModule
+    AdminHomepageModule,
+    RegisterModule
   ],
   exports: [AppComponent],
   providers: [HttpClient],

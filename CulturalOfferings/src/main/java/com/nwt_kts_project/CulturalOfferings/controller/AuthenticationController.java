@@ -69,7 +69,7 @@ public class AuthenticationController {
         String jwt = tokenUtils.generateToken(user.getUsername());
         int expiresIn = tokenUtils.getExpiredIn();
 
-        return ResponseEntity.ok(new UserTokenStateDTO(jwt, expiresIn));
+        return ResponseEntity.ok(new UserTokenStateDTO(jwt, expiresIn, user.getId()));
     }
 	
 	// endpoint koji se poziva da se token osvezi, u slucaju usteka vazenja JWT tokena
@@ -84,7 +84,7 @@ public class AuthenticationController {
             String refreshedToken = tokenUtils.refreshToken(token);
             int expiresIn = tokenUtils.getExpiredIn();
 
-            return ResponseEntity.ok(new UserTokenStateDTO(refreshedToken, expiresIn));
+            return ResponseEntity.ok(new UserTokenStateDTO(refreshedToken, expiresIn, user.getId()));
         } else {
             UserTokenStateDTO userTokenState = new UserTokenStateDTO();
             return ResponseEntity.badRequest().body(userTokenState);
@@ -118,7 +118,6 @@ public class AuthenticationController {
         	e.printStackTrace();
             return new ResponseEntity<>(e, HttpStatus.BAD_REQUEST);
         }
-        System.out.println(existUser.getPassword()+ "----------------------------");
         
         return new ResponseEntity<>(userMapper.toDto(existUser), HttpStatus.CREATED);
     }

@@ -4,6 +4,10 @@
     <button>REGISTER</button>
     <button [routerLink]="['user-profile']" >PROFILE</button>
     <button [routerLink]="['admin-homepage']" >ADMIN HOMEPAGE</button>
+    <button [routerLink]="['register']">REGISTER</button>
+    <button (click)="signOut()">SIGN OUT</button>
+    <p *ngIf="userID"> user id: {{userID}}</p>
+
   </div>
 </div>
 <router-outlet></router-outlet>
