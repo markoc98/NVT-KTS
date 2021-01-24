@@ -42,13 +42,11 @@ import { DialogWindowComponent } from './Components/dialog-window/dialog-window.
     HttpClientModule,
     FormsModule,
     NgbModule,
-<<<<<<< HEAD
     RegisterModule,
-    MatDialogModule
-=======
+    MatDialogModule,
     AdminHomepageModule,
     RegisterModule
->>>>>>> refs/heads/develop
+
   ],
   exports: [AppComponent],
   providers: [HttpClient,
