@@ -14,15 +14,15 @@ import { FilterCulturalOfferingsComponent } from './Components/filter-cultural-o
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import {UserProfileModule} from './Components/user-profile/user-profile.module';
-import { AdminHomepageComponent } from './admin-homepage/admin-homepage.component';
+import { AdminHomepageComponent } from './Components/admin-homepage/admin-homepage.component';
+import { AdminHomepageModule } from './Components/admin-homepage/admin-homepage.module';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     MapsComponent,
-    FilterCulturalOfferingsComponent,
-    AdminHomepageComponent
+    FilterCulturalOfferingsComponent
   ],
   imports: [
     BrowserModule,
@@ -33,7 +33,8 @@ import { AdminHomepageComponent } from './admin-homepage/admin-homepage.componen
     MatButtonModule,
     HttpClientModule,
     FormsModule,
-    NgbModule
+    NgbModule,
+    AdminHomepageModule
   ],
   exports: [AppComponent],
   providers: [HttpClient],
