@@ -14,6 +14,5 @@ public interface CulturalOfferingRepository extends JpaRepository<CulturalOfferi
 
     CulturalOffering findByName(String name);
     List<CulturalOffering> findByNameContainingIgnoreCase(String name);
-
 }
 

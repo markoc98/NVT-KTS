@@ -27,6 +27,7 @@ INSERT INTO category_type_table (name, category_id) VALUES ('Category type delet
 
 
 INSERT INTO cultural_offerings (location, name, description, rating) VALUES ('Beograd', 'Exit festival', 'Najbolji exit festival', -11.0);
+INSERT INTO cultural_offerings (location, name, description, rating) VALUES ('Novi Sad', 'Test festival', 'Neki festival', 5.0);
 
 insert into newsletter (title, content,date) values ('Test-Title1', 'Test-Title1', '2020-05-06');
 insert into reviews (comment,rating) values ('test123' , 5);
