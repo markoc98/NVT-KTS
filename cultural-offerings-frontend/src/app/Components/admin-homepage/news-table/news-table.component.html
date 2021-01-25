@@ -1,1 +1,24 @@
-<p>news-table works!</p>
+<html>
+    <body>
+            <div>
+                    <table border = "1" class="n-table" id="n-table">
+                        <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>Date</th>
+                            <th>Edit</th>
+                            <th>Delete</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let newsletter of newsletters">
+                                <td>{{newsletter.title}}</td>
+                                <td>{{newsletter.date}}</td>
+                                <td><button class="table-btn">Edit</button></td>
+                                <td><button class="table-btn">Delete</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+    </body>
+</html>

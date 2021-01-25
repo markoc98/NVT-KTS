@@ -28,14 +28,6 @@ export class CultoffTableComponent implements OnInit {
   }
 }
 
-class CulturalOffering{
-  name: string;
-  address: string;
-  category: string;
-  type: string;
-  rating: number;
-  description: string;
-}
 
 
 
