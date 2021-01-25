@@ -17,7 +17,9 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Email;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -38,7 +40,7 @@ public class UserController {
     }
 
     //GET ZAHTEV ZA DOBAVLJANJE JEDNOG USERA PO ID-u
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_USER')")
     @RequestMapping(value="/{id}", method= RequestMethod.GET)
     public ResponseEntity<UserDTO> getUser(@PathVariable Long id){
 
@@ -51,7 +53,45 @@ public class UserController {
 
         return new ResponseEntity<>(userMapper.toDto(user), HttpStatus.OK);
     }
+    //GET ZAHTEV ZA DOBIJANJE SVIH CO NA KOJE SMO SUBSCRIBOVANI ----nije testirano
+    @PreAuthorize("hasRole('ROLE_USER')")
+    @RequestMapping(value="/getsubs/{id}", method= RequestMethod.GET)
+    public ResponseEntity<Set<CulturalOffering>> getSubscribedTo(@PathVariable Long id){
 
+        User user = userService.findOne(id);
+
+        if(user == null){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        Set<CulturalOffering> subscribed = new HashSet<CulturalOffering>();
+        subscribed = user.getSubscribedTo();
+        return new ResponseEntity<Set<CulturalOffering>>(subscribed,HttpStatus.OK);
+    }
+
+    //GET ZAHTEV ZA UNSUBSCRIBOVANJE CO  ----nije testirano
+    @PreAuthorize("hasRole('ROLE_USER')")
+    @RequestMapping(value="/unsubscribe/{userId}/{culturalOfferingId}", method= RequestMethod.GET)
+    public ResponseEntity<Set<CulturalOffering>> unsubscribe(@PathVariable Long userId,@PathVariable Long culturalOfferingId) throws Exception {
+
+        User user = userService.findOne(userId);
+
+        if(user == null){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        Set<CulturalOffering> subscribed = new HashSet<>();
+
+        for(CulturalOffering co:user.getSubscribedTo()){
+
+            //ako nije taj koji treba da se brise dodaj ga u listu koju cemo upisivati u bazu
+            if(!co.getId().equals(culturalOfferingId)){
+                subscribed.add(co);
+            }
+        }
+        user.setSubscribedTo(subscribed);
+        User saved = userService.update(user, user.getId());
+
+        return new ResponseEntity<Set<CulturalOffering>>(subscribed,HttpStatus.OK);
+    }
     //GET ZAHTEV ZA DOBAVLJANJE SVIH USERA
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping(method = RequestMethod.GET)

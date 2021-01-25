@@ -12,6 +12,7 @@ import java.util.Set;
 public class CulturalOffering {
 
     @Id
+    @Column(name="cultural_offering_id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -37,8 +38,8 @@ public class CulturalOffering {
     @OneToMany(mappedBy = "culturalOffering",cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
     private Set<Picture> pictures = new HashSet<>();
 
-    @ManyToMany(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
-    private Set<User> subscribedUsers = new HashSet<>();
+    @ManyToMany(mappedBy = "subscribedTo")
+    private transient  Set<User> subscribedUsers ;
 
     @OneToMany(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
     private Set<Review>reviews = new HashSet<>();
