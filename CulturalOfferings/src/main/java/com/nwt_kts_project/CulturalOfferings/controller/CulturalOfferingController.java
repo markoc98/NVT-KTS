@@ -44,7 +44,7 @@ public class CulturalOfferingController {
         return new ResponseEntity<>(cultOffMapper.toDto(cultOff), HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('ROLE_USER')")
+    @PreAuthorize("hasRole('ROLE_ADMIN')" + "|| hasRole('ROLE_USER')")
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<List<CulturalOfferingDTO>> getAllCulturalOfferings() {
         List<CulturalOffering> cultOffs = cultOffService.findAll();

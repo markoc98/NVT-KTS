@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { CategoryService } from 'src/app/Services/category.service';
+
 
 @Component({
   selector: 'app-cat-table',
@@ -7,9 +9,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CatTableComponent implements OnInit {
 
-  constructor() { }
+  public cats;
+
+  constructor(private categoryService: CategoryService) {
+    this.cats = [];
+   }
 
   ngOnInit(): void {
+    this.getCats();
+  }
+
+  public async getCats(){
+    this.cats = await this.categoryService.getCategories();
+    console.log(this.cats);
   }
 
 }
