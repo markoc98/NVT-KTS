@@ -23,6 +23,7 @@ import {RegisterModule} from "./Components/register/register.module";
 import { EventEmitterService } from './event-emitter.service';
 import { MatDialogModule } from '@angular/material/dialog';
 import { DialogWindowComponent } from './Components/dialog-window/dialog-window.component';
+import { MatTableModule } from '@angular/material/table';
 
 @NgModule({
   declarations: [
@@ -45,10 +46,11 @@ import { DialogWindowComponent } from './Components/dialog-window/dialog-window.
     RegisterModule,
     MatDialogModule,
     AdminHomepageModule,
-    RegisterModule
+    RegisterModule,
+    MatTableModule
 
   ],
-  exports: [AppComponent],
+  exports: [AppComponent, MatTableModule],
   providers: [HttpClient,
               EventEmitterService],
   bootstrap: [AppComponent]
