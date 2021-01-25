@@ -1,8 +1,52 @@
-<h1>
+
+<div class="info-and-review">
     <div>
-        {{name}}
-        {{location}}
-        {{rating}}
-        {{description}}
+        <h1>{{name}}</h1>
+        <h2>{{location}}</h2>
+        <h3>Rating: {{rating}}</h3>
+        <h4>{{description}}</h4>   
     </div>
-</h1>
+    <div>
+        <button id="subscribeButton">Subscribe</button> 
+    </div>
+    <br>
+    <div id="rating"class="rate">
+        <input type="radio" id="star5" name="rate" value="5" />
+        <label for="star5" title="text">5 stars</label>
+        <input type="radio" id="star4" name="rate" value="4" />
+        <label for="star4" title="text">4 stars</label>
+        <input type="radio" id="star3" name="rate" value="3" />
+        <label for="star3" title="text">3 stars</label>
+        <input type="radio" id="star2" name="rate" value="2" />
+        <label for="star2" title="text">2 stars</label>
+        <input type="radio" id="star1" name="rate" value="1" />
+        <label for="star1" title="text">1 star</label>
+    </div>
+    <br>
+    <label>Leave a rating</label>
+    <br>
+    
+    <div>
+        <br>
+        <textarea rows="4" cols="50" name="comment" form="usrform" style="margin-right: 0px;">
+        Leave a comment here...
+        </textarea>
+        <p>
+            <button id="leaveComment"type="button">Leave a comment</button> 
+        </p>
+    </div>
+
+    <div class= "previous-reviews"> 
+        <textarea rows="4" cols="50" name="comment" form="usrform" style="margin-right: 0px;">
+            
+        </textarea>
+    </div>
+
+    <div class="news">
+        <textarea rows="4" cols="50" name="comment" form="usrform" style="margin-right: 0px;">
+            
+        </textarea>
+    </div>
+</div>
+
+

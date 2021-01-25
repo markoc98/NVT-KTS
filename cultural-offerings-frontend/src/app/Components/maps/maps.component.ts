@@ -69,7 +69,10 @@ export class MapsComponent implements OnInit {
         this.longitude = temp.longitude;
         console.log(this.latitude + ',' + this.longitude)
         
-        let marker = new Mapboxgl.Marker().setLngLat([this.latitude,this.longitude]).addTo(this.map);
+        let marker = new Mapboxgl.Marker().setLngLat([this.latitude,this.longitude])
+                      .setPopup(new Mapboxgl.Popup().setHTML("<h1>"+temp.name+"</h1>"))
+                      .addTo(this.map);
+        
         this.currMarker.push(marker);
         
       }
