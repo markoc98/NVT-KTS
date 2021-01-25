@@ -5,6 +5,9 @@ import com.nwt_kts_project.CulturalOfferings.model.CategoryType;
 import com.nwt_kts_project.CulturalOfferings.service.CategoryTypeService;
 import com.nwt_kts_project.CulturalOfferings.utility.CategoryTypeMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -44,10 +47,15 @@ public class CategoryTypeController {
     //GET ZAHTEV ZA DOBAVLJANJE SVIH TIPOVA KATEGORIJA
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<List<CategoryTypeDTO>> getAllCategoryTypes() {
-        List<CategoryType> categoryTypes = categoryTypeService.findAll();
+    public ResponseEntity<Page<CategoryTypeDTO>> getAllCategoryTypes(Pageable pageable) {
+    	
+    	Page<CategoryType> page = categoryTypeService.findAll(pageable);
+        //List<CategoryType> categoryTypes = categoryTypeService.findAll();
+    	List<CategoryTypeDTO> categoryTypeDTOS = toCategoryTypeDTOList(page.toList());
+        Page<CategoryTypeDTO> pageCategoryTypeDTOS = new PageImpl<>(categoryTypeDTOS,page.getPageable(),page.getTotalElements());
 
-        return new ResponseEntity<>(toCategoryTypeDTOList(categoryTypes), HttpStatus.OK);
+
+        return new ResponseEntity<>(pageCategoryTypeDTOS, HttpStatus.OK);
     }
     
     private List<CategoryTypeDTO> toCategoryTypeDTOList(List<CategoryType> categoryTypes){
