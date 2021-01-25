@@ -28,6 +28,11 @@ public class CulturalOffering {
     @Max(value = 5, message = "Rating cannot be more than 5")
     @Column(nullable = false)
     private double rating;
+    
+    @Column(nullable = false)
+    private double latitude;
+    @Column(nullable = false)
+    private double longitude;
 
     @OneToMany(mappedBy = "culturalOffering",cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
     private Set<Picture> pictures = new HashSet<>();
@@ -63,8 +68,9 @@ public class CulturalOffering {
         this.description = description;
         this.rating = rating;
     }
-
-    public CulturalOffering(Long id, String location, String name, String description, double rating,
+    
+ 
+	public CulturalOffering(Long id, String location, String name, String description, double rating,
                             Set<Picture> pictures, Set<User> subscribedUsers, Set<Review> reviews, Set<Newsletter> newsletter,
                             Category category, CategoryType categoryType) {
         this.id = id;
@@ -104,6 +110,23 @@ public class CulturalOffering {
 		this.description = description;
 		this.rating = rating;
 		this.categoryType = categoryType;
+	}
+	
+
+	public double getLatitude() {
+		return latitude;
+	}
+
+	public void setLatitude(double latitude) {
+		this.latitude = latitude;
+	}
+
+	public double getLongitude() {
+		return longitude;
+	}
+
+	public void setLongitude(double longitude) {
+		this.longitude = longitude;
 	}
 
 	public Set<User> getSubscribedUsers() {

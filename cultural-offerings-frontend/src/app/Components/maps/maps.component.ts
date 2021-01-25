@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild, ElementRef, OnChanges } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import * as Mapboxgl from 'mapbox-gl';
 import { MapService } from 'src/app/Services/map-service.service';
@@ -21,6 +21,9 @@ export class MapsComponent implements OnInit {
   public searchLocation;
   public entities;
   public categoryName; 
+  public latitude;
+  public longitude;
+  public currMarker;
 
   items: any[] = [
     { id: 1, name: 'Events' },
@@ -39,12 +42,11 @@ export class MapsComponent implements OnInit {
     this.searchLocation = '';
     this.entities = [];
     this.categoryName = this.selected;
+    this.currMarker = [];
   }
 
   selectOption(id: number){
-    console.log(this.selected)
     this.categoryName = id;
-    console.log(this.categoryName)
     if(this.searchLocation !== ''){
       this.searchCulturalOfferings();
     }
@@ -55,6 +57,24 @@ export class MapsComponent implements OnInit {
     this.mapService.getCulturalOfferingForMap(this.searchLocation).subscribe((cultOffering) => {
       const tempEntities = Object.values(cultOffering).filter((item) => item.categoryType.name == this.categoryName)
       this.entities = tempEntities;
+
+      if(this.currMarker !== null){
+        for(let i=0; i < this.currMarker.length ; i++) {
+          this.currMarker[i].remove();
+        }
+      }
+
+      for(var temp of tempEntities) {
+        this.latitude = temp.latitude;
+        this.longitude = temp.longitude;
+        console.log(this.latitude + ',' + this.longitude)
+        
+        let marker = new Mapboxgl.Marker().setLngLat([this.latitude,this.longitude]).addTo(this.map);
+        this.currMarker.push(marker);
+        
+      }
+      
+
       console.log(tempEntities);
     },(error : HttpErrorResponse) => {
       alert("Culutral Offering with given location does not exist.")
@@ -70,6 +90,9 @@ export class MapsComponent implements OnInit {
       center: [19.8463064,45.2443501], // starting position
       zoom: 15 // starting zoom
     });
+    // const marker = new Mapboxgl.Marker() // initialize a new marker
+    //   .setLngLat([19.8495081,45.246105]) // Marker [lng, lat] coordinates
+    //   .addTo(this.map); // Add the marker to the map
   }
 
   onClickTable(entity){
@@ -83,6 +106,8 @@ export class MapsComponent implements OnInit {
 
 
   }
+
+
 
 }
      
