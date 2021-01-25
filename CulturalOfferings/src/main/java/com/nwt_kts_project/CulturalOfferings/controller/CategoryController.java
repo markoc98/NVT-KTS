@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -49,10 +52,15 @@ public class CategoryController {
     //GET ZAHTEV ZA DOBAVLJANJE SVIH KATEGORIJA
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<List<CategoryDTO>> getAllCategories() {
-        List<Category> categories = catService.findAll();
+    public ResponseEntity<Page<CategoryDTO>> getAllCategories(Pageable pageable) {
+    	
+    	Page<Category> page = catService.findAll(pageable);
+        //List<Category> categories = catService.findAll();
+    	List<CategoryDTO> categoryDTOS = toCategoryDTOList(page.toList());
+        Page<CategoryDTO> pageCategoryDTOS = new PageImpl<>(categoryDTOS,page.getPageable(),page.getTotalElements());
 
-        return new ResponseEntity<>(toCategoryDTOList(categories), HttpStatus.OK);
+
+        return new ResponseEntity<>(pageCategoryDTOS, HttpStatus.OK);
     }
 
     private List<CategoryDTO> toCategoryDTOList(List<Category> categories){

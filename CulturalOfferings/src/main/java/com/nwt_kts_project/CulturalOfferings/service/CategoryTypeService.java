@@ -7,6 +7,8 @@ import com.nwt_kts_project.CulturalOfferings.model.CategoryType;
 import com.nwt_kts_project.CulturalOfferings.repository.CategoryTypeRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -20,6 +22,10 @@ public class CategoryTypeService{
 
 	public List<CategoryType> findAll() {
 		return categoryTypeRepository.findAll();
+	}
+	
+	public Page<CategoryType> findAll(Pageable pageable) {
+		return categoryTypeRepository.findAll(pageable);
 	}
 
 	public CategoryType findOne(Long id) {
