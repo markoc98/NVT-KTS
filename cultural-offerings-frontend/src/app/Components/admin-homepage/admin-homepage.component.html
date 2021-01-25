@@ -8,6 +8,7 @@
             <label for="cgs"> Cultural goods</label>
             <input type="checkbox" id="insts" value="insts">
             <label for="insts"> Institutions</label>
+            <p>treba da dodas sve filtere</p>
         </div>
 
         <div class = "add-btns1">
@@ -18,86 +19,18 @@
         <div class = "add-btns2">
             <button class = "btn3">Add a category</button>
             <button class = "btn4">Add a category type</button>
+            <p>treba da namestis da rade dugmici tj da odradis te funkcije i dodas dijaloge</p>
+
         </div>
 
         <div class="search">
             <input class="search-bar" type="text" placeholder="Search">
             <button class="search-btn" type="submit" onclick=pretrazi()>Go</button>
+            <p>namesti da rade filteri i search za tabelu</p>
         </div>
 
-        <div class="t-btns">
-            <button class = "btns" onclick="showCO();">Cultural Offerings</button>
-            <button class = "btns" onclick="showN();">Newsletters</button>
-            <button class = "btns" onclick="showCT();">Categories & Category Types</button>
-        </div>
-
-        <div>
-            <table border = "1" class="co-table" id="co-table">
-                <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Address</th>
-                    <th>Category</th>
-                    <th>Category type</th>
-                    <th>Rating</th>
-                    <th>Description</th>
-                    <th>Edit</th>
-                    <th>Delete</th>
-                </tr>
-                </thead>
-                <tbody>
-                    <tr *ngFor="let co of cos">
-                        <td>{{co.name}}</td>
-                        <td>{{co.address}}</td>
-                        <td>{{co.category}}</td>
-                        <td>{{co.type}}</td>
-                        <td>{{co.rating}}</td>
-                        <td>{{co.description}}</td>
-                        <td><button class="table-btn">Edit</button></td>
-                        <td><button class="table-btn">Delete</button></td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        <div>
-            <table border = "1" class="n-table" id="n-table">
-                <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Address</th>
-                    <th>Edit</th>
-                    <th>Delete</th>
-                </tr>
-                </thead>
-                <tbody>
-                    <tr *ngFor="let newsletter of newsletters">
-                        <td>{{newsletter.name}}</td>
-                        <td>{{newsletter.address}}</td>
-                        <td><button class="table-btn">Edit</button></td>
-                        <td><button class="table-btn">Delete</button></td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        <div>
-            <table border = "1" class="ct-table" id="ct-table">
-                <thead>
-                <tr>
-                    <th>Category</th>
-                    <th>Edit</th>
-                    <th>Delete</th>
-                    <th>Category Types</th>
-                </tr>
-                </thead>
-                <tbody>
-                    <tr *ngFor="let cat of cats">
-                        <td>{{cat.name}}</td>
-                        <td><button class="table-btn">Edit</button></td>
-                        <td><button class="table-btn">Delete</button></td>
-                        <td><button class="table-btn">View Category Types</button></td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+        <p>
+            ovde dodaj tabove za tabele, samo na sredinu stranice, i u tabelama namesti dugmice za edit i delete da rade, i u tabeli za kategorije treba da se doda da radi ono za view types
+        </p>
     </body>
 </html>
