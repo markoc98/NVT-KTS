@@ -1,10 +1,11 @@
 
+
 INSERT INTO authority (name) VALUES ('ROLE_ADMIN');
 INSERT INTO authority (name) VALUES ('ROLE_USER');
 --password admin
 INSERT INTO user_table (email, username, password, is_enabled) VALUES ('adminadminovic@gmail.com', 'admin' ,'$2a$04$SwzgBrIJZhfnzOw7KFcdzOTiY6EFVwIpG7fkF/D1w26G1.fWsi.aK', true);
-INSERT INTO user_table (email, username, password, is_enabled) VALUES ('userrrrrrr@gmail.com', 'user', '$2a$04$Amda.Gm4Q.ZbXz9wcohDHOhOBaNQAkSS1QO26Eh8Hovu3uzEpQvcq', true);
-
+--INSERT INTO user_table (email, username, password, is_enabled) VALUES ('userrrrrrr@gmail.com', 'user', '$2a$04$Amda.Gm4Q.ZbXz9wcohDHOhOBaNQAkSS1QO26Eh8Hovu3uzEpQvcq', true);
+INSERT INTO user_table (email, username, password, is_enabled) VALUES ('userrrrrrr@gmail.com', 'user', '$2a$04$Amda.Gm4Q.ZbXz9wcohDHOhOBaNQAkSS1QO26Eh8Hovu3uzEpQvcq', true );
 
 insert into user_authority (user_id, authority_id) values (1, 1); -- admin has ROLE_ADMIN
 insert into user_authority (user_id, authority_id) values (2, 2); -- user has ROLE_USER
@@ -58,9 +59,15 @@ INSERT INTO cultural_offerings (location, name, description, rating,category_id,
 INSERT INTO cultural_offerings (location, name, description, rating,category_id,latitude,longitude) VALUES ('Subotica', 'Градски музеј', 'Muzej', 3.5,'3',19.6610076,46.0998525);
 
 
-
-
-
-
+--INSERT INTO user_cultural_offering (user_id, cultural_offering_id) VALUES (1,1);
+INSERT INTO user_cultural_offering (user_id, cultural_offering_id) VALUES (2,1);
+INSERT INTO user_cultural_offering (user_id, cultural_offering_id) VALUES (2,2);
+INSERT INTO user_cultural_offering (user_id, cultural_offering_id) VALUES (2,3);
+INSERT INTO user_cultural_offering (user_id, cultural_offering_id) VALUES (2,4);
+INSERT INTO user_cultural_offering (user_id, cultural_offering_id) VALUES (2,5);
+INSERT INTO user_cultural_offering (user_id, cultural_offering_id) VALUES (2,6);
+INSERT INTO user_cultural_offering (user_id, cultural_offering_id) VALUES (2,7);
+INSERT INTO user_cultural_offering (user_id, cultural_offering_id) VALUES (2,8);
+INSERT INTO user_cultural_offering (user_id, cultural_offering_id) VALUES (2,9);
 
 insert into newsletter (title, content,date) values ('Test-Title1', 'Test-Title1', '2020-05-06');
