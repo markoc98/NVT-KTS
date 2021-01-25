@@ -1,10 +1,14 @@
 package com.nwt_kts_project.CulturalOfferings.controller;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.Valid;
 
+import com.nwt_kts_project.CulturalOfferings.model.Picture;
+import com.nwt_kts_project.CulturalOfferings.service.PictureService;
+import com.nwt_kts_project.CulturalOfferings.utility.PictureCompression;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -23,6 +27,7 @@ import com.nwt_kts_project.CulturalOfferings.model.User;
 import com.nwt_kts_project.CulturalOfferings.repository.NewsletterRepository;
 import com.nwt_kts_project.CulturalOfferings.service.NewsletterService;
 import com.nwt_kts_project.CulturalOfferings.utility.NewsletterMapper;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping(value = "/api/newsletters", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -30,6 +35,9 @@ public class NewsletterController {
 
     @Autowired
     NewsletterRepository newsletterRepo;
+
+    @Autowired
+	private PictureService pictureService;
 
     @Autowired
     private NewsletterService newsletterService;
@@ -41,8 +49,14 @@ public class NewsletterController {
     }
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<NewsletterDTO> createNewsletter(@RequestBody @Valid NewsletterDTO newsletterDTO){
+    public ResponseEntity<NewsletterDTO> createNewsletter(@RequestBody @Valid NewsletterDTO newsletterDTO, @RequestBody MultipartFile file) throws Exception {
 
+		if(file != null)
+		{
+			Picture img = new Picture(file.getOriginalFilename(), file.getContentType(),
+					PictureCompression.compressBytes(file.getBytes()), newsletterMapper.toEntity(newsletterDTO));
+			pictureService.create(img);
+		}
     	Newsletter newsL;
     	try {
     		newsL = newsletterService.create(newsletterMapper.toEntity(newsletterDTO));

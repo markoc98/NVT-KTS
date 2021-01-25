@@ -1,10 +1,14 @@
 package com.nwt_kts_project.CulturalOfferings.controller;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.Valid;
 
+import com.nwt_kts_project.CulturalOfferings.model.Picture;
+import com.nwt_kts_project.CulturalOfferings.service.PictureService;
+import com.nwt_kts_project.CulturalOfferings.utility.PictureCompression;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -21,13 +25,17 @@ import com.nwt_kts_project.CulturalOfferings.model.User;
 import com.nwt_kts_project.CulturalOfferings.repository.ReviewRepository;
 import com.nwt_kts_project.CulturalOfferings.service.ReviewService;
 import com.nwt_kts_project.CulturalOfferings.utility.ReviewMapper;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping(value = "/api/reviews", produces = MediaType.APPLICATION_JSON_VALUE)
 public class ReviewController {
 
     @Autowired
-    ReviewRepository reviewRepo;
+    private ReviewRepository reviewRepo;
+
+    @Autowired
+	private PictureService pictureService;
 
     @Autowired
     private ReviewService reviewService;
@@ -49,9 +57,19 @@ public class ReviewController {
 		}
     	return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    // OVDE JE DODATO UBACIVANJE SLIKE
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ReviewDTO> createReview(@RequestBody @Valid ReviewDTO reviewDTO){
+    public ResponseEntity<ReviewDTO> createReview(@RequestBody @Valid ReviewDTO reviewDTO, @RequestBody MultipartFile file) throws Exception {
+
+    	if(file != null)
+		{
+			Picture img = new Picture(file.getOriginalFilename(), file.getContentType(),
+					PictureCompression.compressBytes(file.getBytes()), reviewMapper.toEntity(reviewDTO));
+			pictureService.create(img);
+		}
+
     	Review r;
     	try {	
     		r = reviewService.create(reviewMapper.toEntity(reviewDTO));
