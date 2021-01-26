@@ -106,7 +106,27 @@ public class NewsletterController {
 
     	return new ResponseEntity<>(pageNewsletterDTOS,HttpStatus.OK);
     }
-	
+
+	@PreAuthorize("hasRole('ROLE_USER')")
+	@RequestMapping(value="/culturalOffer/{culturalOfferId}",method = RequestMethod.GET)
+	public ResponseEntity<Page<NewsletterDTO>> getAllNewslettersByCulturalOfferId(@PathVariable Long culturalOfferId, Pageable pageable){
+		//List<Newsletter> newsletters = newsletterService.findAll();
+
+		Page<Newsletter> page = newsletterService.findAll(pageable);
+		ArrayList<Newsletter> newsForCo = new ArrayList<>();
+		for(Newsletter news: page)
+		{
+			if(news.getCulturalOffering().getId().equals(culturalOfferId)){
+				newsForCo.add(news);
+			}
+		}
+
+		List<NewsletterDTO> newsletterDTOS = toNewsletterDTOList(newsForCo);
+		Page<NewsletterDTO> pageNewsletterDTOS = new PageImpl<>(newsletterDTOS,page.getPageable(),page.getTotalElements());
+
+		return new ResponseEntity<>(pageNewsletterDTOS,HttpStatus.OK);
+	}
+
 	private List<NewsletterDTO> toNewsletterDTOList(List<Newsletter> newsList){
 		List<NewsletterDTO> newsDTO = new ArrayList<>(); 
 		for(Newsletter n : newsList)

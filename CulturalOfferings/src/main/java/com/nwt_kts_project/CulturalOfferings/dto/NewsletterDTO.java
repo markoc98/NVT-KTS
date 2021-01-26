@@ -20,8 +20,9 @@ public class NewsletterDTO {
 	private Date date;
 	private Set<Picture> pictures = new HashSet<>();
 	private CulturalOffering culturalOffering;
-	
-	private Long cultOffid = this.culturalOffering.getId();
+
+	private String dateString;
+	//private Long cultOffid = this.culturalOffering.getId();
 	
 	public NewsletterDTO() {}
 
@@ -43,6 +44,7 @@ public class NewsletterDTO {
 		this.date = date2;
 	}
 
+
 	public NewsletterDTO(@NotBlank(message = "Title cannot be empty.")String title,@NotBlank(message = "Content cannot be empty.") String content, @NotBlank(message = "Date cannot be empty.")Date date) {
 		this.title = title;
 		this.content = content;
@@ -58,12 +60,21 @@ public class NewsletterDTO {
 		this.culturalOffering = culturalOffering2;
 	}
 
-	public NewsletterDTO(Long id2, String title2, String content2, Date date2, Long id3) {
+
+	public NewsletterDTO(Long id2, @NotBlank(message = "Title cannot be empty.") String title, @NotBlank(message = "Content cannot be empty.") String content, String dateString, CulturalOffering culturalOffering) {
 		this.id = id2;
-		this.title = title2;
-		this.content = content2;
-		this.date = date2;
-		this.cultOffid = id3;
+		this.title = title;
+		this.content = content;
+		this.culturalOffering = culturalOffering;
+		this.dateString = dateString;
+	}
+
+	public String getDateString() {
+		return dateString;
+	}
+
+	public void setDateString(String dateString) {
+		this.dateString = dateString;
 	}
 
 	public Long getId() {
