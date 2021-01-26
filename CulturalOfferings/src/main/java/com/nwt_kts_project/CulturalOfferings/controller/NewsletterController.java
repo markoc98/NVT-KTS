@@ -129,5 +129,24 @@ public class NewsletterController {
 
         return new ResponseEntity<>(newsletterMapper.toDto(nl), HttpStatus.OK);
     }
+	
+	@PreAuthorize("haseRole('ROLE_USER')")
+	@RequestMapping(value="/getbycultoff/{cultOfferingId}",method = RequestMethod.GET)
+	public ResponseEntity<List<NewsletterDTO>> getReviewByCultOffID(@PathVariable Long cultOfferingId) {
+		
+		List<Newsletter> reviewList = newsletterRepo.findAll();
+		List<Newsletter> found = new ArrayList<Newsletter>();
+		
+		for(Newsletter news : reviewList) {
+			if(news.getCulturalOffering().getId() == cultOfferingId) {
+				found.add(news);
+			}
+		}
+		
+		List<NewsletterDTO> dtoList = toNewsletterDTOList(found);
+		
+		return new ResponseEntity<>(dtoList,HttpStatus.FOUND);		
+		
+	}
 	    
 }

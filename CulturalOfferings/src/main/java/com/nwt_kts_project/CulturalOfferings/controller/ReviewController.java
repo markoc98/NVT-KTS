@@ -141,7 +141,7 @@ public class ReviewController {
 		List<Review> found = new ArrayList<Review>();
 		
 		for(Review r : reviewList) {
-			if(r.getCulutralOffering().getId() == cultOfferingId) {
+			if(r.getCulturalOffering().getId() == cultOfferingId) {
 				found.add(r);
 			}
 		}
@@ -151,17 +151,9 @@ public class ReviewController {
 		return new ResponseEntity<>(dtoList,HttpStatus.FOUND);		
 		
 	}
+	
+	
+	
     
-//    @RequestMapping(value="/overall-rating", method=RequestMethod.GET, consumes = MediaType.APPLICATION_JSON_VALUE)
-//    public ResponseEntity<Double> updateReview(){
-//        Review review;
-//        try {
-//        	double a = 4.4;
-//        	return new ResponseEntity<Double>(a, HttpStatus.BAD_REQUEST);
-//        } catch (Exception e) {
-//        	System.out.println(e.getMessage());
-//            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-//        }
-//    }
 
 }

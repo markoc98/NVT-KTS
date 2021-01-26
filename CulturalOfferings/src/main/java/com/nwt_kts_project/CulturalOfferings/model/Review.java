@@ -89,10 +89,13 @@ public class Review {
 	public void setUser(User user) {
 		this.user = user;
 	}
-
-	public CulturalOffering getCulutralOffering() {
-		// TODO Auto-generated method stub
+	
+	public CulturalOffering getCulturalOffering() {
 		return CulturalOffering;
+	}
+
+	public void setCulturalOffering(CulturalOffering culturalOffering) {
+		CulturalOffering = culturalOffering;
 	}
 
 	@Override
