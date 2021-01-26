@@ -19,6 +19,10 @@ public class CulturalOfferingService implements ServiceInterface<CulturalOfferin
     public List<CulturalOffering> findAll() {
         return culturalOfferingRepository.findAll();
     }
+    
+    public Page<CulturalOffering> findAll(Pageable pageable) {
+        return culturalOfferingRepository.findAll(pageable);
+    }
 
     @Override
     public CulturalOffering findOne(Long id) {

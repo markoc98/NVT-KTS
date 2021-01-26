@@ -1,0 +1,24 @@
+<html>
+    <body>
+            <div>
+                    <table border = "1" class="ct-table" id="ct-table">
+                        <thead>
+                        <tr>
+                            <th>Category</th>
+                            <th>Edit</th>
+                            <th>Delete</th>
+                            <th>Category Types</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let cat of cats">
+                                <td>{{cat.name}}</td>
+                                <td><button class="table-btn">Edit</button></td>
+                                <td><button class="table-btn">Delete</button></td>
+                                <td><button class="table-btn">View Category Types</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+    </body>
+</html>

@@ -10,6 +10,9 @@ import com.nwt_kts_project.CulturalOfferings.model.Picture;
 import com.nwt_kts_project.CulturalOfferings.service.PictureService;
 import com.nwt_kts_project.CulturalOfferings.utility.PictureCompression;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -83,10 +86,15 @@ public class ReviewController {
 
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<List<ReviewDTO>> getAllReviews(){
-		List<Review> reviews = reviewService.findAll();
+    public ResponseEntity<Page<ReviewDTO>> getAllReviews(Pageable pageable){
+		//List<Review> reviews = reviewService.findAll();
+		
+		Page<Review> page = reviewService.findAll(pageable);
+    	List<ReviewDTO> reviewDTOS = toReviewDTOList(page.toList());
+        Page<ReviewDTO> pageReviewDTOS = new PageImpl<>(reviewDTOS,page.getPageable(),page.getTotalElements());
 
-		return new ResponseEntity<>(toReviewDTOList(reviews), HttpStatus.OK);
+
+		return new ResponseEntity<>(pageReviewDTOS, HttpStatus.OK);
     }
 	
 	private List<ReviewDTO> toReviewDTOList(List<Review> reviewList){
