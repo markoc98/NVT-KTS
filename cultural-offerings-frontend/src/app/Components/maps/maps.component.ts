@@ -104,7 +104,8 @@ export class MapsComponent implements OnInit {
       name: entity.name,
       location : entity.location,
       rating: entity.rating,
-      description: entity.description
+      description: entity.description,
+      id: entity.id
     }});
 
 
