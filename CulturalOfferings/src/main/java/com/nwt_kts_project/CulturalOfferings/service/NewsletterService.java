@@ -9,6 +9,8 @@ import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Service;
 
@@ -28,6 +30,11 @@ public class NewsletterService implements ServiceInterface<Newsletter> {
     public List<Newsletter> findAll() {
         return newsRepo.findAll();
     }
+    
+    public Page<Newsletter> findAll(Pageable pageable) {
+        return newsRepo.findAll(pageable);
+    }
+    
     @Override
     public Newsletter findOne(Long id) {
     	 return newsRepo.findById(id).orElse(null);
