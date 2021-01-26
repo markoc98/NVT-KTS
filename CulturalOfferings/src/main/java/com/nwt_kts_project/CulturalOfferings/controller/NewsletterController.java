@@ -104,5 +104,5 @@ public class NewsletterController {
 
         return new ResponseEntity<>(newsletterMapper.toDto(nl), HttpStatus.OK);
     }
-    
+	    
 }

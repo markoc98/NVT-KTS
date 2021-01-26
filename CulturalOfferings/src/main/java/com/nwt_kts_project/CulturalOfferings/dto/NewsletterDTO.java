@@ -19,7 +19,9 @@ public class NewsletterDTO {
 	@NotBlank(message = "Date cannot be empty.")
 	private Date date;
 	private Set<Picture> pictures = new HashSet<>();
-	private CulturalOffering culturalOffering;//treba validacija
+	private CulturalOffering culturalOffering;
+	
+	private Long cultOffid = this.culturalOffering.getId();
 	
 	public NewsletterDTO() {}
 
@@ -45,6 +47,23 @@ public class NewsletterDTO {
 		this.title = title;
 		this.content = content;
 		this.date = date;
+	}
+
+	public NewsletterDTO(Long id2, String title2, String content2, Date date2, CulturalOffering culturalOffering2) {
+		// TODO Auto-generated constructor stub
+		this.id = id2;
+		this.title = title2;
+		this.content = content2;
+		this.date = date2;
+		this.culturalOffering = culturalOffering2;
+	}
+
+	public NewsletterDTO(Long id2, String title2, String content2, Date date2, Long id3) {
+		this.id = id2;
+		this.title = title2;
+		this.content = content2;
+		this.date = date2;
+		this.cultOffid = id3;
 	}
 
 	public Long getId() {

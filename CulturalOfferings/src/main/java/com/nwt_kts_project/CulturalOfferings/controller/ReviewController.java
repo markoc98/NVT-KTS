@@ -107,17 +107,35 @@ public class ReviewController {
         return new ResponseEntity<>(reviewMapper.toDto(review), HttpStatus.OK);
     }
     
+	@PreAuthorize("haseRole('ROLE_USER')")
+	@RequestMapping(value="/getbycultoff/{cultOfferingId}",method = RequestMethod.GET)
+	public ResponseEntity<List<ReviewDTO>> getReviewByCultOffID(@PathVariable Long cultOfferingId) {
+		
+		List<Review> reviewList = reviewRepo.findAll();
+		List<Review> found = new ArrayList<Review>();
+		
+		for(Review r : reviewList) {
+			if(r.getCulutralOffering().getId() == cultOfferingId) {
+				found.add(r);
+			}
+		}
+		
+		List<ReviewDTO> dtoList = toReviewDTOList(found);
+		
+		return new ResponseEntity<>(dtoList,HttpStatus.FOUND);		
+		
+	}
     
-    @RequestMapping(value="/overall-rating", method=RequestMethod.GET, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Double> updateReview(){
-        Review review;
-        try {
-        	double a = 4.4;
-        	return new ResponseEntity<Double>(a, HttpStatus.BAD_REQUEST);
-        } catch (Exception e) {
-        	System.out.println(e.getMessage());
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-    }
+//    @RequestMapping(value="/overall-rating", method=RequestMethod.GET, consumes = MediaType.APPLICATION_JSON_VALUE)
+//    public ResponseEntity<Double> updateReview(){
+//        Review review;
+//        try {
+//        	double a = 4.4;
+//        	return new ResponseEntity<Double>(a, HttpStatus.BAD_REQUEST);
+//        } catch (Exception e) {
+//        	System.out.println(e.getMessage());
+//            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+//        }
+//    }
 
 }
