@@ -14,6 +14,7 @@ public class User implements UserDetails {
 
 
     @Id
+    @Column(name = "user_id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -34,15 +35,18 @@ public class User implements UserDetails {
     @OneToMany(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
     private Set<Review> reviews = new HashSet<>();
 
-    @ManyToMany(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
-    private Set<CulturalOffering> subscribedTo = new HashSet<>();
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "user_cultural_offering",
+            joinColumns = @JoinColumn(name = "user_id"  , referencedColumnName = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "cultural_offering_id" , referencedColumnName = "cultural_offering_id"))
+    private Set<CulturalOffering> subscribedTo;
 
     @Column(name = "last_password_reset_date")
     private Timestamp lastPasswordResetDate;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_authority",
-            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
+            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "authority_id", referencedColumnName = "id"))
     private List<Authority> authorities;
 
@@ -70,6 +74,13 @@ public class User implements UserDetails {
         this.password = password;
         this.isEnabled = isEnabled;
     }
+    public User(String email, String username, String password, boolean isEnabled,Set<CulturalOffering> subscribedTo) {
+        this.email = email;
+        this.username = username;
+        this.password = password;
+        this.isEnabled = isEnabled;
+        this.subscribedTo = subscribedTo;
+    }
     public User(String email,String username) {
     	this.email = email;
     	this.username = username;
@@ -77,14 +88,11 @@ public class User implements UserDetails {
 
     public User(boolean isEnabled, Long id, String email, String password, String username, Set<Review> reviews, Set<CulturalOffering> subscribedTo, Timestamp lastPasswordResetDate, List<Authority> authorities) {
         this.isEnabled = isEnabled;
-        this.id = id;
         this.email = email;
         this.password = password;
         this.username = username;
         this.reviews = reviews;
         this.subscribedTo = subscribedTo;
-        this.lastPasswordResetDate = lastPasswordResetDate;
-        this.authorities = authorities;
     }
 
     public User(Long userId) {

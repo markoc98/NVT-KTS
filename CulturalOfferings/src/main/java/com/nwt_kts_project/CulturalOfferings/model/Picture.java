@@ -1,12 +1,17 @@
 package com.nwt_kts_project.CulturalOfferings.model;
 
+import com.nwt_kts_project.CulturalOfferings.dto.ReviewDTO;
+
 import javax.persistence.*;
 
 @Entity
+@Table(name = "image_table")
 public class Picture {
 
     @Id
-    private String picturePath;
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
     private CulturalOffering culturalOffering;
@@ -17,13 +22,74 @@ public class Picture {
     @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
     private Review review;
 
-    public Picture(String picturePath,CulturalOffering culturalOffering, Newsletter newsletter, Review review) {
-        this.picturePath = picturePath;
+    @Column(name = "name")
+    private String name;
+
+    @Column(name = "type")
+    private String type;
+
+    @Column(name = "picByte", length = 1000)
+    private byte[] picByte;
+
+    public Picture(Long id,CulturalOffering culturalOffering, Newsletter newsletter, Review review) {
+        this.id = id;
         this.culturalOffering = culturalOffering;
         this.newsletter = newsletter;
         this.review = review;
     }
+
     public Picture() {
+    }
+
+    public Picture(String name, String type, byte[] picByte) {
+        this.name = name;
+        this.type = type;
+        this.picByte = picByte;
+
+    }
+    public Picture(String name, String type, byte[] picByte, Review review) {
+        this.name = name;
+        this.type = type;
+        this.picByte = picByte;
+        this.review = review;
+    }
+    public Picture(String name, String type, byte[] picByte, CulturalOffering culturalOffering) {
+        this.name = name;
+        this.type = type;
+        this.picByte = picByte;
+        this.culturalOffering = culturalOffering;
+    }
+    public Picture(String name, String type, byte[] picByte, Newsletter newsletter) {
+        this.name = name;
+        this.type = type;
+        this.picByte = picByte;
+        this.newsletter = newsletter;
+    }
+
+
+
+    public byte[] getPicByte() {
+        return picByte;
+    }
+
+    public void setPicByte(byte[] picByte) {
+        this.picByte = picByte;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     public CulturalOffering getCulturalOffering() {
@@ -50,12 +116,11 @@ public class Picture {
         this.culturalOffering = culturalOffering;
     }
 
-    public void setPicturePath(String picturePath) {
-        this.picturePath = picturePath;
+    public Long getId() {
+        return id;
     }
 
-    public String getPicturePath() {
-        return picturePath;
+    public void setId(Long id) {
+        this.id = id;
     }
-
 }

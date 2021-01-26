@@ -1,0 +1,30 @@
+<html>
+    <body>
+        <div>
+            <table border = "1" class="co-table" id="co-table">
+                <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Location</th>
+                    <th>Category</th>
+                    <th>Rating</th>
+                    <th>Description</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
+                </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let co of cos">
+                        <td>{{co.name}}</td>
+                        <td>{{co.location}}</td>
+                        <td>{{co.categoryType.name}}</td>
+                        <td>{{co.rating}}</td>
+                        <td>{{co.description}}</td>
+                        <td><button class="table-btn">Edit</button></td>
+                        <td><button class="table-btn">Delete</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </body>
+</html>

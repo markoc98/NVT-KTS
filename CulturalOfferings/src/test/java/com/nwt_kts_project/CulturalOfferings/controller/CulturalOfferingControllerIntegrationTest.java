@@ -71,7 +71,7 @@ public class CulturalOfferingControllerIntegrationTest {
         CulturalOfferingDTO[] cultOffs = responseEntity.getBody();
 
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
-        assertEquals(cultOffs.length, DB_CULTOFF_COUNT);
+        assertEquals(cultOffs.length, CONTROLLER_FINDALL_COUNT);
     }
 
     @Test
@@ -82,7 +82,7 @@ public class CulturalOfferingControllerIntegrationTest {
         login(DB_ADMIN_USERNAME, DB_ADMIN_PASSWORD);
         HttpHeaders headers = new HttpHeaders();
         headers.add("Authorization", accessToken);
-        HttpEntity<Object> httpEntity = new HttpEntity<Object>(new CulturalOfferingDTO(2L , DB_NEW_CULTOFF_LOCATION, DB_NEW_CULTOFF_NAME, DB_NEW_CULTOFF_DESCRIPTION));
+        HttpEntity<Object> httpEntity = new HttpEntity<Object>(new CulturalOfferingDTO(null , CONTROLLER_CREATE_CULTOFF_LOCATION, CONTROLLER_CREATE_CULTOFF_NAME, CONTROLLER_CREATE_CULTOFF_DESCRIPTION), headers);
 
         ResponseEntity<CulturalOfferingDTO> responseEntity = restTemplate.exchange("/api/cultural", HttpMethod.POST, httpEntity, CulturalOfferingDTO.class);
 
@@ -90,7 +90,7 @@ public class CulturalOfferingControllerIntegrationTest {
 
         assertEquals(HttpStatus.CREATED, responseEntity.getStatusCode());
         assertNotNull(cultOff);
-        assertEquals(cultOff.getName(), DB_NEW_CULTOFF_NAME);
+        assertEquals(cultOff.getName(), CONTROLLER_CREATE_CULTOFF_NAME);
     }
 
     @Test
@@ -101,17 +101,14 @@ public class CulturalOfferingControllerIntegrationTest {
         login(DB_ADMIN_USERNAME, DB_ADMIN_PASSWORD);
         HttpHeaders headers = new HttpHeaders();
         headers.add("Authorization", accessToken);
-        HttpEntity<Object> httpEntity = new HttpEntity<Object>(new CulturalOfferingDTO(2L, DB_NEW_CULTOFF_LOCATION, DB_NEW_CULTOFF_NAME, DB_UPDATE_CULTOFF_DESCRIPTION));
+        HttpEntity<Object> httpEntity = new HttpEntity<Object>(new CulturalOfferingDTO(null, CONTROLLER_CREATE_CULTOFF_LOCATION, CONTROLLER_CREATE_CULTOFF_NAME, CONTROLLER_UPDATE_CULTOFF_DESCRIPTION), headers);
 
-        ResponseEntity<CulturalOfferingDTO> responseEntity = restTemplate.exchange("/api/cultural/update/2", HttpMethod.PUT, httpEntity, CulturalOfferingDTO.class);
+        ResponseEntity<CulturalOfferingDTO> responseEntity = restTemplate.exchange("/api/cultural/update/6", HttpMethod.PUT, httpEntity, CulturalOfferingDTO.class);
 
         CulturalOfferingDTO cultOff = responseEntity.getBody();
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
         assertNotNull(cultOff);
 
-        assertEquals(DB_UPDATE_CULTOFF_DESCRIPTION, cultOff.getDescription());
-        CulturalOffering cultOffering = cultOffService.findOne(DB_CULTOFF_ID);
-
-        assertEquals(cultOffering.getName(), DB_CULTOFF_NAME);
+        assertEquals(CONTROLLER_UPDATE_CULTOFF_DESCRIPTION, cultOff.getDescription());
     }
 }

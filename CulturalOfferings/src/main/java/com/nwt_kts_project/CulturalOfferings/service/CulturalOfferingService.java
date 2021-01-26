@@ -19,6 +19,10 @@ public class CulturalOfferingService implements ServiceInterface<CulturalOfferin
     public List<CulturalOffering> findAll() {
         return culturalOfferingRepository.findAll();
     }
+    
+    public Page<CulturalOffering> findAll(Pageable pageable) {
+        return culturalOfferingRepository.findAll(pageable);
+    }
 
     @Override
     public CulturalOffering findOne(Long id) {
@@ -52,9 +56,9 @@ public class CulturalOfferingService implements ServiceInterface<CulturalOfferin
         culturalOfferingRepository.delete(dbCultOff);
     }
 
-	public List<CulturalOffering> findByName(String name) {
+	public CulturalOffering findByName(String name) {
 		// TODO Auto-generated method stub
-		List<CulturalOffering> cultOff = culturalOfferingRepository.findByNameContainingIgnoreCase(name);
+		CulturalOffering cultOff = culturalOfferingRepository.findByNameContainingIgnoreCase(name);
 	
 		return cultOff;
 	}

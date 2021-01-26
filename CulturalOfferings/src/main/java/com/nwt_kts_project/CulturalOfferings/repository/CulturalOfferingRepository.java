@@ -13,7 +13,9 @@ import java.util.List;
 public interface CulturalOfferingRepository extends JpaRepository<CulturalOffering, Long> {
 
     CulturalOffering findByName(String name);
-    List<CulturalOffering> findByNameContainingIgnoreCase(String name);
+
+    CulturalOffering findByNameContainingIgnoreCase(String name);
+
 
 }
 

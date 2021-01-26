@@ -20,12 +20,17 @@ import { AdminHomepageModule } from './Components/admin-homepage/admin-homepage.
 
 import { RegisterComponent } from './Components/register/register.component';
 import {RegisterModule} from "./Components/register/register.module";
+import { EventEmitterService } from './event-emitter.service';
+import { MatDialogModule } from '@angular/material/dialog';
+import { DialogWindowComponent } from './Components/dialog-window/dialog-window.component';
+import { MatTableModule } from '@angular/material/table';
 
 @NgModule({
   declarations: [
     AppComponent,
     MapsComponent,
     FilterCulturalOfferingsComponent,
+    DialogWindowComponent
 
   ],
   imports: [
@@ -38,11 +43,16 @@ import {RegisterModule} from "./Components/register/register.module";
     HttpClientModule,
     FormsModule,
     NgbModule,
+    RegisterModule,
+    MatDialogModule,
     AdminHomepageModule,
-    RegisterModule
+    RegisterModule,
+    MatTableModule
+
   ],
-  exports: [AppComponent],
-  providers: [HttpClient],
+  exports: [AppComponent, MatTableModule],
+  providers: [HttpClient,
+              EventEmitterService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

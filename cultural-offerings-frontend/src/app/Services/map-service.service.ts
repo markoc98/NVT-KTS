@@ -18,4 +18,8 @@ export class MapService{
 
    }
 
+   getCulturalOfferingForMap(location:string){
+     return this.http.get(this.basePath + '/getDataForMap/' + location,{responseType: 'json'});
+   }
+
 }
