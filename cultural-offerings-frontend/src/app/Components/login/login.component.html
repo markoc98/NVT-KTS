@@ -1,0 +1,21 @@
+<div class="login">
+
+  <form class="login-form" (submit)="loginUser()">
+    <h1>Log in</h1>
+    <mat-form-field class="formfield">
+      <mat-label>Username</mat-label>
+      <label>
+        <input matInput placeholder="Enter your username" [(ngModel)]="username" name="username" (input)="inputUsername($event)" required>
+      </label>
+    </mat-form-field>
+
+    <mat-form-field class="formfield">
+      <mat-label>Password</mat-label>
+      <label>
+        <input type="password" matInput placeholder="Enter your password" name="password"  [(ngModel)]="password" (input)="inputPassword($event)" required>
+      </label>
+    </mat-form-field>
+
+    <button [disabled]="!(username && password)" type="submit" mat-raised-button color="primary" class="login-button">Login</button>
+  </form>
+</div>

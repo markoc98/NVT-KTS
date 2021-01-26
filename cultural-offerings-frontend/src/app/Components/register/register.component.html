@@ -1,0 +1,29 @@
+<div class="register">
+
+    <form class="register-form" (submit)="registerUser()">
+      <h1>Register</h1>
+      <mat-form-field class="formfield">
+        <mat-label>Username</mat-label>
+        <label>
+          <input matInput  placeholder="Enter your username" minlength="4" [(ngModel)]="username" name="username" (input)="inputUsername($event)" required>
+        </label>
+      </mat-form-field>
+
+      <mat-form-field class="formfield">
+        <mat-label>Email</mat-label>
+        <label>
+          <input minlength="4" required type="email" matInput placeholder="Enter your email" name="email"  [(ngModel)]="email" (input)="inputEmail($event)" >
+        </label>
+      </mat-form-field>
+
+      <mat-form-field class="formfield">
+        <mat-label>Password</mat-label>
+        <label>
+          <input type="password" minlength="4" matInput placeholder="Enter your password" name="password" [(ngModel)]="password" (input)="inputPassword($event)" required>
+        </label>
+      </mat-form-field>
+      <button class="register-button" [disabled]="!(username && email && password)" type="submit" mat-raised-button color="primary">Register</button>
+    </form>
+
+
+</div>

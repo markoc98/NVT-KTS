@@ -16,23 +16,23 @@ public class ReviewDTO {
 	private double rating;
 
 	private String comment;
-	private CulturalOffering culturalOffering;
+	private Long culturalOfferingID;
 
 	private Set<Picture> pictures;
-	private Long user;
+	private Long userId;
 	
 	public ReviewDTO() {}
 
 
-	public ReviewDTO(Long id, String comment,@NotBlank(message = "Rating cannot be empty.") double rating, CulturalOffering culutralOffering, Set<Picture> pictures,
+	public ReviewDTO(Long id, String comment,@NotBlank(message = "Rating cannot be empty.") double rating, Long culutralOffering, Set<Picture> pictures,
 			Long user) {
 		super();
 		this.id = id;
 		this.comment = comment;
 		this.rating = rating;
-		this.culturalOffering = culturalOffering;
+		this.culturalOfferingID = culutralOffering;
 		this.pictures = pictures;
-		this.user = user;
+		this.userId = user;
 	}
 	
 	public ReviewDTO(String comment,@NotBlank(message = "Rating cannot be empty.") double rating) {
@@ -72,14 +72,34 @@ public class ReviewDTO {
 		this.rating = rating;
 	}
 
-	public CulturalOffering getCulturalOffering() {
-		return culturalOffering;
+
+	public Long getCulturalOfferingID() {
+		return culturalOfferingID;
 	}
 
-	public void setCulturalOffering(CulturalOffering culturalOffering) {
-		this.culturalOffering = culturalOffering;
+
+	public void setCulturalOfferingID(Long culturalOfferingID) {
+		this.culturalOfferingID = culturalOfferingID;
 	}
 
+
+	public Long getUserId() {
+		return userId;
+	}
+
+
+	public void setUserId(Long userId) {
+		this.userId = userId;
+	}
+
+//	public CulturalOffering getCulturalOffering() {
+//		return culturalOffering;
+//	}
+//
+//	public void setCulturalOffering(CulturalOffering culturalOffering) {
+//		this.culturalOffering = culturalOffering;
+//	}
+//
 	public Set<Picture> getPictures() {
 		return pictures;
 	}
@@ -87,12 +107,13 @@ public class ReviewDTO {
 	public void setPictures(Set<Picture> pictures) {
 		this.pictures = pictures;
 	}
-
-	public Long getUser() {
-		return user;
-	}
-
-	public void setUser(Long user) {
-		this.user = user;
-	}
+//
+//	public Long getUser() {
+//		return user;
+//	}
+//
+//	public void setUser(Long user) {
+//		this.user = user;
+//	}
+	
 }

@@ -1,0 +1,116 @@
+.user-info{
+  height: 50%;
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+
+}
+
+.user-profile{
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+
+h1{
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 250%;
+}
+
+.home-button{
+  background-color: #262626;
+  border: none;
+  color: #ffffff;
+  padding-left: 8px;
+  padding-right: 8px;
+  padding-top: 6px;
+  padding-bottom: 6px;
+  margin-top: 8px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: 14px;
+  transition-duration: 0.4s;
+}
+
+.edit-button{
+    background-color: #262626;
+    border: none;
+    color: #ffffff;
+    padding-left: 8px;
+    padding-right: 8px;
+    padding-top: 6px;
+    padding-bottom: 6px;
+    margin-top: 8px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    cursor: pointer;
+    border-radius: 14px;
+    transition-duration: 0.4s;
+    display: block;
+}
+
+.edit-button:hover{
+    background-color: #535353;
+    color: white;
+    box-shadow: 0 3px 5px 0 rgba(0,0,0,0.24), 0 3px 5px 0 rgba(0,0,0,0.19);
+}
+
+.news-table{
+
+    width: 100%;
+}
+
+.news-table th{
+    padding-top: 6px;
+    padding-bottom: 6px;
+    padding-left: 8px;
+    padding-right: 8px;
+    color: white;
+    background-color: #262626;
+    width: fit-content;
+
+}
+
+.news-table tr{
+    padding-top: 6px;
+    padding-bottom: 6px;
+    padding-left: 8px;
+    padding-right: 8px;
+    color: #262626;
+    background-color: #ffffff;
+    size: 200px;
+    text-align: center;
+}
+
+.unsub-btn{
+    background-color: #535353;
+    border: none;
+    color: #ffffff;
+    padding-left: 8px;
+    padding-right: 8px;
+    padding-top: 6px;
+    padding-bottom: 6px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    cursor: pointer;
+    border-radius: 14px;
+    transition-duration: 0.4s;
+    display: inline-block;}
+
+.unsub-btn:hover{
+    background-color: #262626;
+    color: white;
+    box-shadow: 0 3px 5px 0 rgba(0,0,0,0.24), 0 3px 5px 0 rgba(0,0,0,0.19);
+}

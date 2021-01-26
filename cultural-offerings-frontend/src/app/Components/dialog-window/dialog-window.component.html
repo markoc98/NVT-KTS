@@ -1,0 +1,75 @@
+
+<div class="info-and-review">
+    <div class="info">
+      <div class="info-text">
+        <h1>{{name}}</h1>
+        <h4>Location: {{location}}</h4>
+        <h4>Rating: {{rating}}</h4>
+        <h4>Description: {{description}}</h4>
+        <div class="subscribe-button">
+          <button *ngIf="!alreadySubbed" id="subscribeButton" mat-raised-button color="primary"(click)="subscribe()">Subscribe</button>
+          <button *ngIf="alreadySubbed" id="unsubscribeButton" mat-raised-button color="warn" (click)="unsubscribe()">Unsubscribe</button>
+        </div>
+
+        <div id="rating" class="rate">
+          <input type="radio" id="star5" name="rate" value=5  (click)= "updateRating(5)"/>
+          <label for="star5" title="text">5 stars</label>
+          <input type="radio" id="star4" name="rate" value=4  (click)= "updateRating(4)"/>
+          <label for="star4" title="text">4 stars</label>
+          <input type="radio" id="star3" name="rate" value=3  (click)= "updateRating(3)"/>
+          <label for="star3" title="text">3 stars</label>
+          <input type="radio" id="star2" name="rate" value=2  (click)= "updateRating(2)"/>
+          <label for="star2" title="text">2 stars</label>
+          <input type="radio" id="star1" name="rate" value=1  (click)= "updateRating(1)"/>
+          <label for="star1" title="text">1 star</label>
+        </div>
+        <label class="rating-label" >Leave a rating</label>
+        <div class="comment">
+          <textarea class="comment-text-area" rows="4" cols="50" name="comment" [(ngModel)]="comment" (input)="inputComment($event)" >
+            Leave a comment here...
+          </textarea>
+          <button mat-raised-button color="primary" id="leaveComment"type="button" (click)="sendReview()">Leave a comment</button>
+        </div>
+      </div>
+      <div class="info-image">
+        <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
+      </div>
+    </div>
+    <div class="news-area">
+      <div *ngFor="let news of newsletters" class="news">
+        <mat-card class="news-card">
+          <mat-card-header>
+            <mat-card-title>{{news.title}}</mat-card-title>
+            <mat-card-subtitle>{{news.dateString}}</mat-card-subtitle>
+          </mat-card-header>
+          <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
+          <mat-card-content>
+            <p>
+              {{news.content}}
+            </p>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </div>
+  <div class="reviews-area">
+    <div *ngFor="let review of reviews" class="review">
+      <mat-card class="review-card">
+        <div class="header-content">
+          <mat-card-header>
+            <mat-card-title>Rating: {{review.rating}}</mat-card-title>
+            <mat-card-subtitle>{{this.user.username}}</mat-card-subtitle>
+          </mat-card-header>
+          <mat-card-content>
+            <p>
+              {{review.comment}}
+            </p>
+          </mat-card-content>
+        </div>
+        <img class="review-image" mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
+      </mat-card>
+      <mat-divider></mat-divider>
+    </div>
+  </div>
+</div>
+
+

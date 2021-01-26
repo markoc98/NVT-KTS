@@ -25,7 +25,17 @@ INSERT INTO category_type_table (name, category_id) VALUES ('Festivals', '1');
 INSERT INTO category_type_table (name, category_id) VALUES ('Monuments', '2');
 INSERT INTO category_type_table (name, category_id) VALUES ('Category type delete', '2');
 
+
+INSERT INTO cultural_offerings (location, name, description, rating,category_id,latitude,longitude) VALUES ('Subotica', 'Exit festival', 'Muzej', 3.5,'3',19.6610076,46.0998525);
+INSERT INTO cultural_offerings (location, name, description, rating,category_id,latitude,longitude) VALUES ('Subotica', 'Test festival', 'Muzej', 3.5,'3',19.6633076,46.0558525);
+INSERT INTO cultural_offerings (location, name, description, rating,category_id,latitude,longitude) VALUES ('Subotica', 'Test festival222', 'Muzej', 3.5,'3',19.6622076,46.0668525);
+
+--INSERT INTO cultural_offerings (location, name, description, rating) VALUES ('Beograd', 'Exit festival', 'Najbolji exit festival', -11.0);
+--INSERT INTO cultural_offerings (location, name, description, rating) VALUES ('Novi Sad', 'Test festival', 'Neki festival', 5.0);
+
 insert into newsletter (title, content,date) values ('Test-Title1', 'Test-Title1', '2020-05-06');
 insert into reviews (comment,rating) values ('test123' , 5);
 insert into reviews (comment,rating) values ('NewTestComment' , 2.5);
+
+INSERT INTO user_cultural_offering (user_id, cultural_offering_id) VALUES (2,3);
 

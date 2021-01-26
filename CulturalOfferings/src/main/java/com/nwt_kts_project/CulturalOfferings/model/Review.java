@@ -19,7 +19,7 @@ public class Review {
     private double rating;
 
     @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
-    private CulturalOffering CulturalOffering ;
+    private CulturalOffering culturalOffering ;
 
     @OneToMany(mappedBy = "review",cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
     private Set<Picture> pictures = new HashSet<>();
@@ -33,7 +33,7 @@ public class Review {
         this.id = id;
         this.comment = comment;
         this.rating = rating;
-        this.CulturalOffering = culturalOffering;
+        this.culturalOffering = culturalOffering;
         this.pictures = pictures;
         this.user = user;
     }
@@ -49,6 +49,11 @@ public class Review {
     	this.rating = rating;
     	
     }
+
+	public Review(double rating2) {
+		// TODO Auto-generated constructor stub
+		this.rating = rating2;
+	}
 
 	public Long getId() {
         return id;
@@ -89,16 +94,19 @@ public class Review {
 	public void setUser(User user) {
 		this.user = user;
 	}
+	
+	public CulturalOffering getCulturalOffering() {
+		return culturalOffering;
+	}
 
-	public CulturalOffering getCulutralOffering() {
-		// TODO Auto-generated method stub
-		return CulturalOffering;
+	public void setCulturalOffering(CulturalOffering culturalOffering) {
+		culturalOffering = culturalOffering;
 	}
 
 	@Override
 	public String toString() {
 		return "Review [id=" + id + ", comment=" + comment + ", rating=" + rating + ", CulturalOffering="
-				+ CulturalOffering + ", pictures=" + pictures + ", user=" + user + "]";
+				+ culturalOffering + ", pictures=" + pictures + ", user=" + user + "]";
 	}
 	
 	

@@ -14,7 +14,7 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(webEnvironment= SpringBootTest.WebEnvironment.RANDOM_PORT)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestPropertySource("classpath:test.properties")
 public class UserServiceIntegrationTest {
 
@@ -49,12 +49,6 @@ public class UserServiceIntegrationTest {
         User savedUser = new User(DB_DEL_USER_EMAIL,DB_DEL_USER_USERNAME,DB_DEL_USER_PASSWORD);
         savedUser.setId(DB_DEL_USER_ID);
     }
-    @Test
-    public void testUpdateUser() throws Exception {
-            User user = new User(NEW_USER_EMAIL1, NEW_USER_USERNAME1, NEW_USER_PASSWORD1);
-            User created = userService.update(user,DB_USER_ID);
 
-        assertEquals(NEW_USER_PASSWORD1, created.getPassword());
-    }
 
 }
