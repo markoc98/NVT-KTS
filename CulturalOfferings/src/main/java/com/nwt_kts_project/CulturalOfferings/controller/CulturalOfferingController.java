@@ -2,7 +2,9 @@ package com.nwt_kts_project.CulturalOfferings.controller;
 
 import com.nwt_kts_project.CulturalOfferings.dto.CulturalOfferingDTO;
 import com.nwt_kts_project.CulturalOfferings.model.CulturalOffering;
+import com.nwt_kts_project.CulturalOfferings.model.Picture;
 import com.nwt_kts_project.CulturalOfferings.service.CulturalOfferingService;
+import com.nwt_kts_project.CulturalOfferings.service.PictureService;
 import com.nwt_kts_project.CulturalOfferings.utility.CulturalOfferingMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -13,7 +15,11 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import com.nwt_kts_project.CulturalOfferings.utility.PictureCompression;
+import org.springframework.web.multipart.MultipartFile;
 
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,6 +29,9 @@ public class CulturalOfferingController {
 
     @Autowired
     private CulturalOfferingService cultOffService;
+
+    @Autowired
+    private PictureService pictureService;
 
     private CulturalOfferingMapper cultOffMapper;
 
@@ -46,10 +55,16 @@ public class CulturalOfferingController {
 
     @PreAuthorize("hasRole('ROLE_ADMIN')" + "|| hasRole('ROLE_USER')")
     @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<List<CulturalOfferingDTO>> getAllCulturalOfferings() {
-        List<CulturalOffering> cultOffs = cultOffService.findAll();
+    public ResponseEntity<Page<CulturalOfferingDTO>> getAllCulturalOfferings(Pageable pageable) {
+        //List<CulturalOffering> cultOffs = cultOffService.findAll();
+        
+        Page<CulturalOffering> page = cultOffService.findAll(pageable);
+    	List<CulturalOfferingDTO> cultOffDTOS = toCultOffDTOList(page.toList());
+        Page<CulturalOfferingDTO> pageCultOffDTOS = new PageImpl<>(cultOffDTOS,page.getPageable(),page.getTotalElements());
 
-        return new ResponseEntity<>(toCultOffDTOList(cultOffs), HttpStatus.OK);
+
+
+        return new ResponseEntity<>(pageCultOffDTOS, HttpStatus.OK);
     }
 
     private List<CulturalOfferingDTO> toCultOffDTOList(List<CulturalOffering> cultOffs){
@@ -62,7 +77,14 @@ public class CulturalOfferingController {
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping(method=RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<CulturalOfferingDTO> createCulturalOffering(@RequestBody CulturalOfferingDTO cultOffDTO){
+    public ResponseEntity<CulturalOfferingDTO> createCulturalOffering(@RequestBody CulturalOfferingDTO cultOffDTO, @RequestBody MultipartFile file) throws Exception {
+
+        if(file != null)
+        {
+            Picture img = new Picture(file.getOriginalFilename(), file.getContentType(),
+                    PictureCompression.compressBytes(file.getBytes()), cultOffMapper.toEntity(cultOffDTO));
+            pictureService.create(img);
+        }
         CulturalOffering cultOff;
         try {
             cultOff = cultOffService.create(cultOffMapper.toEntity(cultOffDTO));

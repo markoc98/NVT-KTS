@@ -38,7 +38,7 @@ public class CulturalOffering {
     @OneToMany(mappedBy = "culturalOffering",cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
     private Set<Picture> pictures = new HashSet<>();
 
-    @ManyToMany(mappedBy = "subscribedTo")
+    @ManyToMany(mappedBy = "subscribedTo",fetch = FetchType.EAGER)
     private transient  Set<User> subscribedUsers ;
 
     @OneToMany(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)

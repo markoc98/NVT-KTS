@@ -2,11 +2,11 @@ package com.nwt_kts_project.CulturalOfferings.constants;
 
 public class CulturalOfferingConstants {
     //Constants for delete tests in service
-    public static final int SERVICE_COUNT_AFTER_DELETE = 1;
+    public static final int SERVICE_COUNT_AFTER_DELETE = 2;
     public static final Long SERVICE_DEL_CULTOFF_ID = 2l;
 
     //Constants for find all test in service
-    public static final int SERVICE_FIND_ALL_COUNT = 2;
+    public static final int SERVICE_FIND_ALL_COUNT = 3;
 
     //Constants for find by id test in service
     public static final Long SERVICE_CULTOFF_ID_FINDONE = 1l;
@@ -23,7 +23,7 @@ public class CulturalOfferingConstants {
     public static final Long SERVICE_UPDATE_CULTOFF_ID = 3L;
     
     //Constants for find all test in controller
-    public static final int CONTROLLER_FINDALL_COUNT = 4;
+    public static final int CONTROLLER_FINDALL_COUNT = 5;
 
     //Constants for create cult off test in controller
     public static final String CONTROLLER_CREATE_CULTOFF_LOCATION = "Indjija";

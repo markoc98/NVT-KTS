@@ -35,7 +35,7 @@ public class User implements UserDetails {
     @OneToMany(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
     private Set<Review> reviews = new HashSet<>();
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_cultural_offering",
             joinColumns = @JoinColumn(name = "user_id"  , referencedColumnName = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "cultural_offering_id" , referencedColumnName = "cultural_offering_id"))
