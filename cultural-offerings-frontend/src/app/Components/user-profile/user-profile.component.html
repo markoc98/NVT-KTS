@@ -1,41 +1,28 @@
 <html>
 <body>
-    <div class="title">
-        <h1> {{ user.username | uppercase }}'S PROFILE</h1>
-    </div>
+<button class="home-button" (click)="goHome()">Home</button>
+<div class="user-profile">
 
-
-    <div class="photo-btns">
-        <button class="photo-button">Add profile photo</button>
-        <button class="photo-button">Change profile photo</button>
-        <button class="photo-button">Remove profile photo</button>
-    </div>
-    <br>
+  <div class="user-info">
+    <h1> {{ user.username | uppercase }}'S PROFILE</h1>
 
     <div class="edit-form">
         <table class="edit-form-table">
             <tr>
                 <td><label>Username  : </label></td>
-                <td><label placeholder="Username :">{{user.username}} </label></td>
+                <td align="right"><label >{{user.username}} </label></td>
             </tr>
             <tr>
                 <td><label>Email  : </label></td>
-                <td align="right"><label  placeholder="Email">{{user.email}} </label></td>
-            </tr>
-            <tr>
-                <td><label>ID: </label></td>
-                <td align="right"><label  placeholder="Id" >{{user.id}} </label></td>
-            </tr>
-            <tr>
-                <td></td>
-                <td><button class="edit-button">NE RADIM NISTA</button></td>
+                <td align="right"><label>{{user.email}} </label></td>
             </tr>
         </table>
     </div>
+  </div>
     <br>
 
     <div class="newsletters">
-        <h2>NEWSLETTERS</h2>
+        <h2>Active subscriptions</h2>
         <table border = "1" class="news-table">
             <thead>
             <tr>
@@ -45,13 +32,13 @@
             </thead>
             <tbody>
                 <tr *ngFor="let subscription of subscribed">
-                    <td>{{subscription}}</td>
-                    <td><button class="unsub-btn">Unsubscribe</button></td>
+                    <td>{{subscription.name}}</td>
+                    <td><button class="unsub-btn" (click)="unsubscribe(subscription.id)">Unsubscribe</button></td>
                 </tr>
             </tbody>
         </table>
     </div>
+</div>
 </body>
 </html>
 
-//

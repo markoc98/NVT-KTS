@@ -38,6 +38,7 @@ export class LoginComponent implements OnInit {
       response = await this.Auth.login(this.username,this.password) as IResponse;
       let accessToken = response.accessToken;
       this.TokenStorage.saveToken(accessToken);
+      console.log(accessToken)
       this.TokenStorage.saveUser(response.userID);
       this.goToHomePage();
     }

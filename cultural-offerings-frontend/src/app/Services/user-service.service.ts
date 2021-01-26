@@ -12,16 +12,42 @@ export class UserServiceService {
   constructor(private http: HttpClient) { }
 
 
-  getUserById(userID:string)
-  {
+  getUserById(userID:string) {
     let headers_object = new HttpHeaders().set("Authorization", "Bearer " + window.sessionStorage.getItem(TOKEN_KEY));
-
+    console.log(headers_object);
     const httpOptions = {
       headers: headers_object
     };
 
     return this.http.get("api/users/" + userID , httpOptions
-    ).toPromise()
+    ).toPromise();
   }
 
+  public getSubscriptions(userID:string): Promise<any> {
+    let headers_object = new HttpHeaders({
+      "Authorization": "Bearer " + window.sessionStorage.getItem(TOKEN_KEY),
+      'Content-Type': 'application/text'
+    })
+
+    const httpOptions = {
+      headers: headers_object
+    };
+
+    return this.http.get("api/users/getsubs/" + userID , httpOptions
+    ).toPromise();
+  }
+
+  public unsubscribe(userId:string, culturalOfferingId:number){
+    let headers_object = new HttpHeaders({
+      "Authorization": "Bearer " + window.sessionStorage.getItem(TOKEN_KEY),
+      'Content-Type': 'application/text'
+    });
+
+    const httpOptions = {
+      headers: headers_object
+    };
+
+    return this.http.get("api/users/unsubscribe/" + userId + "/" + culturalOfferingId , httpOptions
+    ).toPromise();
+  }
 }
