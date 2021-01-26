@@ -1,6 +1,8 @@
 package com.nwt_kts_project.CulturalOfferings.controller;
 
+import com.nwt_kts_project.CulturalOfferings.dto.CategoryDTO;
 import com.nwt_kts_project.CulturalOfferings.dto.UserDTO;
+import com.nwt_kts_project.CulturalOfferings.model.Category;
 import com.nwt_kts_project.CulturalOfferings.model.CulturalOffering;
 import com.nwt_kts_project.CulturalOfferings.model.User;
 import com.nwt_kts_project.CulturalOfferings.repository.VerificationTokenRepository;
@@ -9,6 +11,9 @@ import com.nwt_kts_project.CulturalOfferings.service.EmailSenderService;
 import com.nwt_kts_project.CulturalOfferings.service.UserService;
 import com.nwt_kts_project.CulturalOfferings.utility.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -95,10 +100,16 @@ public class UserController {
     //GET ZAHTEV ZA DOBAVLJANJE SVIH USERA
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<List<UserDTO>> getAllUsers() {
-        List<User> users = userService.findAll();
+    public ResponseEntity<Page<UserDTO>> getAllUsers(Pageable pageable) {
+        //List<User> users = userService.findAll();
+    	
+    	Page<User> page = userService.findAll(pageable);
+    	List<UserDTO> userDTOS = toUserDTOList(page.toList());
+        Page<UserDTO> pageUserDTOS = new PageImpl<>(userDTOS,page.getPageable(),page.getTotalElements());
 
-        return new ResponseEntity<>(toUserDTOList(users), HttpStatus.OK);
+
+
+        return new ResponseEntity<>(pageUserDTOS, HttpStatus.OK);
     }
 
     private List<UserDTO> toUserDTOList(List<User> users){
