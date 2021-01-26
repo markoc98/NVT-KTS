@@ -16,8 +16,22 @@ export class NewsletterServiceService {
     const httpOptions = {
       headers: headers_object
     };
-    
+
     return this.http.get("api/newsletters",httpOptions).toPromise();
+
+  }
+
+  getNewslettersByCoId(culturalOfferId: number) {
+
+    let headers_object = new HttpHeaders({
+      "Authorization": "Bearer " + window.sessionStorage.getItem(TOKEN_KEY),
+      'Content-Type': 'application/json'
+    })
+    const httpOptions = {
+      headers: headers_object
+    };
+
+    return this.http.get("api/newsletters/culturalOffer/" + culturalOfferId ,httpOptions).toPromise();
 
   }
 }

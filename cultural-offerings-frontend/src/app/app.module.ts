@@ -24,6 +24,9 @@ import { EventEmitterService } from './event-emitter.service';
 import { MatDialogModule } from '@angular/material/dialog';
 import { DialogWindowComponent } from './Components/dialog-window/dialog-window.component';
 import { MatTableModule } from '@angular/material/table';
+import {MatCard, MatCardModule} from "@angular/material/card";
+import {MatDividerModule} from "@angular/material/divider";
+
 
 @NgModule({
   declarations: [
@@ -47,10 +50,13 @@ import { MatTableModule } from '@angular/material/table';
     MatDialogModule,
     AdminHomepageModule,
     RegisterModule,
-    MatTableModule
+    MatTableModule,
+    MatCardModule,
+    MatDividerModule
+
 
   ],
-  exports: [AppComponent, MatTableModule],
+  exports: [AppComponent],
   providers: [HttpClient,
               EventEmitterService],
   bootstrap: [AppComponent]
