@@ -68,7 +68,7 @@ public class UserController {
         return new ResponseEntity<Set<CulturalOffering>>(subscribed,HttpStatus.OK);
     }
 
-    //GET ZAHTEV ZA UNSUBSCRIBOVANJE CO  ----nije testirano
+    //GET ZAHTEV ZA UNSUBSCRIBOVANJE CO
     @PreAuthorize("hasRole('ROLE_USER')")
     @RequestMapping(value="/unsubscribe/{userId}/{culturalOfferingId}", method= RequestMethod.GET)
     public ResponseEntity<Set<CulturalOffering>> unsubscribe(@PathVariable Long userId,@PathVariable Long culturalOfferingId) throws Exception {
@@ -152,23 +152,22 @@ public class UserController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    //DELETE ZAHTEV BRISANEJ POSTOJECEG USERA
+    //SUBSCRIBOVANJE
     @PreAuthorize("hasRole('ROLE_USER')")
     @RequestMapping(value="/subscribe/{culturalOfferingId}/{userId}", method=RequestMethod.PUT)
     public ResponseEntity<Void> subscribeToNewsletter(@PathVariable Long culturalOfferingId, @PathVariable Long userId){
         try {
-            System.out.println("===========================================" + culturalOfferingId+ userId);
 
             CulturalOffering co = culturalOfferingService.findOne(culturalOfferingId);
+
             User user = userService.findOne(userId);
 
             Set<CulturalOffering> subscribedTo = user.getSubscribedTo();
-            Set<User> subscribers = co.getSubscribedUsers();
+
 
             subscribedTo.add(co);
-            subscribers.add(user);
             userService.update(user, user.getId());
-            culturalOfferingService.update(co,co.getId());
+
 
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

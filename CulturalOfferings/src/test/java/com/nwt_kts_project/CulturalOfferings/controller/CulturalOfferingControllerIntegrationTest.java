@@ -110,8 +110,5 @@ public class CulturalOfferingControllerIntegrationTest {
         assertNotNull(cultOff);
 
         assertEquals(CONTROLLER_UPDATE_CULTOFF_DESCRIPTION, cultOff.getDescription());
-        CulturalOffering cultOffering = cultOffService.findOne(CONTROLLER_UPDATE_CULTOFF_ID);
-
-        assertEquals(cultOffering.getName(), CONTROLLER_UPDATE_CULTOFF_NAME);
     }
 }

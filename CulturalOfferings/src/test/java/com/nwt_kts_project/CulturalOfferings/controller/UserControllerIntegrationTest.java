@@ -55,7 +55,7 @@ public class UserControllerIntegrationTest {
     @Test
     public void testGetUser()
     {
-        login(DB_ADMIN_USERNAME,DB_ADMIN_PASSWORD);
+        login(DB_USER_USERNAME,DB_USER_PASSWORD);
 
         // postavimo JWT token u zaglavlje zahteva da bi bilo dozvoljeno da pozovemo funkcionalnost
          HttpHeaders headers = new HttpHeaders();
@@ -76,7 +76,7 @@ public class UserControllerIntegrationTest {
     @Test
     public void testGetUserFailed()
     {
-        login(DB_ADMIN_USERNAME,DB_ADMIN_PASSWORD);
+        login(DB_USER_USERNAME,DB_USER_PASSWORD);
 
         // postavimo JWT token u zaglavlje zahteva da bi bilo dozvoljeno da pozovemo funkcionalnost
         HttpHeaders headers = new HttpHeaders();
@@ -301,7 +301,6 @@ public class UserControllerIntegrationTest {
     {
         login(DB_USER_USERNAME, DB_USER_PASSWORD);
 
-
         // postavimo JWT token u zaglavlje zahteva da bi bilo dozvoljeno da pozovemo funkcionalnost
         HttpHeaders headers = new HttpHeaders();
         headers.add("Authorization", accessToken);
@@ -312,14 +311,115 @@ public class UserControllerIntegrationTest {
                         HttpMethod.PUT, httpEntity,
                         Void.class);
 
-        CulturalOffering co = culturalOfferingService.findOne(1l);
-        User user = userService.findOne(DB_USER_ID);
+        CulturalOffering co = culturalOfferingService.findOne(1L);
+        User user = userService.findOne(1L);
 
 
-        assertEquals(responseEntity.getStatusCode(), HttpStatus.OK);
-        assertNotNull(co.getSubscribedUsers());
+        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
 
         assertNotNull(user.getSubscribedTo());
     }
+    @Test
+    public void testUnsubscribe() throws Exception {
+        login(DB_USER_USERNAME, DB_USER_PASSWORD);
 
+        CulturalOffering co = culturalOfferingService.findOne(1L);
+        User user = userService.findOne(DB_USER_ID);
+
+
+        int numOfSubbedTo = user.getSubscribedTo().size();
+        // postavimo JWT token u zaglavlje zahteva da bi bilo dozvoljeno da pozovemo funkcionalnost
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Authorization", accessToken);
+
+        // kreiramo objekat koji saljemo u sklopu zahteva
+        HttpEntity<Object> httpEntity = new HttpEntity<Object>( headers);
+        ResponseEntity<Void> responseEntity =
+                restTemplate.exchange("/api/users/unsubscribe/2/3",
+                        HttpMethod.GET, httpEntity,
+                        Void.class);
+
+
+        User user1 = userService.findOne(2L);
+
+
+        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+        assertEquals(numOfSubbedTo,user1.getSubscribedTo().size() + 1);//+1 jer smo jedan izbrisali znaci isti broj treba da dobijemo
+
+    }
+    @Test
+    public void testUnsubscribeCantFindSubscription() throws Exception {
+        login(DB_USER_USERNAME, DB_USER_PASSWORD);
+
+        CulturalOffering co = culturalOfferingService.findOne(1L);
+        User user = userService.findOne(DB_USER_ID);
+
+
+        int numOfSubbedTo = user.getSubscribedTo().size();
+        // postavimo JWT token u zaglavlje zahteva da bi bilo dozvoljeno da pozovemo funkcionalnost
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Authorization", accessToken);
+
+        // kreiramo objekat koji saljemo u sklopu zahteva
+        HttpEntity<Object> httpEntity = new HttpEntity<Object>( headers);
+        ResponseEntity<Void> responseEntity =
+                restTemplate.exchange("/api/users/unsubscribe/999/999",
+                        HttpMethod.GET, httpEntity,
+                        Void.class);
+
+
+        User user1 = userService.findOne(2L);
+
+        assertEquals(HttpStatus.NOT_FOUND, responseEntity.getStatusCode());
+
+    }
+
+
+    @Test
+    public void testGetSubscribedTo() throws Exception {
+        login(DB_USER_USERNAME, DB_USER_PASSWORD);
+
+        User user = userService.findOne(DB_USER_ID);
+
+
+        int numOfSubbedTo = user.getSubscribedTo().size();
+        // postavimo JWT token u zaglavlje zahteva da bi bilo dozvoljeno da pozovemo funkcionalnost
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Authorization", accessToken);
+
+        // kreiramo objekat koji saljemo u sklopu zahteva
+        HttpEntity<Object> httpEntity = new HttpEntity<Object>( headers);
+        ResponseEntity<CulturalOffering[]> responseEntity =
+                restTemplate.exchange("/api/users/getsubs/2",
+                        HttpMethod.GET, httpEntity,
+                        CulturalOffering[].class);
+
+        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+        assertEquals(numOfSubbedTo,responseEntity.getBody().length);
+
+    }
+
+    @Test
+    public void testGetSubscribedToIsEmpty() throws Exception {
+        login(DB_USER_USERNAME, DB_USER_PASSWORD);
+
+        User user = userService.findOne(DB_USER_ID);
+
+
+        int numOfSubbedTo = user.getSubscribedTo().size();
+        // postavimo JWT token u zaglavlje zahteva da bi bilo dozvoljeno da pozovemo funkcionalnost
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Authorization", accessToken);
+
+        // kreiramo objekat koji saljemo u sklopu zahteva
+        HttpEntity<Object> httpEntity = new HttpEntity<Object>( headers);
+        ResponseEntity<CulturalOffering[]> responseEntity =
+                restTemplate.exchange("/api/users/getsubs/1",
+                        HttpMethod.GET, httpEntity,
+                        CulturalOffering[].class);
+
+        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+        assertEquals(0,responseEntity.getBody().length);
+
+    }
 }
