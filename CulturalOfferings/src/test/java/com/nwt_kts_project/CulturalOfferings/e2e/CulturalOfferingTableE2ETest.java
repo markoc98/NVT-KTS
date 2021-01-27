@@ -37,6 +37,15 @@ public class CulturalOfferingTableE2ETest {
         adminHomePage = PageFactory.initElements(driver, AdminHomePage.class);
     }
 
+    private static boolean isDialogPresent(WebDriver driver) {
+        try {
+            driver.getTitle();
+            return false;
+        } catch (Exception e) {
+            return true;
+        }
+    }
+
     @After
     public void tearDown() {
         driver.quit();
@@ -61,13 +70,39 @@ public class CulturalOfferingTableE2ETest {
 
         assertEquals("http://localhost:4200/admin-homepage", driver.getCurrentUrl());
     }
-    
+
     @Test
     public void AddCulturalOfferingSuccess() throws InterruptedException {
+
+        adminLogin();
+
+
+        adminHomePage.ensureIsDisplayedAddCultOffButton();
+        justWait(1000);
+
+        adminHomePage.getAddCultOffButton().click();
+        justWait(1000);
+
+        adminHomePage.getCultOffNameAdd().sendKeys("Potpuno novi naziv");
+        adminHomePage.getCultOffLocationAdd().sendKeys("Novi Sad");
+        adminHomePage.getCultOffDescriptionAdd().sendKeys("Nov opis add");
+        driver.findElement(By.id("cultOffCategoryAdd")).click();
+        driver.findElement(By.id("Events")).click();
+
+
+        adminHomePage.ensureIsDisplayedAddCultOffButtonOk();
+        justWait(1000);
+
+        adminHomePage.getAddCultOffButtonOk().click();
+        justWait(1000);
+        assertEquals(false, isDialogPresent(driver));
+    }
+
+    @Test
+    public void AddCulturalOfferingFail() throws InterruptedException {
     	
     	adminLogin();
-    	
-    	List<WebElement> rows = driver.findElements(By.xpath("//*[@id='cultOffTable']/tbody/tr/td[1]"));
+
     	
     	adminHomePage.ensureIsDisplayedAddCultOffButton();
     	justWait(1000);
@@ -75,7 +110,7 @@ public class CulturalOfferingTableE2ETest {
     	adminHomePage.getAddCultOffButton().click();
     	justWait(1000);
     	
-    	adminHomePage.getCultOffNameAdd().sendKeys("Nov naziv add2");
+    	adminHomePage.getCultOffNameAdd().sendKeys("Starinar");
         adminHomePage.getCultOffLocationAdd().sendKeys("Novi Sad");
         adminHomePage.getCultOffDescriptionAdd().sendKeys("Nov opis add");
         driver.findElement(By.id("cultOffCategoryAdd")).click();
@@ -86,13 +121,8 @@ public class CulturalOfferingTableE2ETest {
         justWait(1000);
         
         adminHomePage.getAddCultOffButtonOk().click();
-        
-    	List<WebElement> newRows = driver.findElements(By.xpath("//*[@id='cultOffTable']/tbody/tr/td[1]"));
-    	
-    	assertEquals(newRows.size(), rows.size()+1);
-
-
-        
+        justWait(1000);
+    	assertEquals(true, isDialogPresent(driver));
     }
     
     @Test
@@ -109,7 +139,7 @@ public class CulturalOfferingTableE2ETest {
         adminHomePage.getEditCultOffButton().click();
         justWait(1000);
         
-        adminHomePage.getCultOffNameEdit().sendKeys("Nov naziv edit");
+        adminHomePage.getCultOffNameEdit().sendKeys("Bas novi naziv");
         adminHomePage.getCultOffLocationEdit().sendKeys("Novi Sad");
         adminHomePage.getCultOffDescriptionEdit().sendKeys("Nov opis edit");
         
@@ -117,11 +147,40 @@ public class CulturalOfferingTableE2ETest {
         justWait(1000);
         
         adminHomePage.getEditCultOffButtonOk().click();
-        
+        justWait(3000);
+
+        assertEquals("Bas novi naziv", driver.findElement(By.id("Bas novi naziv")).getText());
     }
-    
+
     @Test
-    public void DeleteCulturalOfferingSuccess() throws InterruptedException{
+    public void EditCulturalOfferingFail() throws InterruptedException {
+
+        adminLogin();
+
+        adminHomePage.ensureIsDisplayedEditCultOffButton();
+        justWait(1000);
+
+        adminHomePage.ensureIsClickableEditCultOffButton();
+        justWait(1000);
+
+        adminHomePage.getEditCultOffButton().click();
+        justWait(1000);
+
+        adminHomePage.getCultOffNameEdit().sendKeys("Starinar");
+        adminHomePage.getCultOffLocationEdit().sendKeys("Novi Sad");
+        adminHomePage.getCultOffDescriptionEdit().sendKeys("Nov opis edit");
+
+        adminHomePage.ensureIsClickableEditCultOffButtonOk();
+        justWait(1000);
+
+        adminHomePage.getEditCultOffButtonOk().click();
+        justWait(3000);
+
+        assertEquals(true, isDialogPresent(driver));
+    }
+
+    @Test
+    public void DeleteCulturalOfferingFail() throws InterruptedException{
     	
     	adminLogin();
     	
@@ -133,16 +192,12 @@ public class CulturalOfferingTableE2ETest {
     	
     	adminHomePage.ensureIsClickableDeleteCultOffButton();
     	justWait(1000);
-    	
-    	List<WebElement> rows = driver.findElements(By.xpath("//*[@id='cultOffTable']/tbody/tr/td[1]"));
-    	
-    	WebElement cultOffToDelete = driver.findElement(By.xpath("//*[@id='cultOffTable']/tbody/tr[4]/td[8]"));
-    	cultOffToDelete.click();
+
+    	adminHomePage.getDeleteCultOffButton().click();
     	justWait(2000);
+
     	
-    	List<WebElement> newRows = driver.findElements(By.xpath("//*[@id='cultOffTable']/tbody/tr/td[1]"));
-    	
-    	assertEquals(newRows.size(), rows.size()-1);
+    	assertEquals(true, isDialogPresent(driver));
     }
     
     private void justWait(int milliseconds) throws InterruptedException {

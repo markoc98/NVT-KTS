@@ -2,6 +2,8 @@ package com.nwt_kts_project.CulturalOfferings.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.util.List;
+
+import com.nwt_kts_project.CulturalOfferings.model.CulturalOffering;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,12 +22,14 @@ public class NewsletterServiceIntegrationTest {
 	
 	@Autowired
 	private NewsletterService newsService;
-	
+
+	@Autowired
+	private CulturalOfferingService culturalOfferingService;
 	
 	@Test
 	public void testFindAllNews() {
 		List<Newsletter> newsList = newsService.findAll();
-		assertEquals(1, newsList.size());
+		assertEquals(2, newsList.size());
 		
 	}
 	
@@ -37,7 +41,8 @@ public class NewsletterServiceIntegrationTest {
 	
 	@Test
 	public void testCreateNews() throws Exception {
-		Newsletter n = new Newsletter(NEW_NEWS_TITLE,NEW_NEWS_CONTENT,NEW_NEWS_DATE);
+		CulturalOffering co = culturalOfferingService.findOne(1L);
+		Newsletter n = new Newsletter(NEW_NEWS_TITLE,NEW_NEWS_CONTENT,NEW_NEWS_DATE,co);
 		Newsletter nCreated = newsService.create(n);
 		
 		assertEquals(NEW_NEWS_TITLE, nCreated.getTitle());
@@ -45,6 +50,7 @@ public class NewsletterServiceIntegrationTest {
 	
 	@Test
 	public void testUpdateNews() throws Exception{
+		//CulturalOffering co =
 		Newsletter n = new Newsletter(NEW_NEWS_TITLE,NEW_NEWS_CONTENT,NEW_NEWS_DATE);
 		Newsletter nCreated = newsService.update(n,DB_DEL_NEWS_ID);
 		

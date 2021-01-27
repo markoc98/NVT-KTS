@@ -66,13 +66,14 @@ public class CulturalOfferingControllerIntegrationTest {
         headers.add("Authorization", accessToken);
         HttpEntity<Object> httpEntity = new HttpEntity<Object>(headers);
 
-        ResponseEntity<CulturalOfferingDTO[]> responseEntity = restTemplate.exchange("/api/cultural", HttpMethod.GET, httpEntity, CulturalOfferingDTO[].class);
+        ResponseEntity<CulturalOfferingDTO[]> responseEntity = restTemplate.exchange("/api/cultural/pageable?page=0&size=10", HttpMethod.GET, httpEntity, CulturalOfferingDTO[].class);
 
         CulturalOfferingDTO[] cultOffs = responseEntity.getBody();
 
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
-        assertEquals(cultOffs.length, CONTROLLER_FINDALL_COUNT);
+        assertEquals(cultOffs.length, CONTROLLER_FINDALL_COUNT-1);
     }
+
 
     @Test
     @Transactional
