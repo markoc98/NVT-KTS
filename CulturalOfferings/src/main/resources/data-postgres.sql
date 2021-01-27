@@ -70,5 +70,5 @@ INSERT INTO user_cultural_offering (user_id, cultural_offering_id) VALUES (2,7);
 INSERT INTO user_cultural_offering (user_id, cultural_offering_id) VALUES (2,8);
 INSERT INTO user_cultural_offering (user_id, cultural_offering_id) VALUES (2,9);
 
-insert into newsletter (title, content, date, cultural_offering_cultural_offering_id) values ('EXIT NAJBOLJI', 'Lorem Ipsook a galley ope specimen book. It unchanged. It was popularised in the 1960s with the release ofker including versions of Lorem Ipsum.', '01.01.2021.','1');
-insert into newsletter (title, content, date, cultural_offering_cultural_offering_id) values ('Exit otkazan ove godine svi placu', 'Lorem Ipsook a galley ope specimen book. It unchanged. It was popularised in the 1960s with the release ofker including versions of Lorem Ipsum.', '05.12.2020.','1');
+insert into newsletter (id, title, content, date, cultural_offering_cultural_offering_id) values (98,'EXIT NAJBOLJI', 'Lorem Ipsook a galley ope specimen book. It unchanged. It was popularised in the 1960s with the release ofker including versions of Lorem Ipsum.', '01.01.2021.','1');
+insert into newsletter (id, title, content, date, cultural_offering_cultural_offering_id) values (99, 'Exit otkazan ove godine svi placu', 'Lorem Ipsook a galley ope specimen book. It unchanged. It was popularised in the 1960s with the release ofker including versions of Lorem Ipsum.', '05.12.2020.','1');

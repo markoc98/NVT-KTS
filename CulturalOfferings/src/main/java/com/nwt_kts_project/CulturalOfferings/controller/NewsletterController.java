@@ -6,7 +6,8 @@ import java.util.List;
 
 import javax.validation.Valid;
 
-import com.nwt_kts_project.CulturalOfferings.model.Picture;
+import com.nwt_kts_project.CulturalOfferings.model.*;
+import com.nwt_kts_project.CulturalOfferings.service.CulturalOfferingService;
 import com.nwt_kts_project.CulturalOfferings.service.PictureService;
 import com.nwt_kts_project.CulturalOfferings.utility.PictureCompression;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,10 +27,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.nwt_kts_project.CulturalOfferings.dto.CategoryDTO;
 import com.nwt_kts_project.CulturalOfferings.dto.NewsletterDTO;
 import com.nwt_kts_project.CulturalOfferings.dto.ReviewDTO;
-import com.nwt_kts_project.CulturalOfferings.model.Category;
-import com.nwt_kts_project.CulturalOfferings.model.Newsletter;
-import com.nwt_kts_project.CulturalOfferings.model.Review;
-import com.nwt_kts_project.CulturalOfferings.model.User;
 import com.nwt_kts_project.CulturalOfferings.repository.NewsletterRepository;
 import com.nwt_kts_project.CulturalOfferings.service.NewsletterService;
 import com.nwt_kts_project.CulturalOfferings.utility.NewsletterMapper;
@@ -47,29 +44,38 @@ public class NewsletterController {
 
     @Autowired
     private NewsletterService newsletterService;
-    
+
+    @Autowired
+	private CulturalOfferingService culturalOfferingService;
+
+
     private NewsletterMapper newsletterMapper;
     
     public NewsletterController() {
     	this.newsletterMapper = new NewsletterMapper();
     }
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
-    @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<NewsletterDTO> createNewsletter(@RequestBody @Valid NewsletterDTO newsletterDTO, @RequestBody MultipartFile file) throws Exception {
 
-		if(file != null)
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+    @RequestMapping(value = "/create/{cultoffid}", method = RequestMethod.POST)
+    public ResponseEntity<NewsletterDTO> createNewsletter(@RequestBody @Valid NewsletterDTO newsletterDTO,@PathVariable Long cultoffid) throws Exception {
+
+		/*if(file != null)
 		{
 			Picture img = new Picture(file.getOriginalFilename(), file.getContentType(),
 					PictureCompression.compressBytes(file.getBytes()), newsletterMapper.toEntity(newsletterDTO));
 			pictureService.create(img);
-		}
-    	Newsletter newsL;
+		}*/
+    	Newsletter newsletter;
+		Newsletter newNews;
+    	CulturalOffering co = culturalOfferingService.findOne(cultoffid);
     	try {
-    		newsL = newsletterService.create(newsletterMapper.toEntity(newsletterDTO));
+			newsletter = newsletterMapper.toEntity(newsletterDTO);
+			newsletter.setCulturalOffering(co);
+			newNews = newsletterService.create(newsletter);
     	}catch (Exception e) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
-    	return new ResponseEntity<>(newsletterMapper.toDto(newsL),HttpStatus.CREATED);
+    	return new ResponseEntity<>(newsletterMapper.toDto(newNews),HttpStatus.CREATED);
     }
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
@@ -152,7 +158,7 @@ public class NewsletterController {
 	
 	@PreAuthorize("haseRole('ROLE_USER')")
 	@RequestMapping(value="/getbycultoff/{cultOfferingId}",method = RequestMethod.GET)
-	public ResponseEntity<List<NewsletterDTO>> getReviewByCultOffID(@PathVariable Long cultOfferingId) {
+	public ResponseEntity<List<NewsletterDTO>> getNewsletterByCultOffID(@PathVariable Long cultOfferingId) {
 		
 		List<Newsletter> reviewList = newsletterRepo.findAll();
 		List<Newsletter> found = new ArrayList<Newsletter>();

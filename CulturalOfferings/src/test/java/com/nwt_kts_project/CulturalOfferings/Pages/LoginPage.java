@@ -23,6 +23,9 @@ public class LoginPage {
     @FindBy(id = "submit")
     private WebElement loginBtn;
 
+    @FindBy(id = "href-login")
+    private WebElement link;
+
     public LoginPage() {
         super();
     }
@@ -31,10 +34,14 @@ public class LoginPage {
         super();
         this.driver = driver;
     }
-
+    
     public WebElement getUsername() {
         return username;
     }
+    public WebElement getLink() {
+        return link;
+    }
+
 
     public WebElement getPassword() {
         return password;

@@ -34,4 +34,15 @@ export class NewsletterServiceService {
     return this.http.get("api/newsletters/culturalOffer/" + culturalOfferId ,httpOptions).toPromise();
 
   }
+
+  createNewsLetter(culturalOfferId: number, data){
+    let headers_object = new HttpHeaders({
+      "Authorization": "Bearer " + window.sessionStorage.getItem(TOKEN_KEY)
+    })
+    const httpOptions = {
+      headers: headers_object
+    };
+
+    return this.http.post("api/newsletters/create/" + culturalOfferId, data ,httpOptions).toPromise();
+  }
 }
