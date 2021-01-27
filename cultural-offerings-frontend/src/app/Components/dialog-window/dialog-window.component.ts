@@ -7,6 +7,7 @@ import {UserServiceService} from "../../Services/user-service.service";
 import {NewsletterServiceService} from "../../Services/newsletter-service.service";
 import {Newsletter} from "../../model/Newsletter";
 import {User} from "../../model/User";
+import {ImageService} from "../../Services/image.service";
 
 const USER_KEY = 'auth-user';
 
@@ -34,7 +35,7 @@ export class DialogWindowComponent implements OnInit {
   public location : string;
   public description : string;
   public rating : number;
-  public review : Review = {rating: 0, comment: "" ,userId : "0", pictures: [], culturalOfferingID: 0};
+  public review : Review = {id: 0,rating: 0, comment: "" ,userId : "0", picture: null, culturalOfferingID: 0};
   public comment : string;
   public newRating;
   public newsletters: Newsletter[];
@@ -43,6 +44,7 @@ export class DialogWindowComponent implements OnInit {
 
   selectedFile: File;
   retrievedImage: any;
+  coImage: any;
   base64Data: any;
   retrieveResonse: any;
   message: string;
@@ -53,7 +55,8 @@ export class DialogWindowComponent implements OnInit {
               private userService:UserServiceService,
               private authService : AuthService,
               private reviewService: ReviewService,
-              private newsletterService: NewsletterServiceService) {
+              private newsletterService: NewsletterServiceService,
+              private imageService: ImageService) {
 
 
   }
@@ -74,6 +77,21 @@ export class DialogWindowComponent implements OnInit {
     this.isSubbed();
 
   }
+  public async loadCulturalOfferImage(){
+    let response;
+    try{
+      response = await this.imageService.getCulturalOfferImage(this.dialogData.id) as any;
+    }catch(error){
+      console.error(error)
+    }
+    if(response) {
+      this.retrieveResonse = response;
+      this.base64Data = this.retrieveResonse.picByte;
+      this.coImage = 'data:image/jpeg;base64,' + this.base64Data;
+
+    }
+  }
+
   public isLoggedIn(): boolean{
     if(window.sessionStorage.getItem(USER_KEY)){
       return true;
@@ -84,23 +102,28 @@ export class DialogWindowComponent implements OnInit {
   updateRating(newRating : number) {
 
     this.newRating = newRating;
-    console.log(this.newRating);
-    console.log("update rating");
+
   }
 
-  sendReview() {
-    console.log(this.review);
+  public async sendReview() {
     const uploadImageData = new FormData();
-    uploadImageData.append('imageFile', this.selectedFile, this.selectedFile.name);
-
 
     this.review.rating = this.newRating;
     this.review.comment = this.comment;
     this.review.userId = window.sessionStorage.getItem(USER_KEY);
-    this.reviewService.setRatingforOffer(this.review, window.sessionStorage.getItem(USER_KEY), this.review.culturalOfferingID).subscribe(success=> {
-    console.log("USPESNO POSTAVLJANJE RATINGA");
+    let response: Review;
+    try{
+      response = await this.reviewService.setRatingforOffer(this.review, window.sessionStorage.getItem(USER_KEY), this.review.culturalOfferingID) as Review;
+      }catch (error){
+        console.error(error);
+    }
 
-    });
+    if(this.selectedFile)
+    {
+      uploadImageData.append('imageFile', this.selectedFile, this.selectedFile.name);
+      let respone = await this.imageService.uploadReviewImage(uploadImageData,response.id) as any;
+      console.log(respone);
+    }
 
   }
   inputComment(event){
@@ -158,7 +181,28 @@ export class DialogWindowComponent implements OnInit {
       console.error(error)
     }
     this.reviews = response;
-    console.log(this.reviews);
+    for (let review of this.reviews) {
+      review.picture = this.getReviewImage(review.id);
+    }
+
+  }
+
+  public async getReviewImage(reviewId: number){
+    let response;
+    try{
+      response = await this.imageService.getReviewImage(reviewId) as any;
+    }catch(error){
+      console.error(error)
+    }
+    if(response){
+      this.retrieveResonse = response;
+      this.base64Data = this.retrieveResonse.picByte;
+      this.retrievedImage = 'data:image/jpeg;base64,' + this.base64Data;
+      return this.retrievedImage;
+
+    }else{
+      return null;
+    }
 
   }
 
@@ -175,7 +219,6 @@ export class DialogWindowComponent implements OnInit {
   }
 
   public onFileChanged(event) {
-    //Select File
     this.selectedFile = event.target.files[0];
   }
 }
