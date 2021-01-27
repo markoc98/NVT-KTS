@@ -33,7 +33,7 @@ public class LoginE2ETest {
     }
 
     @Test
-    public void LogInTestSuccessUser() throws InterruptedException {
+    public void logInTestSuccessUser() throws InterruptedException {
 
         driver.get("http://localhost:4200/login");
 
@@ -54,7 +54,7 @@ public class LoginE2ETest {
     }
 
     @Test
-    public void LogInTestSuccessAdmin() throws InterruptedException {
+    public void logInTestSuccessAdmin() throws InterruptedException {
 
         driver.get("http://localhost:4200/login");
 
@@ -71,7 +71,7 @@ public class LoginE2ETest {
     }
 
     @Test
-    public void LogInTestFailed() throws InterruptedException {
+    public void logInTestFailed() throws InterruptedException {
 
         driver.get("http://localhost:4200/login");
 
