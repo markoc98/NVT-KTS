@@ -1,19 +1,15 @@
 package com.nwt_kts_project.CulturalOfferings.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-
 import java.util.List;
-
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
-
 import com.nwt_kts_project.CulturalOfferings.model.Newsletter;
-import com.nwt_kts_project.CulturalOfferings.model.Review;
+
 
 import static com.nwt_kts_project.CulturalOfferings.constants.NewsletterConstants.*;
 
@@ -29,7 +25,8 @@ public class NewsletterServiceIntegrationTest {
 	@Test
 	public void testFindAllNews() {
 		List<Newsletter> newsList = newsService.findAll();
-		assertEquals(DB_NEWS_COUNT, newsList.size());
+		assertEquals(1, newsList.size());
+		
 	}
 	
 	@Test

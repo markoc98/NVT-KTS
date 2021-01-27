@@ -40,7 +40,14 @@ public class Newsletter {
         this.content = content;
         this.date = date;
         this.pictures = pictures;
-        CulturalOffering = culturalOffering;	
+        this.CulturalOffering = culturalOffering;
+    }
+
+    public Newsletter(String title, String content, Date date, CulturalOffering culturalOffering) {
+        this.title = title;
+        this.content = content;
+        this.date = date;
+        this.CulturalOffering = culturalOffering;
     }
     
     public Newsletter(String title,String content, Date date) {
