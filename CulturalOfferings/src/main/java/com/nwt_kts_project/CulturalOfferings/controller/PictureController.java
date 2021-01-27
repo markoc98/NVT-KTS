@@ -67,14 +67,12 @@ public class PictureController {
         final Picture retrievedImage = pictureRepo.findByCulturalOfferingId(id).orElse(null);
         if(retrievedImage != null)
         {
-
             Picture img = new Picture(retrievedImage.getName(), retrievedImage.getType(),
                     PictureCompression.decompressBytes(retrievedImage.getPicByte()));
             return new ResponseEntity<>(img,HttpStatus.OK);
         }else{
             return new ResponseEntity<>(null,HttpStatus.NOT_FOUND);
         }
-
     }
 
     @PreAuthorize("hasRole('ROLE_USER')")

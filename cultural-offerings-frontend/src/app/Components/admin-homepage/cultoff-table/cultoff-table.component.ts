@@ -84,12 +84,17 @@ export class CultoffTableComponent implements AfterViewInit, OnInit {
     dialogRef.afterClosed().subscribe(async result => {
       if(result != undefined)
       {
+        try{
           let responseData = await this.culturalOfferingService.updateCulturalOffering(id, result) as CulturalOfferFullModel;
           let index = this.dataSource.data.findIndex(obj => obj.id == id)
           this.dataSource.data.splice(index, 1);
           this.dataSource.data.push(responseData);
           this.dataSource.data.sort((a: CulturalOfferFullModel, b:CulturalOfferFullModel) => a.id - b.id);          
           this.dataSource.data = this.dataSource.data;
+        }
+        catch{
+          alert("Couldn't edit Cultural Offer");
+        }
       }
     });
   }
@@ -103,9 +108,15 @@ export class CultoffTableComponent implements AfterViewInit, OnInit {
     dialogRef.afterClosed().subscribe(async result => {
       if(result != undefined)
       {
-        let responseData = await this.createCultOff(result) as CulturalOfferFullModel;
-        this.dataSource.data.push(responseData);
-        this.dataSource.data = this.dataSource.data;
+        try{
+          let responseData = await this.createCultOff(result) as CulturalOfferFullModel;
+          this.dataSource.data.push(responseData);
+          this.dataSource.data = this.dataSource.data;
+        }
+        catch{
+          alert("Couldn't create Cultural Offer");
+        }
+        
       }
     });
   }

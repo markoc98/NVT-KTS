@@ -63,6 +63,18 @@ public class CategoryController {
         return new ResponseEntity<>(pageCategoryDTOS, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @RequestMapping(value="pageable",method = RequestMethod.GET)
+    public ResponseEntity<List<CategoryDTO>> getAllCategoriesPageable(Pageable pageable) {
+
+        Page<Category> page = catService.findAll(pageable);
+        //List<Category> categories = catService.findAll();
+        List<CategoryDTO> categoryDTOS = toCategoryDTOList(page.toList());
+        // Page<CategoryDTO> pageCategoryDTOS = new PageImpl<>(categoryDTOS,page.getPageable(),page.getTotalElements());
+
+
+        return new ResponseEntity<>(categoryDTOS, HttpStatus.OK);
+    }
     private List<CategoryDTO> toCategoryDTOList(List<Category> categories){
         List<CategoryDTO> categoryDTOS = new ArrayList<>();
         for (Category cat: categories) {

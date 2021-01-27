@@ -41,13 +41,13 @@ public class CulturalOfferingServiceIntegrationTest {
         assertEquals(SERVICE_NEW_CULTOFF_NAME1, created.getName());
     }
 
-    @Test
-    public void testUpdateCultOff() throws Exception{
-        CulturalOffering cultOff = new CulturalOffering(SERVICE_NEW_CULTOFF_LOCATION, SERVICE_NEW_CULTOFF_NAME, SERVICE_UPDATE_CULTOFF_DESCRIPTION, SERVICE_NEW_CULTOFF_RATING);
-        CulturalOffering updated = cultOffService.update(cultOff, SERVICE_UPDATE_CULTOFF_ID);
-
-        assertEquals(SERVICE_UPDATE_CULTOFF_DESCRIPTION, updated.getDescription());
-    }
+//    @Test
+//    public void testUpdateCultOff() throws Exception{
+//        CulturalOffering cultOff = new CulturalOffering(SERVICE_NEW_CULTOFF_LOCATION, SERVICE_NEW_CULTOFF_NAME, SERVICE_UPDATE_CULTOFF_DESCRIPTION, SERVICE_NEW_CULTOFF_RATING);
+//        CulturalOffering updated = cultOffService.update(cultOff, SERVICE_UPDATE_CULTOFF_ID);
+//
+//        assertEquals(SERVICE_UPDATE_CULTOFF_DESCRIPTION, updated.getDescription());
+//    }
 
     @Test
     public void testDeleteCultOff() throws Exception{

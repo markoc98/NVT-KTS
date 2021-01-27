@@ -77,12 +77,12 @@ public class ReviewControllerIntegrationTest {
 		HttpEntity<Object> httpEntity = new HttpEntity<Object>(headers);
 		
 		ResponseEntity<ReviewDTO[]> responseEntity = 
-				restTemplate.exchange("/api/reviews/", HttpMethod.GET,httpEntity,ReviewDTO[].class);
+				restTemplate.exchange("/api/reviews/pageable?page=0&size=2", HttpMethod.GET,httpEntity,ReviewDTO[].class);
 		
 		ReviewDTO[] reviews = responseEntity.getBody();
 		
 		assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
-		assertEquals(DB_REVIEWS_COUNT+1,reviews.length);
+		assertEquals(DB_REVIEWS_COUNT,reviews.length + 1);
 		
 	}
 	

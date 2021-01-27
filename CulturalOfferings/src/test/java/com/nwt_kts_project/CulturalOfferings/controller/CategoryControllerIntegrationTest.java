@@ -5,6 +5,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -81,7 +82,7 @@ public class CategoryControllerIntegrationTest {
         HttpEntity<Object> httpEntity = new HttpEntity<Object>(headers);
 
         ResponseEntity<CategoryDTO[]> responseEntity =
-                restTemplate.exchange("/api/categories/", HttpMethod.GET, httpEntity, CategoryDTO[].class);
+                restTemplate.exchange("/api/categories/pageable?page=0&size=10", HttpMethod.GET, httpEntity, CategoryDTO[].class);
 
         CategoryDTO[] categories = responseEntity.getBody();
         

@@ -16,6 +16,24 @@ public class AdminHomePage {
 	@FindBy(id = "cultOffTable")
     private WebElement cultOffTable;
 	
+	@FindBy(id = "categoryTable")
+    private WebElement categoryTable;
+	
+	@FindBy(id = "newsletterTable")
+    private WebElement newsletterTable;
+	
+	@FindBy(id = "tabCultOff")
+    private WebElement tabCultOff;
+	
+	@FindBy(id = "tabCat")
+    private WebElement tabCat;
+	
+	@FindBy(id = "tabNews")
+    private WebElement tabNews;
+	
+	@FindBy(id = "tabs")
+    private WebElement tabs;
+	
 	//add cult off
 	
 	@FindBy(id = "addCultOffButton")
@@ -186,6 +204,56 @@ public class AdminHomePage {
 		this.deleteCultOffButton = deleteCultOffButton;
 	}
 	
+	
+	
+	public WebElement getCultOffTable() {
+		return cultOffTable;
+	}
+
+	public void setCultOffTable(WebElement cultOffTable) {
+		this.cultOffTable = cultOffTable;
+	}
+
+	public WebElement getCategoryTable() {
+		return categoryTable;
+	}
+
+	public void setCategoryTable(WebElement categoryTable) {
+		this.categoryTable = categoryTable;
+	}
+
+	public WebElement getNewsletterTable() {
+		return newsletterTable;
+	}
+
+	public void setNewsletterTable(WebElement newsletterTable) {
+		this.newsletterTable = newsletterTable;
+	}
+
+	public WebElement getTabCultOff() {
+		return tabCultOff;
+	}
+
+	public void setTabCultOff(WebElement tabCultOff) {
+		this.tabCultOff = tabCultOff;
+	}
+
+	public WebElement getTabCat() {
+		return tabCat;
+	}
+
+	public void setTabCat(WebElement tabCat) {
+		this.tabCat = tabCat;
+	}
+
+	public WebElement getTabNews() {
+		return tabNews;
+	}
+
+	public void setTabNews(WebElement tabNews) {
+		this.tabNews = tabNews;
+	}
+
 	public AdminHomePage() {
 	}
 
@@ -194,6 +262,16 @@ public class AdminHomePage {
 		this.driver = driver;
 	}
 	
+	
+	
+	public WebElement getTabs() {
+		return tabs;
+	}
+
+	public void setTabs(WebElement tabs) {
+		this.tabs = tabs;
+	}
+
 	public void ensureIsDisplayedEditCultOffButton() {
         (new WebDriverWait(driver, 30)).until(ExpectedConditions.elementToBeClickable(By.id("editCultOffButton")));
     }
@@ -225,5 +303,24 @@ public class AdminHomePage {
 	public void ensureIsDisplayedAddCultOffButtonOk() {
         (new WebDriverWait(driver, 30)).until(ExpectedConditions.elementToBeClickable(By.id("addCultOffButtonOk")));
     }
-
+	
+	public void ensureIsDisplayedCategoryTable() {
+        (new WebDriverWait(driver, 30)).until(ExpectedConditions.elementToBeClickable(By.id("categoryTable")));
+    }
+	
+	public void ensureIsDisplayedNewsletterTable() {
+        (new WebDriverWait(driver, 30)).until(ExpectedConditions.elementToBeClickable(By.id("newsletterTable")));
+    }
+	
+	public void ensureIsDisplayedNewsletterTab() {
+        (new WebDriverWait(driver, 30)).until(ExpectedConditions.elementToBeClickable(By.id("tabNews")));
+    }
+	
+	public void ensureIsDisplayedCatTab() {
+        (new WebDriverWait(driver, 30)).until(ExpectedConditions.elementToBeClickable(By.id("tabCat")));
+    }
+	
+	public void ensureIsDisplayedCOTab() {
+        (new WebDriverWait(driver, 30)).until(ExpectedConditions.elementToBeClickable(By.id("tabCultOff")));
+    }
 }
