@@ -1,5 +1,5 @@
 
-<div class="info-and-review">
+<div id="dialogWindow" class="info-and-review">
     <div class="info">
       <div class="info-text">
         <h1>{{name}}</h1>
@@ -25,7 +25,7 @@
         </div>
         <label class="rating-label" >Leave a rating</label>
         <div class="comment">
-          <textarea placeholder=" Leave a comment here..." class="comment-text-area" rows="4" cols="50" name="comment" [(ngModel)]="comment" (input)="inputComment($event)" >
+          <textarea id = "textAreaComment" placeholder=" Leave a comment here..." class="comment-text-area" rows="4" cols="50" name="comment" [(ngModel)]="comment" (input)="inputComment($event)" >
 
           </textarea>
           <input type="file" (change)="onFileChanged($event)">

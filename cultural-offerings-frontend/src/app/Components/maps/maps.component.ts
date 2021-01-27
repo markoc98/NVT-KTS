@@ -67,9 +67,9 @@ export class MapsComponent implements OnInit {
   }
   selectOption(id: number){
     this.categoryName = id;
-    if(this.searchLocation !== ''){
-      this.searchCulturalOfferings();
-    }
+    // if(this.searchLocation !== ''){
+    //   this.searchCulturalOfferings();
+    // }
 
   }
 
