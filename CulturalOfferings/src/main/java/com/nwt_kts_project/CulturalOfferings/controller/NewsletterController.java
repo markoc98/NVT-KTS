@@ -3,12 +3,12 @@ package com.nwt_kts_project.CulturalOfferings.controller;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import javax.validation.Valid;
 
 import com.nwt_kts_project.CulturalOfferings.model.*;
-import com.nwt_kts_project.CulturalOfferings.service.CulturalOfferingService;
-import com.nwt_kts_project.CulturalOfferings.service.PictureService;
+import com.nwt_kts_project.CulturalOfferings.service.*;
 import com.nwt_kts_project.CulturalOfferings.utility.PictureCompression;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -17,6 +17,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -28,7 +29,6 @@ import com.nwt_kts_project.CulturalOfferings.dto.CategoryDTO;
 import com.nwt_kts_project.CulturalOfferings.dto.NewsletterDTO;
 import com.nwt_kts_project.CulturalOfferings.dto.ReviewDTO;
 import com.nwt_kts_project.CulturalOfferings.repository.NewsletterRepository;
-import com.nwt_kts_project.CulturalOfferings.service.NewsletterService;
 import com.nwt_kts_project.CulturalOfferings.utility.NewsletterMapper;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -39,6 +39,9 @@ public class NewsletterController {
     @Autowired
     NewsletterRepository newsletterRepo;
 
+	@Autowired
+	private EmailSenderService emailSenderService;
+
     @Autowired
 	private PictureService pictureService;
 
@@ -48,6 +51,8 @@ public class NewsletterController {
     @Autowired
 	private CulturalOfferingService culturalOfferingService;
 
+    @Autowired
+	private UserService userService;
 
     private NewsletterMapper newsletterMapper;
     
@@ -71,12 +76,58 @@ public class NewsletterController {
     	try {
 			newsletter = newsletterMapper.toEntity(newsletterDTO);
 			newsletter.setCulturalOffering(co);
+
 			newNews = newsletterService.create(newsletter);
+
     	}catch (Exception e) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
+		sendMails(co, newNews.getTitle(), newNews.getContent());
     	return new ResponseEntity<>(newsletterMapper.toDto(newNews),HttpStatus.CREATED);
     }
+
+	private void sendMails(CulturalOffering culturalOffering, String title, String content) {
+		System.out.println("id coa je " + culturalOffering.getId());
+		List<User> users =	userService.findAll();
+		for(User user: users)
+		{
+			if(user.getSubscribedTo()==null){
+				for(CulturalOffering co: user.getSubscribedTo()){
+					if(co.getId().equals(culturalOffering.getId())){
+
+						SimpleMailMessage mailMessage = new SimpleMailMessage();
+						mailMessage.setTo(user.getEmail());
+						mailMessage.setSubject(title);
+						mailMessage.setFrom("culturalofferings@gmail.com");
+						mailMessage.setText(content);
+						System.out.println("Emails sent!");
+						emailSenderService.sendMail(mailMessage);
+					}
+				}
+			}
+
+		}
+//		if(culturalOffering.getSubscribedUsers() != null){
+//			Set<User> subscribers = culturalOffering.getSubscribedUsers();
+//
+//			System.out.println("imamo subscrajbera:" + subscribers.size());
+//			for(User subscriber : subscribers) {
+//				SimpleMailMessage mailMessage = new SimpleMailMessage();
+//				mailMessage.setTo(subscriber.getEmail());
+//				mailMessage.setSubject(title);
+//				mailMessage.setFrom("culturalofferings@gmail.com");
+//				mailMessage.setText(content);
+//
+//				emailSenderService.sendMail(mailMessage);
+//			}
+//		}
+//		else {
+//			System.out.println("jeste null jbfg");
+//		}
+
+	}
+
+
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<Void> deleteNewsletter(@PathVariable Long id){
@@ -112,6 +163,17 @@ public class NewsletterController {
 
     	return new ResponseEntity<>(pageNewsletterDTOS,HttpStatus.OK);
     }
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@RequestMapping(value="pageable", method = RequestMethod.GET)
+	public ResponseEntity<List<NewsletterDTO>> getAllNewslettersPageable(Pageable pageable){
+		//List<Newsletter> newsletters = newsletterService.findAll();
+
+		Page<Newsletter> page = newsletterService.findAll(pageable);
+		List<NewsletterDTO> newsletterDTOS = toNewsletterDTOList(page.toList());
+		//Page<NewsletterDTO> pageNewsletterDTOS = new PageImpl<>(newsletterDTOS,page.getPageable(),page.getTotalElements());
+
+		return new ResponseEntity<>(newsletterDTOS,HttpStatus.OK);
+	}
 
 	@PreAuthorize("hasRole('ROLE_USER')")
 	@RequestMapping(value="/culturalOffer/{culturalOfferId}",method = RequestMethod.GET)

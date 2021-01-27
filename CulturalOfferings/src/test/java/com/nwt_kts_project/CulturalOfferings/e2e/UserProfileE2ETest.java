@@ -1,6 +1,7 @@
 package com.nwt_kts_project.CulturalOfferings.e2e;
 
 import com.nwt_kts_project.CulturalOfferings.Pages.LoginPage;
+import com.nwt_kts_project.CulturalOfferings.Pages.MapPage;
 import com.nwt_kts_project.CulturalOfferings.Pages.RegisterPage;
 import com.nwt_kts_project.CulturalOfferings.Pages.UserProfilePage;
 import org.junit.After;
@@ -24,6 +25,8 @@ public class UserProfileE2ETest {
 
     private LoginPage loginPage;
 
+    private MapPage mapPage;
+
     @Before
     public void setUp() {
 
@@ -33,6 +36,8 @@ public class UserProfileE2ETest {
         driver.manage().window().maximize();
         userProfilePage = PageFactory.initElements(driver, UserProfilePage.class);
         loginPage = PageFactory.initElements(driver, LoginPage.class);
+        mapPage = PageFactory.initElements(driver, MapPage.class);
+
 
     }
 
@@ -63,11 +68,11 @@ public class UserProfileE2ETest {
         //redirectovani smo na home page gde je mapa
         //proverimo da li smo tamo
         assertEquals("http://localhost:4200/maps", driver.getCurrentUrl());
-        justWait(1000);
+        justWait(2000);
 
-        //asdkjlajsd-------------------------------------------------------------xxxxxxx-x-xx--x-x-x-x-x--x-x
         //ovo treba da bude mapPage.button.click da odemo tamo al za sada je ovo
-        driver.get("http://localhost:4200/user-profile");
+        mapPage.getMyProfileRouteButton().click();
+
         justWait(1000);
 
         //proverimo da li smo stigli na user profile

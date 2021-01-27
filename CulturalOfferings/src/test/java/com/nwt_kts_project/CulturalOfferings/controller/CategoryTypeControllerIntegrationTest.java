@@ -77,7 +77,7 @@ public class CategoryTypeControllerIntegrationTest {
         HttpEntity<Object> httpEntity = new HttpEntity<Object>(headers);
         
         ResponseEntity<CategoryTypeDTO[]> responseEntity =
-                restTemplate.exchange("/api/categoryTypes/", HttpMethod.GET, httpEntity, CategoryTypeDTO[].class);
+                restTemplate.exchange("/api/categoryTypes/pageable?page=0&size=10", HttpMethod.GET, httpEntity, CategoryTypeDTO[].class);
 
         CategoryTypeDTO[] categoryTypes = responseEntity.getBody();
 
