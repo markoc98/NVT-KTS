@@ -55,14 +55,14 @@ public class NewsletterController {
     }
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<NewsletterDTO> createNewsletter(@RequestBody @Valid NewsletterDTO newsletterDTO, @RequestBody MultipartFile file) throws Exception {
-
-		if(file != null)
-		{
-			Picture img = new Picture(file.getOriginalFilename(), file.getContentType(),
-					PictureCompression.compressBytes(file.getBytes()), newsletterMapper.toEntity(newsletterDTO));
-			pictureService.create(img);
-		}
+    //public ResponseEntity<NewsletterDTO> createNewsletter(@RequestBody @Valid NewsletterDTO newsletterDTO, @RequestBody MultipartFile file) throws Exception {
+	public ResponseEntity<NewsletterDTO> createNewsletter(@RequestBody @Valid NewsletterDTO newsletterDTO) throws Exception {
+//		if(file != null)
+//		{
+//			Picture img = new Picture(file.getOriginalFilename(), file.getContentType(),
+//					PictureCompression.compressBytes(file.getBytes()), newsletterMapper.toEntity(newsletterDTO));
+//			pictureService.create(img);
+//		}
     	Newsletter newsL;
     	try {
     		newsL = newsletterService.create(newsletterMapper.toEntity(newsletterDTO));
