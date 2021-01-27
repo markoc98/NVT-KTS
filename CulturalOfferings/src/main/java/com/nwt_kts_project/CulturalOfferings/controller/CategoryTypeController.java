@@ -130,5 +130,4 @@ public class CategoryTypeController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-
 }
