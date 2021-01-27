@@ -89,7 +89,7 @@ public class CulturalOfferingController {
         }
         CulturalOffering cultOff;
         try {
-            cultOff = cultOffService.create(cultOffMapper.toEntity(cultOffDTO));
+            cultOff = cultOffService.create(cultOffMapper.toEntityCreate(cultOffDTO));
         } catch (Exception e) {
             System.out.println(e.getMessage());
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
