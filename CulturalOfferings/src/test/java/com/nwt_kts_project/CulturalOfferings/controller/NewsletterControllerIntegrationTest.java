@@ -96,7 +96,7 @@ public class NewsletterControllerIntegrationTest {
 			
 		HttpHeaders headers = new HttpHeaders();
         headers.add("Authorization", accessToken);
-        HttpEntity<Object> httpEntity = new HttpEntity<Object>(new NewsletterDTO(555L, NEW_NEWS_TITLE,NEW_NEWS_CONTENT,NEW_NEWS_DATE),headers);
+        HttpEntity<Object> httpEntity = new HttpEntity<Object>(new NewsletterDTO(NEW_NEWS_TITLE,NEW_NEWS_CONTENT,NEW_NEWS_DATE),headers);
         
         ResponseEntity<NewsletterDTO> responseEntity = 
         		restTemplate.exchange("/api/newsletters/create/1", HttpMethod.POST,httpEntity,NewsletterDTO.class);

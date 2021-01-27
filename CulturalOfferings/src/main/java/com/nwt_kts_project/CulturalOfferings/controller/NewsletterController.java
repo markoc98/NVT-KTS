@@ -76,6 +76,7 @@ public class NewsletterController {
     	try {
 			newsletter = newsletterMapper.toEntity(newsletterDTO);
 			newsletter.setCulturalOffering(co);
+
 			newNews = newsletterService.create(newsletter);
 
     	}catch (Exception e) {
