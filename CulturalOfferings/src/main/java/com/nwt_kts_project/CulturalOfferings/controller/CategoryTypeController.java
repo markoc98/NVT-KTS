@@ -58,6 +58,18 @@ public class CategoryTypeController {
         return new ResponseEntity<>(pageCategoryTypeDTOS, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @RequestMapping(value="pageable",method = RequestMethod.GET)
+    public ResponseEntity<List<CategoryTypeDTO>> getAllCategoryTypesPageable(Pageable pageable) {
+
+        Page<CategoryType> page = categoryTypeService.findAll(pageable);
+        //List<CategoryType> categoryTypes = categoryTypeService.findAll();
+        List<CategoryTypeDTO> categoryTypeDTOS = toCategoryTypeDTOList(page.toList());
+        //Page<CategoryTypeDTO> pageCategoryTypeDTOS = new PageImpl<>(categoryTypeDTOS,page.getPageable(),page.getTotalElements());
+
+        return new ResponseEntity<>(categoryTypeDTOS, HttpStatus.OK);
+    }
+
     //GET ZAHTEV ZA DOBAVLJANJE SVIH TIPOVA KATEGORIJA
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping(value="/getbycategoryid/{catId}" ,method = RequestMethod.GET)
@@ -129,6 +141,5 @@ public class CategoryTypeController {
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
-
 
 }

@@ -1,44 +1,57 @@
 <html>
+<link rel="stylesheet" href="./user-profile.component.scss" />
 <body>
-<button class="home-button" (click)="goHome()">Home</button>
-<div class="user-profile">
+<div class="user-profile-page">
+  <div class="header">
+    <button mat-raised-button id="home-button" color="primary" class="home-button" (click)="goHome()">
+      Go to Home page
+    </button>
+  </div>
 
   <div class="user-info">
-    <h1> {{ user.username | uppercase }}'S PROFILE</h1>
+    <h1>{{ user.username | uppercase }}'S PROFILE</h1>
 
     <div class="edit-form">
-        <table class="edit-form-table">
-            <tr>
-                <td><label>Username  : </label></td>
-                <td align="right"><label >{{user.username}} </label></td>
-            </tr>
-            <tr>
-                <td><label>Email  : </label></td>
-                <td align="right"><label>{{user.email}} </label></td>
-            </tr>
-        </table>
+      <div class="edit-form-table">
+        <div class="edit-form-username">
+          <label>Username:  &nbsp;</label>
+          <label>{{ user.username }} </label>
+        </div>
+        <div class="edit-form-email">
+          <label>Email:  &nbsp;</label>
+          <label>{{ user.email }} </label>
+        </div>
+      </div>
     </div>
   </div>
-    <br>
 
-    <div class="newsletters">
-        <h2>Active subscriptions</h2>
-        <table border = "1" class="news-table">
-            <thead>
-            <tr>
-                <th>Name</th>
-                <th>Unsubscribe</th>
-            </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let subscription of subscribed">
-                    <td>{{subscription.name}}</td>
-                    <td><button class="unsub-btn" (click)="unsubscribe(subscription.id)">Unsubscribe</button></td>
-                </tr>
-            </tbody>
-        </table>
+  <div class="newsletters">
+    <div class="newsletters-container">
+      <h2>Active subscriptions</h2>
+      <table id="subscription-table" border="1" class="news-table">
+        <thead class="table-head">
+        <tr>
+          <th>Name</th>
+          <th>Unsubscribe</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let subscription of subscribed">
+          <td>{{ subscription.name }}</td>
+          <td>
+            <button mat-raised-button
+                    color="primary"
+              class="unsub-btn"
+              (click)="unsubscribe(subscription.id)"
+            >
+              Unsubscribe
+            </button>
+          </td>
+        </tr>
+        </tbody>
+      </table>
     </div>
+  </div>
 </div>
 </body>
 </html>
-

@@ -69,6 +69,20 @@ public class CulturalOfferingController {
         return new ResponseEntity<>(pageCultOffDTOS, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')" + "|| hasRole('ROLE_USER')")
+    @RequestMapping(value="pageable",method = RequestMethod.GET)
+    public ResponseEntity<List<CulturalOfferingDTO>> getAllCulturalOfferingsPageable(@PageableDefault(size = 100, sort = {"id"}, direction = Sort.Direction.ASC) Pageable pageable) {
+        //List<CulturalOffering> cultOffs = cultOffService.findAll();
+
+        Page<CulturalOffering> page = cultOffService.findAll(pageable);
+        List<CulturalOfferingDTO> cultOffDTOS = toCultOffDTOList(page.toList());
+        //Page<CulturalOfferingDTO> pageCultOffDTOS = new PageImpl<>(cultOffDTOS,page.getPageable(),page.getTotalElements());
+
+
+
+        return new ResponseEntity<>(cultOffDTOS, HttpStatus.OK);
+    }
+
     private List<CulturalOfferingDTO> toCultOffDTOList(List<CulturalOffering> cultOffs){
         List<CulturalOfferingDTO> cultOffDTOS = new ArrayList<>();
         for (CulturalOffering cultOff: cultOffs) {

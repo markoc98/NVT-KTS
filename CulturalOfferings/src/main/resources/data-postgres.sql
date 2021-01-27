@@ -5,10 +5,16 @@ INSERT INTO authority (name) VALUES ('ROLE_USER');
 --password admin
 INSERT INTO user_table (email, username, password, is_enabled) VALUES ('adminadminovic@gmail.com', 'admin' ,'$2a$04$SwzgBrIJZhfnzOw7KFcdzOTiY6EFVwIpG7fkF/D1w26G1.fWsi.aK', true);
 --INSERT INTO user_table (email, username, password, is_enabled) VALUES ('userrrrrrr@gmail.com', 'user', '$2a$04$Amda.Gm4Q.ZbXz9wcohDHOhOBaNQAkSS1QO26Eh8Hovu3uzEpQvcq', true);
-INSERT INTO user_table (email, username, password, is_enabled) VALUES ('userrrrrrr@gmail.com', 'user', '$2a$04$Amda.Gm4Q.ZbXz9wcohDHOhOBaNQAkSS1QO26Eh8Hovu3uzEpQvcq', true );
+INSERT INTO user_table (email, username, password, is_enabled) VALUES ('noteventryingyo@gmail.com', 'user', '$2a$04$Amda.Gm4Q.ZbXz9wcohDHOhOBaNQAkSS1QO26Eh8Hovu3uzEpQvcq', true );
+INSERT INTO user_table (email, username, password, is_enabled) VALUES ('drugiuserovic@gmail.com', 'miha', '$2a$04$Amda.Gm4Q.ZbXz9wcohDHOhOBaNQAkSS1QO26Eh8Hovu3uzEpQvcq', true );
+INSERT INTO user_table (email, username, password, is_enabled) VALUES ('dobarjakogmail@gmail.com', 'user2', '$2a$04$Amda.Gm4Q.ZbXz9wcohDHOhOBaNQAkSS1QO26Eh8Hovu3uzEpQvcq', true );
+
+
 
 insert into user_authority (user_id, authority_id) values (1, 1); -- admin has ROLE_ADMIN
 insert into user_authority (user_id, authority_id) values (2, 2); -- user has ROLE_USER
+insert into user_authority (user_id, authority_id) values (3, 2); -- user has ROLE_USER
+insert into user_authority (user_id, authority_id) values (4, 2); -- user has ROLE_USER
 
 INSERT INTO category_table (name) VALUES ('Events');
 INSERT INTO category_table (name) VALUES ('Cultural goods');
@@ -60,15 +66,19 @@ INSERT INTO cultural_offerings (location, name, description, rating,category_id,
 
 
 --INSERT INTO user_cultural_offering (user_id, cultural_offering_id) VALUES (1,1);
-INSERT INTO user_cultural_offering (user_id, cultural_offering_id) VALUES (2,1);
 INSERT INTO user_cultural_offering (user_id, cultural_offering_id) VALUES (2,2);
 INSERT INTO user_cultural_offering (user_id, cultural_offering_id) VALUES (2,3);
-INSERT INTO user_cultural_offering (user_id, cultural_offering_id) VALUES (2,4);
 INSERT INTO user_cultural_offering (user_id, cultural_offering_id) VALUES (2,5);
 INSERT INTO user_cultural_offering (user_id, cultural_offering_id) VALUES (2,6);
 INSERT INTO user_cultural_offering (user_id, cultural_offering_id) VALUES (2,7);
 INSERT INTO user_cultural_offering (user_id, cultural_offering_id) VALUES (2,8);
 INSERT INTO user_cultural_offering (user_id, cultural_offering_id) VALUES (2,9);
 
-insert into newsletter (title, content, date, cultural_offering_cultural_offering_id) values ('EXIT NAJBOLJI', 'Lorem Ipsook a galley ope specimen book. It unchanged. It was popularised in the 1960s with the release ofker including versions of Lorem Ipsum.', '01.01.2021.','1');
-insert into newsletter (title, content, date, cultural_offering_cultural_offering_id) values ('Exit otkazan ove godine svi placu', 'Lorem Ipsook a galley ope specimen book. It unchanged. It was popularised in the 1960s with the release ofker including versions of Lorem Ipsum.', '05.12.2020.','1');
+insert into newsletter (id, title, content, date, cultural_offering_cultural_offering_id) values (93,'Novi muzej u novom sadu', 'Lorem Ipsook a galley ope specimen book. It unchanged. It was popularised in the 1960s with the release ofker including versions of Lorem Ipsum.', '01.01.2021.','1');
+insert into newsletter (id, title, content, date, cultural_offering_cultural_offering_id) values (94,'Izlozbe ', 'Lorem Ipsook a galley ope specimen book. It unchanged. It was popularised in the 1960s with the release ofker including versions of Lorem Ipsum.', '01.01.2021.','1');
+insert into newsletter (id, title, content, date, cultural_offering_cultural_offering_id) values (95,'EXIT NAJBOLJI', 'Lorem Ipsook a galley ope specimen book. It unchanged. It was popularised in the 1960s with the release ofker including versions of Lorem Ipsum.', '01.01.2021.','1');
+insert into newsletter (id, title, content, date, cultural_offering_cultural_offering_id) values (96,'Dodjite kod nas!!!', 'Lorem Ipsook a galley ope specimen book. It unchanged. It was popularised in the 1960s with the release ofker including versions of Lorem Ipsum.', '01.01.2021.','1');
+insert into newsletter (id, title, content, date, cultural_offering_cultural_offering_id) values (97,'Zvonko Bogdan potvrdio dolazak', 'Lorem Ipsook a galley ope specimen book. It unchanged. It was popularised in the 1960s with the release ofker including versions of Lorem Ipsum.', '01.01.2021.','1');
+
+insert into newsletter (id, title, content, date, cultural_offering_cultural_offering_id) values (98,'Prava kulturna dobra', 'Lorem Ipsook a galley ope specimen book. It unchanged. It was popularised in the 1960s with the release ofker including versions of Lorem Ipsum.', '01.01.2021.','1');
+insert into newsletter (id, title, content, date, cultural_offering_cultural_offering_id) values (99, 'Exit otkazan ove godine svi placu', 'Lorem Ipsook a galley ope specimen book. It unchanged. It was popularised in the 1960s with the release ofker including versions of Lorem Ipsum.', '05.12.2020.','1');

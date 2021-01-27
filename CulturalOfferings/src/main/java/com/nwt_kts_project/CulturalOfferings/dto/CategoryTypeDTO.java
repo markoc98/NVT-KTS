@@ -32,7 +32,5 @@ public class CategoryTypeDTO {
 	public void setName(String name) {
 		this.name = name;
 	}
-	
-	
 
 }

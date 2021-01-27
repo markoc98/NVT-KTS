@@ -1,61 +1,23 @@
-body {
-    background-color: #f2d4bd;
-    background-size: cover;
-    position: fixed;
-    min-width: 100%;
-    min-height: 100%;
-}
-
-.co-table, .n-table, .ct-table{
-    margin-top: 15px;
-    margin-left: auto;
-    margin-right: auto;
-    border-collapse: collapse;
-    width: 80%;
-}
-
-.co-table th, .n-table th, .ct-table th{
-    padding-top: 6px;
-    padding-bottom: 6px;
-    padding-left: 8px;
-    padding-right: 8px;
-    color: white;
-    background-color: #262626;
-}
-
-
-.co-table tr, .n-table tr, .ct-table tr{
-    padding-top: 6px;
-    padding-bottom: 6px;
-    padding-left: 8px;
-    padding-right: 8px;
-    color: #262626;
-    background-color: #ffffff;
-    text-align: center;
-}
-
-.table-btn{
-    background-color: #535353;
-    border: none;
-    color: #ffffff;
-    padding-left: 8px;
-    padding-right: 8px;
-    padding-top: 6px;
-    padding-bottom: 6px;
-    margin-top: 3px;
-    margin-bottom: 3px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 14px;
-    cursor: pointer;
-    border-radius: 14px;
-    transition-duration: 0.4s;
-    display: inline-block;}
-
-.table-btn:hover{
-    background-color: #262626;
-    color: white;
-    box-shadow: 0 3px 5px 0 rgba(0,0,0,0.24), 0 3px 5px 0 rgba(0,0,0,0.19);
-}
+table {
+    width: 100%;
+  }
   
+  .mat-form-field {
+    font-size: 14px;
+    width: 80%;
+  }
+  
+  td, th {
+    width: 17%;
+  }
+
+  .addButton{
+    width: 10%;
+    margin-inline-start: 10%;
+  }
+
+  body{
+    padding-left: 10%;
+    padding-right: 10%;
+    align-content: center;
+  }
