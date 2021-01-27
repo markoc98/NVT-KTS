@@ -152,7 +152,7 @@ public class NewsletterController {
 	
 	@PreAuthorize("haseRole('ROLE_USER')")
 	@RequestMapping(value="/getbycultoff/{cultOfferingId}",method = RequestMethod.GET)
-	public ResponseEntity<List<NewsletterDTO>> getReviewByCultOffID(@PathVariable Long cultOfferingId) {
+	public ResponseEntity<List<NewsletterDTO>> getNewsletterByCultOffID(@PathVariable Long cultOfferingId) {
 		
 		List<Newsletter> reviewList = newsletterRepo.findAll();
 		List<Newsletter> found = new ArrayList<Newsletter>();
