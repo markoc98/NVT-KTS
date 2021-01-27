@@ -12,6 +12,8 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.http.*;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.TestPropertySource;
@@ -24,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.validation.Valid;
 
+import java.awt.print.Pageable;
 import java.util.List;
 
 import static com.nwt_kts_project.CulturalOfferings.constants.UserConstants.*;
@@ -95,27 +98,26 @@ public class UserControllerIntegrationTest {
         assertNull(user);
     }
 
-    @Test
-    public void testGetAllUsers()
-    {
-        login(DB_ADMIN_USERNAME,DB_ADMIN_PASSWORD);
+       @Test
+       public void testGetAllUsers()
+       {
+           login(DB_ADMIN_USERNAME,DB_ADMIN_PASSWORD);
 
-        // postavimo JWT token u zaglavlje zahteva da bi bilo dozvoljeno da pozovemo funkcionalnost
-        HttpHeaders headers = new HttpHeaders();
-        headers.add("Authorization", accessToken);
-        // kreiramo objekat koji saljemo u sklopu zahteva
-        // objekat nema telo, vec samo zaglavlje, jer je rec o GET zahtevu
-        HttpEntity<Object> httpEntity = new HttpEntity<Object>(headers);
+           // postavimo JWT token u zaglavlje zahteva da bi bilo dozvoljeno da pozovemo funkcionalnost
+           HttpHeaders headers = new HttpHeaders();
+           headers.add("Authorization", accessToken);
+           // kreiramo objekat koji saljemo u sklopu zahteva
+           // objekat nema telo, vec samo zaglavlje, jer je rec o GET zahtevu
+           HttpEntity<Object> httpEntity = new HttpEntity<Object>(headers);
 
+           ResponseEntity<UserDTO[]> responseEntity =
+                   restTemplate.exchange("/api/users/", HttpMethod.GET, httpEntity, UserDTO[].class);
 
-        ResponseEntity<UserDTO[]> responseEntity =
-                restTemplate.exchange("/api/users/", HttpMethod.GET, httpEntity, UserDTO[].class);
+           UserDTO[] users = responseEntity.getBody();
 
-        UserDTO[] users = responseEntity.getBody();
-
-        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
-        assertEquals(users.length, DB_USERS_COUNT);
-    }
+           assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+           assertEquals(users.length, DB_USERS_COUNT);
+       }
     @Test
     @Transactional
     @Rollback(true)
@@ -194,43 +196,7 @@ public class UserControllerIntegrationTest {
         assertNull(user);
     }
 
-//    @Test
 
-//    public void testUpdateUser() throws Exception {
-//        login(DB_ADMIN_USERNAME, DB_ADMIN_PASSWORD);
-//
-//        // postavimo JWT token u zaglavlje zahteva da bi bilo dozvoljeno da pozovemo funkcionalnost
-//        HttpHeaders headers = new HttpHeaders();
-//        headers.add("Authorization", accessToken);
-//        // kreiramo objekat koji saljemo u sklopu zahteva
-//        HttpEntity<Object> httpEntity = new HttpEntity<Object>(new UserDTO(2L, DB_USER_USERNAME, DB_USER_USERNAME, NEW_USER_PASSWORD1), headers);
-//        ResponseEntity<UserDTO> responseEntity =
-//                restTemplate.exchange("/api/users/update/2",
-//                        HttpMethod.PUT, httpEntity,
-//                        UserDTO.class);
-//
-//
-//        UserDTO user = responseEntity.getBody();
-//        // provera odgovora servera
-//        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
-//        assertNotNull(user);
-//
-//        assertEquals(DB_USER_ID, user.getId());
-//        assertEquals(NEW_USER_PASSWORD1DB, user.getPassword());
-//
-//        // provera da li je izmenjen slog u bazi
-//
-//        User user1 = userService.findOne(DB_USER_ID);
-//
-//        assertEquals(DB_USER_ID, user1.getId());
-//        assertEquals(NEW_USER_PASSWORD1DB, user1.getPassword());
-//
-//        // vracanje podatka na staru vrednost
-//        user1.setPassword(DB_USER_PASSWORD);
-//        userService.update(user1, user1.getId());
-//
-//
-//    }
 
   //  @Transactional
   //  @Rollback(true)
@@ -335,7 +301,7 @@ public class UserControllerIntegrationTest {
         // kreiramo objekat koji saljemo u sklopu zahteva
         HttpEntity<Object> httpEntity = new HttpEntity<Object>( headers);
         ResponseEntity<Void> responseEntity =
-                restTemplate.exchange("/api/users/unsubscribe/2/3",
+                restTemplate.exchange("/api/users/unsubscribe/3/2",
                         HttpMethod.GET, httpEntity,
                         Void.class);
 

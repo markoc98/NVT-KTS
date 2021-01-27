@@ -62,16 +62,14 @@ public class UserController {
     //GET ZAHTEV ZA DOBAVLJANJE SVIH USERA
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<Page<UserDTO>> getAllUsers(Pageable pageable) {
-        //List<User> users = userService.findAll();
-    	
-    	Page<User> page = userService.findAll(pageable);
-    	List<UserDTO> userDTOS = toUserDTOList(page.toList());
-        Page<UserDTO> pageUserDTOS = new PageImpl<>(userDTOS,page.getPageable(),page.getTotalElements());
+    public ResponseEntity<List<UserDTO>> getAllUsers(Pageable pageable) {
+        List<User> users = userService.findAll();
 
+//    	Page<User> page = userService.findAll(pageable);
+//    	List<UserDTO> userDTOS = toUserDTOList(page.toList());
+//        Page<UserDTO> pageUserDTOS = new PageImpl<>(userDTOS,page.getPageable(),page.getTotalElements());
 
-
-        return new ResponseEntity<>(pageUserDTOS, HttpStatus.OK);
+        return new ResponseEntity<>(toUserDTOList(users), HttpStatus.OK);
     }
 
     private List<UserDTO> toUserDTOList(List<User> users){
