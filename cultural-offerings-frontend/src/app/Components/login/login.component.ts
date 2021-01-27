@@ -40,7 +40,13 @@ export class LoginComponent implements OnInit {
       this.TokenStorage.saveToken(accessToken);
       console.log(accessToken)
       this.TokenStorage.saveUser(response.userID);
-      this.goToHomePage();
+      if(response.userID == '1')
+      {
+        this.goAdminPage();
+      }else{
+        this.goToHomePage();
+      }
+
     }
     catch(error) {
       console.error(error);
@@ -57,5 +63,9 @@ export class LoginComponent implements OnInit {
 
   private goToHomePage() {
     this.router.navigate([''])
+  }
+
+  private goAdminPage() {
+    this.router.navigate(['admin-homepage'])
   }
 }

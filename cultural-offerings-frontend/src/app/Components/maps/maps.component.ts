@@ -5,9 +5,12 @@ import { MapService } from 'src/app/Services/map-service.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { stringify } from '@angular/compiler/src/util';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
-import { EventEmitterService } from '../../event-emitter.service';  
+import { EventEmitterService } from '../../event-emitter.service';
 import { MatDialog } from '@angular/material/dialog';
 import {DialogWindowComponent} from '../dialog-window/dialog-window.component';
+import {Router} from "@angular/router";
+
+const USER_KEY = 'auth-user';
 
 @Component({
   selector: 'app-maps',
@@ -17,10 +20,11 @@ import {DialogWindowComponent} from '../dialog-window/dialog-window.component';
 
 export class MapsComponent implements OnInit {
 
+
   //public name: string;
   public searchLocation;
   public entities;
-  public categoryName; 
+  public categoryName;
   public latitude;
   public longitude;
   public currMarker;
@@ -31,12 +35,14 @@ export class MapsComponent implements OnInit {
     { id: 3, name: 'Institutions' },
   ];
   selected: string = 'Events';
-  
+
   map: Mapboxgl.Map;
+  userLoggedIn: boolean;
 
   constructor(private mapService : MapService,
       private eventEmitterService: EventEmitterService,
-      private dialog: MatDialog
+      private dialog: MatDialog,
+              private router: Router
 
     ){
     this.searchLocation = '';
@@ -45,14 +51,32 @@ export class MapsComponent implements OnInit {
     this.currMarker = [];
   }
 
+  ngOnInit() {
+    Mapboxgl.accessToken = environment.mapboxKey;
+    this.userLoggedIn = this.isUserLogged();
+
+    this.map = new Mapboxgl.Map({
+      container: 'map-mapBox',
+      style: 'mapbox://styles/mapbox/streets-v11',
+      center: [19.8463064,45.2443501], // starting position
+      zoom: 15 // starting zoom
+    });
+    // const marker = new Mapboxgl.Marker() // initialize a new marker
+    //   .setLngLat([19.8495081,45.246105]) // Marker [lng, lat] coordinates
+    //   .addTo(this.map); // Add the marker to the map
+  }
   selectOption(id: number){
     this.categoryName = id;
     if(this.searchLocation !== ''){
       this.searchCulturalOfferings();
     }
-    
+
   }
 
+  public isUserLogged(): boolean{
+    return !!window.sessionStorage.getItem(USER_KEY);
+
+  }
   searchCulturalOfferings(){
     this.mapService.getCulturalOfferingForMap(this.searchLocation).subscribe((cultOffering) => {
       const tempEntities = Object.values(cultOffering).filter((item) => item.categoryType.name == this.categoryName)
@@ -68,15 +92,15 @@ export class MapsComponent implements OnInit {
         this.latitude = temp.latitude;
         this.longitude = temp.longitude;
         console.log(this.latitude + ',' + this.longitude)
-        
+
         let marker = new Mapboxgl.Marker().setLngLat([this.latitude,this.longitude])
                       .setPopup(new Mapboxgl.Popup().setHTML("<h1>"+temp.name+"</h1>"))
                       .addTo(this.map);
-        
+
         this.currMarker.push(marker);
-        
+
       }
-      
+
 
       console.log(tempEntities);
     },(error : HttpErrorResponse) => {
@@ -84,34 +108,36 @@ export class MapsComponent implements OnInit {
     });
   }
 
-  ngOnInit() {
-    Mapboxgl.accessToken = environment.mapboxKey;
 
-    this.map = new Mapboxgl.Map({
-      container: 'map-mapBox',
-      style: 'mapbox://styles/mapbox/streets-v11',
-      center: [19.8463064,45.2443501], // starting position
-      zoom: 15 // starting zoom
-    });
-    // const marker = new Mapboxgl.Marker() // initialize a new marker
-    //   .setLngLat([19.8495081,45.246105]) // Marker [lng, lat] coordinates
-    //   .addTo(this.map); // Add the marker to the map
-  }
 
   onClickTable(entity){
     console.log(entity)
     this.dialog.open(DialogWindowComponent,{width: '80%', height: '80%',data:{
+      id: entity.id,
       name: entity.name,
       location : entity.location,
       rating: entity.rating,
-      description: entity.description
+      description: entity.description,
     }});
 
 
   }
 
+  myProfileRoute() {
+    this.router.navigate(['/user-profile']);
+  }
 
+  signOut() {
+    window.sessionStorage.clear();
+    this.router.navigate(['login']);
+  }
 
+  loginRoute() {
+    this.router.navigate(['/login']);
+  }
+
+  registerRoute() {
+    this.router.navigate(['/register']);
+  }
 }
-     
-    
+

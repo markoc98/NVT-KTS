@@ -308,7 +308,7 @@ public class UserControllerIntegrationTest {
         HttpEntity<Object> httpEntity = new HttpEntity<Object>( headers);
         ResponseEntity<Void> responseEntity =
                 restTemplate.exchange("/api/users/subscribe/1/1",
-                        HttpMethod.PUT, httpEntity,
+                        HttpMethod.GET, httpEntity,
                         Void.class);
 
         CulturalOffering co = culturalOfferingService.findOne(1L);

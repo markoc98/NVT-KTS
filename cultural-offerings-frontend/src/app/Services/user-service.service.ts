@@ -47,7 +47,33 @@ export class UserServiceService {
       headers: headers_object
     };
 
-    return this.http.get("api/users/unsubscribe/" + userId + "/" + culturalOfferingId , httpOptions
+    return this.http.get("api/users/unsubscribe/" + culturalOfferingId+ "/" + userId , httpOptions
     ).toPromise();
   }
+
+  public subscribe(userId: string, culturalOfferId:number){
+    let headers_object = new HttpHeaders({
+      "Authorization": "Bearer " + window.sessionStorage.getItem(TOKEN_KEY),
+      'Content-Type': 'application/text'
+    });
+    const httpOptions = {
+      headers: headers_object
+    };
+    return this.http.get("api/users/subscribe/" + culturalOfferId + "/" +  userId , httpOptions
+    ).toPromise();
+
+  }
+  public isSubbed(userId: string, culturalOfferId:string){
+    let headers_object = new HttpHeaders({
+      "Authorization": "Bearer " + window.sessionStorage.getItem(TOKEN_KEY),
+      'Content-Type': 'application/text'
+    });
+    const httpOptions = {
+      headers: headers_object
+    };
+    return this.http.get("api/users/isSubbed/" + culturalOfferId + "/" +  userId , httpOptions
+    ).toPromise();
+
+  }
+
 }

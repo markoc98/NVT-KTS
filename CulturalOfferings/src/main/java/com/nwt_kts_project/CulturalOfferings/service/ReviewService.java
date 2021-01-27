@@ -28,6 +28,13 @@ public class ReviewService implements ServiceInterface<Review> {
     public Review findOne(Long id) {
         return reviewRepo.findById(id).orElse(null);
     }
+    
+    public List<Review> findByUserID(Long id){
+    	return reviewRepo.findByUserId(id);
+    }
+    public List<Review> findByOfferID(Long id) {
+    	return reviewRepo.findByCulturalOfferingId(id);
+    }
 
     @Override
     public Review create(Review r) throws Exception {

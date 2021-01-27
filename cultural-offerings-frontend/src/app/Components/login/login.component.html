@@ -1,6 +1,7 @@
 <div class="login">
-  <h1>Log in</h1>
+
   <form class="login-form" (submit)="loginUser()">
+    <h1>Log in</h1>
     <mat-form-field class="formfield">
       <mat-label>Username</mat-label>
       <label>
@@ -15,6 +16,6 @@
       </label>
     </mat-form-field>
 
-    <button type="submit" mat-raised-button color="primary">Login</button>
+    <button [disabled]="!(username && password)" type="submit" mat-raised-button color="primary" class="login-button">Login</button>
   </form>
 </div>

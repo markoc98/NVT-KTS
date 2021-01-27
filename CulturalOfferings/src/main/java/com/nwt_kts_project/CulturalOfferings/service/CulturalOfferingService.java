@@ -21,7 +21,6 @@ public class CulturalOfferingService implements ServiceInterface<CulturalOfferin
     }
     
     public Page<CulturalOffering> findAll(Pageable pageable) {
-        System.out.println("Makse");
         return culturalOfferingRepository.findAll(pageable);
     }
 
@@ -64,9 +63,6 @@ public class CulturalOfferingService implements ServiceInterface<CulturalOfferin
         }
 
 
-        System.out.println(cultOff.getName());
-        System.out.println(cultOff.getLocation());
-        System.out.println(cultOff.getDescription());
 
         return culturalOfferingRepository.save(cultOff);
     }

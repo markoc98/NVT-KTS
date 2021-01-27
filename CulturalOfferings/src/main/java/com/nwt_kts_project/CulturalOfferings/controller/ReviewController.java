@@ -6,9 +6,12 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import com.nwt_kts_project.CulturalOfferings.model.CulturalOffering;
 import com.nwt_kts_project.CulturalOfferings.model.Picture;
+import com.nwt_kts_project.CulturalOfferings.service.CulturalOfferingService;
 import com.nwt_kts_project.CulturalOfferings.service.PictureService;
 import com.nwt_kts_project.CulturalOfferings.utility.PictureCompression;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -25,8 +28,11 @@ import org.springframework.web.bind.annotation.RestController;
 import com.nwt_kts_project.CulturalOfferings.dto.ReviewDTO;
 import com.nwt_kts_project.CulturalOfferings.model.Review;
 import com.nwt_kts_project.CulturalOfferings.model.User;
+import com.nwt_kts_project.CulturalOfferings.repository.CulturalOfferingRepository;
 import com.nwt_kts_project.CulturalOfferings.repository.ReviewRepository;
+import com.nwt_kts_project.CulturalOfferings.repository.UserRepository;
 import com.nwt_kts_project.CulturalOfferings.service.ReviewService;
+import com.nwt_kts_project.CulturalOfferings.service.UserService;
 import com.nwt_kts_project.CulturalOfferings.utility.ReviewMapper;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -34,16 +40,23 @@ import org.springframework.web.multipart.MultipartFile;
 @RequestMapping(value = "/api/reviews", produces = MediaType.APPLICATION_JSON_VALUE)
 public class ReviewController {
 
-    @Autowired
-    private ReviewRepository reviewRepo;
 
     @Autowired
 	private PictureService pictureService;
-
+    
     @Autowired
     private ReviewService reviewService;
     
+    @Autowired
+    private CulturalOfferingService cultService;
+    
     private ReviewMapper reviewMapper;
+    
+    @Autowired
+    private CulturalOfferingService offerService;
+    
+    @Autowired
+    private UserService userService;
     
     public ReviewController() {
     	this.reviewMapper = new ReviewMapper();
@@ -132,28 +145,64 @@ public class ReviewController {
 
         return new ResponseEntity<>(reviewMapper.toDto(review), HttpStatus.OK);
     }
-    
-	@PreAuthorize("haseRole('ROLE_USER')")
+
+	@PreAuthorize("hasRole('ROLE_USER')")
 	@RequestMapping(value="/getbycultoff/{cultOfferingId}",method = RequestMethod.GET)
 	public ResponseEntity<List<ReviewDTO>> getReviewByCultOffID(@PathVariable Long cultOfferingId) {
 		
-		List<Review> reviewList = reviewRepo.findAll();
+		List<Review> reviewList = reviewService.findAll();
 		List<Review> found = new ArrayList<Review>();
 		
 		for(Review r : reviewList) {
-			if(r.getCulturalOffering().getId() == cultOfferingId) {
+			if(r.getCulturalOffering().getId().equals(cultOfferingId)) {
 				found.add(r);
 			}
 		}
 		
 		List<ReviewDTO> dtoList = toReviewDTOList(found);
 		
-		return new ResponseEntity<>(dtoList,HttpStatus.FOUND);		
+		return new ResponseEntity<>(dtoList,HttpStatus.OK);
 		
 	}
 	
-	
-	
-    
+	@PreAuthorize("hasRole('ROLE_USER')")
+	@RequestMapping(value="/setRating/{userId}/{cultOffId}",method = RequestMethod.POST) 
+	public ResponseEntity<?> setRatingForOffer(@RequestBody ReviewDTO reviewDTO,@PathVariable Long userId,@PathVariable Long cultOffId) throws Exception{
+		
+		User user = userService.findOne(userId);
+		CulturalOffering cultOff = cultService.findOne(cultOffId);
+		
+		Review review = reviewMapper.toEntity(reviewDTO);
+		List<Review> reviews = reviewService.findAll();
+		
+		review.setCulturalOffering(cultOff);
+		review.setUser(user);
+		
+		double oldRating = cultOff.getRating();
+		double newRating = 0;
+		
+		int count = 0;
+		
+		for(Review r : reviews) {
+			if(r.getCulturalOffering().getId() == cultOffId ) {
+				++count;
+			}
+		}
+
+		System.out.println(review.getRating());
+		
+		newRating = (oldRating*count + review.getRating())/(count+1);
+		
+		
+		cultOff.setRating(newRating);
+		cultService.update(cultOff, cultOffId);
+		reviewService.create(review);
+		
+		
+		return new ResponseEntity<>(HttpStatus.OK);
+		
+		
+		
+	}
 
 }

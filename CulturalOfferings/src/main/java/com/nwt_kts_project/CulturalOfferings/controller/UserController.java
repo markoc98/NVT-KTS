@@ -58,45 +58,7 @@ public class UserController {
 
         return new ResponseEntity<>(userMapper.toDto(user), HttpStatus.OK);
     }
-    //GET ZAHTEV ZA DOBIJANJE SVIH CO NA KOJE SMO SUBSCRIBOVANI ----nije testirano
-    @PreAuthorize("hasRole('ROLE_USER')")
-    @RequestMapping(value="/getsubs/{id}", method= RequestMethod.GET)
-    public ResponseEntity<Set<CulturalOffering>> getSubscribedTo(@PathVariable Long id){
 
-        User user = userService.findOne(id);
-
-        if(user == null){
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        Set<CulturalOffering> subscribed = new HashSet<CulturalOffering>();
-        subscribed = user.getSubscribedTo();
-        return new ResponseEntity<Set<CulturalOffering>>(subscribed,HttpStatus.OK);
-    }
-
-    //GET ZAHTEV ZA UNSUBSCRIBOVANJE CO
-    @PreAuthorize("hasRole('ROLE_USER')")
-    @RequestMapping(value="/unsubscribe/{userId}/{culturalOfferingId}", method= RequestMethod.GET)
-    public ResponseEntity<Set<CulturalOffering>> unsubscribe(@PathVariable Long userId,@PathVariable Long culturalOfferingId) throws Exception {
-
-        User user = userService.findOne(userId);
-
-        if(user == null){
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        Set<CulturalOffering> subscribed = new HashSet<>();
-
-        for(CulturalOffering co:user.getSubscribedTo()){
-
-            //ako nije taj koji treba da se brise dodaj ga u listu koju cemo upisivati u bazu
-            if(!co.getId().equals(culturalOfferingId)){
-                subscribed.add(co);
-            }
-        }
-        user.setSubscribedTo(subscribed);
-        User saved = userService.update(user, user.getId());
-
-        return new ResponseEntity<Set<CulturalOffering>>(subscribed,HttpStatus.OK);
-    }
     //GET ZAHTEV ZA DOBAVLJANJE SVIH USERA
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping(method = RequestMethod.GET)
@@ -162,10 +124,72 @@ public class UserController {
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
+    //GET ZAHTEV ZA DOBIJANJE SVIH CO NA KOJE SMO SUBSCRIBOVANI ----nije testirano
+    @PreAuthorize("hasRole('ROLE_USER')")
+    @RequestMapping(value="/getsubs/{id}", method= RequestMethod.GET)
+    public ResponseEntity<Set<CulturalOffering>> getSubscribedTo(@PathVariable Long id){
 
+        User user = userService.findOne(id);
+
+        if(user == null){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        Set<CulturalOffering> subscribed = new HashSet<CulturalOffering>();
+        subscribed = user.getSubscribedTo();
+        return new ResponseEntity<Set<CulturalOffering>>(subscribed,HttpStatus.OK);
+    }
+
+
+    @PreAuthorize("hasRole('ROLE_USER')") //nije testirano
+    @RequestMapping(value="/isSubbed/{culturalOfferingId}/{userId}", method= RequestMethod.GET)
+    public ResponseEntity<Boolean> getIsSubscribed(@PathVariable Long culturalOfferingId,@PathVariable Long userId){
+
+        User user = userService.findOne(userId);
+
+        boolean isSubbed = false;
+        if(user == null){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        Set<CulturalOffering> subscribed = new HashSet<>();
+
+        for(CulturalOffering co:user.getSubscribedTo()){
+
+            //ako nije taj koji treba da se brise dodaj ga u listu koju cemo upisivati u bazu
+            if(co.getId().equals(culturalOfferingId)){
+                isSubbed = true;
+            }
+        }
+        return new ResponseEntity<Boolean>(isSubbed,HttpStatus.OK);
+
+    }
+
+    //GET ZAHTEV ZA UNSUBSCRIBOVANJE CO
+    @PreAuthorize("hasRole('ROLE_USER')")
+    @RequestMapping(value="/unsubscribe/{culturalOfferingId}/{userId}", method= RequestMethod.GET)
+    public ResponseEntity<Set<CulturalOffering>> unsubscribe(@PathVariable Long userId,@PathVariable Long culturalOfferingId) throws Exception {
+
+        User user = userService.findOne(userId);
+
+        if(user == null){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        Set<CulturalOffering> subscribed = new HashSet<>();
+
+        for(CulturalOffering co:user.getSubscribedTo()){
+
+            //ako nije taj koji treba da se brise dodaj ga u listu koju cemo upisivati u bazu
+            if(!co.getId().equals(culturalOfferingId)){
+                subscribed.add(co);
+            }
+        }
+        user.setSubscribedTo(subscribed);
+        User saved = userService.update(user, user.getId());
+
+        return new ResponseEntity<Set<CulturalOffering>>(subscribed,HttpStatus.OK);
+    }
     //SUBSCRIBOVANJE
     @PreAuthorize("hasRole('ROLE_USER')")
-    @RequestMapping(value="/subscribe/{culturalOfferingId}/{userId}", method=RequestMethod.PUT)
+    @RequestMapping(value="/subscribe/{culturalOfferingId}/{userId}", method=RequestMethod.GET)
     public ResponseEntity<Void> subscribeToNewsletter(@PathVariable Long culturalOfferingId, @PathVariable Long userId){
         try {
 

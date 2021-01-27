@@ -44,8 +44,8 @@ public class CulturalOffering {
     @OneToMany(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
     private Set<Review>reviews = new HashSet<>();
 
-    @OneToMany(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
-    private Set<Newsletter> newsletter = new HashSet<>();
+    @OneToMany(mappedBy = "CulturalOffering",cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
+    private transient Set<Newsletter> newsletter = new HashSet<>();
 
     @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
     private Category category;

@@ -29,7 +29,10 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
- 
+import {MatCard, MatCardModule} from "@angular/material/card";
+import {MatDividerModule} from "@angular/material/divider";
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -53,9 +56,11 @@ import { MatInputModule } from '@angular/material/input';
     AdminHomepageModule,
     RegisterModule,
     MatTableModule,
+    MatCardModule,
+    MatDividerModule,
+    MatTableModule,
     MatButtonModule,
-    MatInputModule,
-    MatFormFieldModule
+
   ],
   exports: [AppComponent, MatTableModule],
   providers: [HttpClient,

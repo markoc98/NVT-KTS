@@ -5,11 +5,11 @@ import com.nwt_kts_project.CulturalOfferings.repository.PictureRepository;
 import com.nwt_kts_project.CulturalOfferings.service.PictureService;
 import com.nwt_kts_project.CulturalOfferings.utility.PictureCompression;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.Optional;
@@ -21,7 +21,7 @@ public class PictureController {
     @Autowired
     private PictureRepository pictureRepo;
 
-    @GetMapping(path = { "/newsletter/{id}" })
+    @PostMapping(path = { "/newsletter/{id}" })
     public Picture getNewsletterPicture(@PathVariable Long id) throws IOException {
 
         final Picture retrievedImage = pictureRepo.findByNewsletterId(id).orElse(null);
@@ -38,11 +38,28 @@ public class PictureController {
         return img;
     }
     @GetMapping(path = { "/culturalOffering/{id}" })
-    public Picture getCulturalOfferingPicture(@PathVariable Long id) throws IOException {
+    public ResponseEntity<Picture> getCulturalOfferingPicture(@PathVariable Long id) throws IOException {
+        try{
+            final Picture retrievedImage = pictureRepo.findByCulturalOfferingId(id).orElse(null);
+            Picture img = new Picture(retrievedImage.getName(), retrievedImage.getType(),
+                    PictureCompression.decompressBytes(retrievedImage.getPicByte()));
+            return new ResponseEntity<>(img,HttpStatus.OK);
+        }catch (Exception e){
+            System.out.println(e);
+        }
+        return null;
+    }
 
-        final Picture retrievedImage = pictureRepo.findByCulturalOfferingId(id).orElse(null);
-        Picture img = new Picture(retrievedImage.getName(), retrievedImage.getType(),
-                PictureCompression.decompressBytes(retrievedImage.getPicByte()));
-        return img;
+    @PostMapping(path = { "/upload/culturalOffering/{id}" })
+    public ResponseEntity.BodyBuilder uploadCulturalOfferingPicture(@RequestParam("imageFile") MultipartFile file) throws IOException {
+        try{
+            Picture img = new Picture(file.getOriginalFilename(), file.getContentType(),
+                    PictureCompression.compressBytes(file.getBytes()));
+            pictureRepo.save(img);
+            //return ResponseEntity(HttpStatus.OK);
+        }catch (Exception e){
+            System.out.println(e);
+        }
+        return null;
     }
 }
