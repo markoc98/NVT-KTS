@@ -15,7 +15,7 @@ public class LoginPage {
     private LoginPage loginPage;
 
     @FindBy(id = "username")
-    private WebElement email;
+    private WebElement username;
 
     @FindBy(id = "password")
     private WebElement password;
@@ -32,8 +32,8 @@ public class LoginPage {
         this.driver = driver;
     }
 
-    public WebElement getEmail() {
-        return email;
+    public WebElement getUsername() {
+        return username;
     }
 
     public WebElement getPassword() {

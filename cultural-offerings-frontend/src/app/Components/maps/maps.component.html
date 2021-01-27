@@ -1,4 +1,4 @@
-<div class="home-page">
+<div id="mapHomePage" class="home-page">
 
   <div class="header" id = "filterOffers" >
     <form class="search-form" >
@@ -7,9 +7,9 @@
     </form>
     <div class="header-button-group">
       <button *ngIf="!userLoggedIn" mat-raised-button color="primary" (click)="loginRoute()">Login</button>
-      <button *ngIf="!userLoggedIn" mat-raised-button color="primary" (click)="registerRoute()">Register</button>
-      <button *ngIf="userLoggedIn" mat-raised-button color="primary" (click)="myProfileRoute()">My Profile</button>
-      <button *ngIf="userLoggedIn" mat-raised-button color="primary" (click)="signOut()">Sign out</button>
+      <button id="registerRoute" *ngIf="!userLoggedIn" mat-raised-button color="primary" (click)="registerRoute()">Register</button>
+      <button id="myProfileRoute" *ngIf="userLoggedIn" mat-raised-button color="primary" (click)="myProfileRoute()">My Profile</button>
+      <button id="signOut" *ngIf="userLoggedIn" mat-raised-button color="primary" (click)="signOut()">Sign out</button>
     </div>
   </div>
   <div class="main-content">
@@ -21,8 +21,8 @@
         </select>
       </div>
 
-      <div class="container">
-        <table class="table">
+      <div  class="container">
+        <table id="tableOffers" class="table">
           <thead class="table-head">
           <tr class="table-row">
             <th class="name">Name</th>
@@ -31,7 +31,7 @@
           </tr>
           </thead>
           <tbody class="table-body">
-          <tr class="table-row" *ngFor="let entity of entities" (click)="onClickTable(entity)">
+          <tr id="tableOffer" class="table-row" *ngFor="let entity of entities" (click)="onClickTable(entity)">
 
             <td class="name">{{ entity.name }}</td>
             <td class="location">{{ entity.location }}</td>
