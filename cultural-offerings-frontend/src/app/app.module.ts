@@ -23,8 +23,13 @@ import {RegisterModule} from "./Components/register/register.module";
 import { EventEmitterService } from './event-emitter.service';
 import { MatDialogModule } from '@angular/material/dialog';
 import { DialogWindowComponent } from './Components/dialog-window/dialog-window.component';
-import { MatTableModule } from '@angular/material/table';
-
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import { CdkTableModule } from '@angular/cdk/table';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+ 
 @NgModule({
   declarations: [
     AppComponent,
@@ -47,8 +52,10 @@ import { MatTableModule } from '@angular/material/table';
     MatDialogModule,
     AdminHomepageModule,
     RegisterModule,
-    MatTableModule
-
+    MatTableModule,
+    MatButtonModule,
+    MatInputModule,
+    MatFormFieldModule
   ],
   exports: [AppComponent, MatTableModule],
   providers: [HttpClient,

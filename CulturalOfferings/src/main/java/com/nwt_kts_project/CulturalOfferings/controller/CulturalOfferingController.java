@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -39,7 +41,7 @@ public class CulturalOfferingController {
         cultOffMapper = new CulturalOfferingMapper();
     }
 
-    @PreAuthorize("hasRole('ROLE_USER')")
+    @PreAuthorize("hasRole('ROLE_ADMIN')" + "|| hasRole('ROLE_USER')")
     @RequestMapping(value="/{id}", method= RequestMethod.GET)
     public ResponseEntity<CulturalOfferingDTO> getCulturalOffering(@PathVariable Long id){
 
@@ -55,9 +57,9 @@ public class CulturalOfferingController {
 
     @PreAuthorize("hasRole('ROLE_ADMIN')" + "|| hasRole('ROLE_USER')")
     @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<Page<CulturalOfferingDTO>> getAllCulturalOfferings(Pageable pageable) {
+    public ResponseEntity<Page<CulturalOfferingDTO>> getAllCulturalOfferings(@PageableDefault(size = 100, sort = {"id"}, direction = Sort.Direction.ASC) Pageable pageable) {
         //List<CulturalOffering> cultOffs = cultOffService.findAll();
-        
+
         Page<CulturalOffering> page = cultOffService.findAll(pageable);
     	List<CulturalOfferingDTO> cultOffDTOS = toCultOffDTOList(page.toList());
         Page<CulturalOfferingDTO> pageCultOffDTOS = new PageImpl<>(cultOffDTOS,page.getPageable(),page.getTotalElements());
@@ -99,9 +101,9 @@ public class CulturalOfferingController {
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping(value="/update/{id}", method=RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<CulturalOfferingDTO> updateCulturalOffering(@RequestBody CulturalOfferingDTO cultOffDTO, @PathVariable Long id){
-        CulturalOffering cultOff;
+        CulturalOffering cultOff = cultOffMapper.toEntity(cultOffDTO);
         try {
-            cultOff = cultOffService.update(cultOffMapper.toEntity(cultOffDTO), id);
+            cultOff = cultOffService.update(cultOff, id);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }

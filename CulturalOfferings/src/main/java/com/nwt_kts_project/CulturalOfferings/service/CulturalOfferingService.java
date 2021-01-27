@@ -21,6 +21,7 @@ public class CulturalOfferingService implements ServiceInterface<CulturalOfferin
     }
     
     public Page<CulturalOffering> findAll(Pageable pageable) {
+        System.out.println("Makse");
         return culturalOfferingRepository.findAll(pageable);
     }
 
@@ -40,11 +41,34 @@ public class CulturalOfferingService implements ServiceInterface<CulturalOfferin
 
     @Override
     public CulturalOffering update(CulturalOffering entity, Long id) throws Exception {
-        if(culturalOfferingRepository.findById(id).orElse(null) == null)
+        CulturalOffering cultOff = culturalOfferingRepository.findById(id).orElse(null);
+
+        if(cultOff == null)
         {
             throw new Exception("Cultural offering with such id doesn't exist");
         }
-        return culturalOfferingRepository.save(entity);
+
+        if(entity.getName() != null)
+        {
+            cultOff.setName(entity.getName());
+        }
+
+        if(entity.getDescription() != null)
+        {
+            cultOff.setDescription(entity.getDescription());
+        }
+
+        if(entity.getLocation() != null)
+        {
+            cultOff.setLocation(entity.getLocation());
+        }
+
+
+        System.out.println(cultOff.getName());
+        System.out.println(cultOff.getLocation());
+        System.out.println(cultOff.getDescription());
+
+        return culturalOfferingRepository.save(cultOff);
     }
 
     @Override
