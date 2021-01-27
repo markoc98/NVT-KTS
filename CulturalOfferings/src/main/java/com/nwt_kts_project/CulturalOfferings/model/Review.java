@@ -47,9 +47,15 @@ public class Review {
     public Review(String comment,double rating) {
     	this.comment = comment;
     	this.rating = rating;
-    	
+
     }
 
+    public Review(String comment,double rating,CulturalOffering co, User user) {
+        this.comment = comment;
+        this.rating = rating;
+        this.culturalOffering = co;
+        this.user = user;
+    }
 	public Review(double rating2) {
 		// TODO Auto-generated constructor stub
 		this.rating = rating2;

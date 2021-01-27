@@ -82,3 +82,4 @@ insert into newsletter (id, title, content, date, cultural_offering_cultural_off
 
 insert into newsletter (id, title, content, date, cultural_offering_cultural_offering_id) values (98,'Prava kulturna dobra', 'Lorem Ipsook a galley ope specimen book. It unchanged. It was popularised in the 1960s with the release ofker including versions of Lorem Ipsum.', '01.01.2021.','1');
 insert into newsletter (id, title, content, date, cultural_offering_cultural_offering_id) values (99, 'Exit otkazan ove godine svi placu', 'Lorem Ipsook a galley ope specimen book. It unchanged. It was popularised in the 1960s with the release ofker including versions of Lorem Ipsum.', '05.12.2020.','1');
+
