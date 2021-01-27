@@ -94,7 +94,7 @@ export class CultoffTableComponent implements AfterViewInit, OnInit {
     });
   }
 
-  openAddDialog(id): void {
+  openAddDialog(): void {
     const dialogRef = this.dialog.open(CultOffAddDialog, {
       width: '250px',
       data: {}

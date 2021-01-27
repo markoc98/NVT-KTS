@@ -10,7 +10,7 @@ import java.util.Set;
 public class Newsletter {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @Column(nullable = false)
@@ -19,7 +19,7 @@ public class Newsletter {
     @Column(nullable = false)
     private String content;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private Date date;
 
     @OneToMany(mappedBy = "newsletter",cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
