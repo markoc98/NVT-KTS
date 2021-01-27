@@ -59,7 +59,7 @@ public class CategoryController {
     	List<CategoryDTO> categoryDTOS = toCategoryDTOList(page.toList());
         Page<CategoryDTO> pageCategoryDTOS = new PageImpl<>(categoryDTOS,page.getPageable(),page.getTotalElements());
 
-
+    
         return new ResponseEntity<>(pageCategoryDTOS, HttpStatus.OK);
     }
 

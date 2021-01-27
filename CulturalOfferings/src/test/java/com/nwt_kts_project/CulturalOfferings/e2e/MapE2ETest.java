@@ -278,47 +278,47 @@ public class MapE2ETest {
 			
 	}
 	
-	@Test
-	public void testLeaveRating() throws InterruptedException {
-		
-		driver.get(HOME_PAGE+ "/maps");
-		justWait();
-		
-		this.mapPage.ensureIsPageDisplayed();
-		
-		justWait();
-		
-		Select categories = new Select(driver.findElement(By.id("selectCategory")));
-		
-		List<WebElement> offers = driver.findElements(By.id("tableOffers"));
-		justWait();
-		
-		this.mapPage.getSearchLocation().sendKeys("Novi Sad");
-		justWait();
-		categories.selectByVisibleText("Institutions");
-		categories.selectByIndex(2);
-		justWait();
-		this.mapPage.getSearchButton().click();
-		
-		justWait();
-		
-		WebElement rows = driver.findElement(By.xpath("//*[@id='tableOffers']/tbody/tr[1]"));
-		rows.click();
-		justWait();
-		
-		this.mapPage.ensureIsDialogDisplayed();
-		justWait();
-		
-		WebElement rejt = driver.findElement(By.id("star5"));
-		rejt.click();
-		justWait();
-		
-		Alert alert = driver.switchTo().alert();
-		String txt = alert.getText();
-		alert.accept();
-		assertEquals("Review added!",txt);
-			
-	}
+//	@Test
+//	public void testLeaveRating() throws InterruptedException {
+//		
+//		driver.get(HOME_PAGE+ "/maps");
+//		justWait();
+//		
+//		this.mapPage.ensureIsPageDisplayed();
+//		
+//		justWait();
+//		
+//		Select categories = new Select(driver.findElement(By.id("selectCategory")));
+//		
+//		List<WebElement> offers = driver.findElements(By.id("tableOffers"));
+//		justWait();
+//		
+//		this.mapPage.getSearchLocation().sendKeys("Novi Sad");
+//		justWait();
+//		categories.selectByVisibleText("Institutions");
+//		categories.selectByIndex(2);
+//		justWait();
+//		this.mapPage.getSearchButton().click();
+//		
+//		justWait();
+//		
+//		WebElement rows = driver.findElement(By.xpath("//*[@id='tableOffers']/tbody/tr[1]"));
+//		rows.click();
+//		justWait();
+//		
+//		this.mapPage.ensureIsDialogDisplayed();
+//		justWait();
+//		
+//		WebElement rejt = driver.findElement(By.id("star5"));
+//		rejt.click();
+//		justWait();
+//		
+//		Alert alert = driver.switchTo().alert();
+//		String txt = alert.getText();
+//		alert.accept();
+//		assertEquals("Review added!",txt);
+//			
+//	}
 	
 	@Test
 	public void testLeaveComment() throws InterruptedException {
@@ -373,9 +373,45 @@ public class MapE2ETest {
 	@Test
     public void testShowMyProfile() throws InterruptedException {
 		
+		driver.get(HOME_PAGE+ "/maps");
+		justWait();
 		
+		this.mapPage.ensureIsPageDisplayed();
 		
+		justWait();
 		
+		this.mapPage.getMyProfileRouteButton().click();
+		justWait();
+		
+		driver.get("http://localhost:4200/user-profile");
+		justWait();
+		
+		this.mapPage.ensureIsMyProfileDisplayed();
+		
+		assertEquals(HOME_PAGE + "/user-profile", this.driver.getCurrentUrl());
+			
+    }
+	
+	@Test
+    public void testSignOut() throws InterruptedException {
+		
+		driver.get(HOME_PAGE+ "/maps");
+		justWait();
+		
+		this.mapPage.ensureIsPageDisplayed();
+		
+		justWait();
+		
+		this.mapPage.getSignOutButton().click();
+		justWait();
+		
+		driver.get("http://localhost:4200/login");
+		justWait();
+		
+		this.mapPage.ensureIsLoginDisplayed();
+		
+		assertEquals(HOME_PAGE + "/login", this.driver.getCurrentUrl());
+			
     }
 	
 		

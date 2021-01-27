@@ -65,6 +65,8 @@ public class MapPage {
 	@FindBy(id = "txtAreaComment")
 	private WebElement txtAreaComment;
 	
+	
+	
 	public MapPage() {
 		super();
 	}
@@ -98,6 +100,14 @@ public class MapPage {
 	
 	public void ensureIsDialogDisplayed() {
 		(new WebDriverWait(driver, 30)).until(ExpectedConditions.elementToBeClickable(By.id("dialogWindow")));
+	}
+	
+	public void ensureIsMyProfileDisplayed() {
+		(new WebDriverWait(driver, 30)).until(ExpectedConditions.elementToBeClickable(By.id("home-button")));
+	}
+	
+	public void ensureIsLoginDisplayed() {
+		(new WebDriverWait(driver, 30)).until(ExpectedConditions.elementToBeClickable(By.className("login-form")));
 	}
 
 	public WebElement getSearchLocation() {

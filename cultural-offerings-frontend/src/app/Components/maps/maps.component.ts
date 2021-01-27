@@ -82,6 +82,13 @@ export class MapsComponent implements OnInit {
       const tempEntities = Object.values(cultOffering).filter((item) => item.categoryType.name == this.categoryName)
       this.entities = tempEntities;
 
+      this.map = new Mapboxgl.Map({
+        container: 'map-mapBox',
+        style: 'mapbox://styles/mapbox/streets-v11',
+        center: [tempEntities[0].latitude,tempEntities[0].longitude], // starting position
+        zoom: 12 // starting zoom
+      });
+
       if(this.currMarker !== null){
         for(let i=0; i < this.currMarker.length ; i++) {
           this.currMarker[i].remove();
@@ -99,7 +106,10 @@ export class MapsComponent implements OnInit {
 
         this.currMarker.push(marker);
 
+
+
       }
+      
 
 
       console.log(tempEntities);

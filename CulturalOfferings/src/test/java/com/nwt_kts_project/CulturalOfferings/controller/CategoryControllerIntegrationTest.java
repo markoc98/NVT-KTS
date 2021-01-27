@@ -85,7 +85,7 @@ public class CategoryControllerIntegrationTest {
                 restTemplate.exchange("/api/categories/pageable?page=0&size=10", HttpMethod.GET, httpEntity, CategoryDTO[].class);
 
         CategoryDTO[] categories = responseEntity.getBody();
-
+        
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
         assertEquals(DB_CATEGORIES_COUNT, categories.length);
         //assertEquals(DB_CATEGORY, categories[0].getName());

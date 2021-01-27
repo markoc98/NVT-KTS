@@ -2,5 +2,12 @@
 
 Alat za wireframe: Balsamiq.
 
+Potrebne komande za pokretanje:
 
-21.11. Slučajno obrisani svi fajlovi i commitovi sa repozitorijuma, pa su danas dodati opet.
+$  npm i --save-dev @angular-devkit/build-angular 
+
+$  npm i @ng-bootstrap/ng-bootstrap
+
+$  npm i mapbox-gl
+
+$  npm i
