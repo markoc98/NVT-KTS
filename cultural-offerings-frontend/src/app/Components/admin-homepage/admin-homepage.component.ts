@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-admin-homepage',
@@ -13,11 +14,15 @@ export class AdminHomepageComponent implements OnInit {
 
   cats: Category[] = [{name: 'Event'}];
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit(): void {
   }
 
+  signOut() {
+    window.sessionStorage.clear();
+    this.router.navigate(['login'])
+  }
 }
 
 class CulturalOffering{
