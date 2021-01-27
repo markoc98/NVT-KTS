@@ -5,9 +5,11 @@ import com.nwt_kts_project.CulturalOfferings.Pages.LoginPage;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 public class LoginE2ETest {
 
@@ -31,26 +33,77 @@ public class LoginE2ETest {
     }
 
     @Test
-    public void LogInTestSuccess() throws InterruptedException {
+    public void LogInTestSuccessUser() throws InterruptedException {
 
         driver.get("http://localhost:4200/login");
 
-        justWait();
+        justWait(2000);
 
-        loginPage.getEmail().sendKeys("user");
+        loginPage.getUsername().sendKeys("user");
         loginPage.getPassword().sendKeys("user");
+
+        loginPage.ensureIsClickableLoginBtn();
         loginPage.getLoginBtn().click();
-        justWait();
+
+        justWait(5000);
+
         loginPage.ensureIsNotVisibleUsername();
 
         assertEquals("http://localhost:4200/maps", driver.getCurrentUrl());
 
     }
 
-    private void justWait() throws InterruptedException {
+    @Test
+    public void LogInTestSuccessAdmin() throws InterruptedException {
+
+        driver.get("http://localhost:4200/login");
+
+        justWait(2000);
+
+        loginPage.getUsername().sendKeys("admin");
+        loginPage.getPassword().sendKeys("admin");
+        loginPage.getLoginBtn().click();
+        justWait(3000);
+        loginPage.ensureIsNotVisibleUsername();
+
+        assertEquals("http://localhost:4200/admin-homepage", driver.getCurrentUrl());
+
+    }
+
+    @Test
+    public void LogInTestFailed() throws InterruptedException {
+
+        driver.get("http://localhost:4200/login");
+
+        justWait(2000);
+
+        loginPage.getUsername().sendKeys("radenijeuser");
+        loginPage.getPassword().sendKeys("losasifra");
+        loginPage.getLoginBtn().click();
+        justWait(2000);
+        Alert alert = driver.switchTo().alert();
+        String text = alert.getText();
+        assertEquals("Wrong username or password!", text);
+
+    }
+
+    @Test
+    public void dontHaveAccount() throws InterruptedException {
+
+        driver.get("http://localhost:4200/login");
+
+        justWait(1000);
+        this.loginPage.getLink().click();
+        justWait(1000);
+
+        assertEquals("http://localhost:4200/register", driver.getCurrentUrl());
+
+    }
+
+    private void justWait(int milliseconds) throws InterruptedException {
         synchronized (driver)
         {
-            driver.wait(3000);
+            driver.wait(milliseconds);
         }
     }
 }

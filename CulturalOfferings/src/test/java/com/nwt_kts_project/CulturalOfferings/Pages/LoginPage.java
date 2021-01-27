@@ -15,13 +15,16 @@ public class LoginPage {
     private LoginPage loginPage;
 
     @FindBy(id = "username")
-    private WebElement email;
+    private WebElement username;
 
     @FindBy(id = "password")
     private WebElement password;
 
     @FindBy(id = "submit")
     private WebElement loginBtn;
+
+    @FindBy(id = "href-login")
+    private WebElement link;
 
     public LoginPage() {
         super();
@@ -32,8 +35,12 @@ public class LoginPage {
         this.driver = driver;
     }
 
-    public WebElement getEmail() {
-        return email;
+    public WebElement getLink() {
+        return link;
+    }
+
+    public WebElement getUsername() {
+        return username;
     }
 
     public WebElement getPassword() {

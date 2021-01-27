@@ -42,9 +42,9 @@ public class NewsletterService implements ServiceInterface<Newsletter> {
 
     @Override
     public Newsletter create(Newsletter n) throws Exception {
-        if(n.getId() != null) {
-        	throw new Exception("Newsletter already exists.");
-        }
+//        if(n.getId() != null) {
+//        	throw new Exception("Newsletter already exists.");
+//        }
        // CulturalOffering culturalOffering = culturalOfferingService.findOne(n.getCulturalOffering().getId());
 
        // sendMails(culturalOffering, n);
