@@ -10,16 +10,19 @@ import com.nwt_kts_project.CulturalOfferings.model.CulturalOffering;
 import com.nwt_kts_project.CulturalOfferings.model.Picture;
 import com.nwt_kts_project.CulturalOfferings.service.CulturalOfferingService;
 import com.nwt_kts_project.CulturalOfferings.service.PictureService;
+import com.nwt_kts_project.CulturalOfferings.utility.PageImplementation;
 import com.nwt_kts_project.CulturalOfferings.utility.PictureCompression;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -201,8 +204,17 @@ public class ReviewController {
 		
 		return new ResponseEntity<ReviewDTO>(reviewMapper.toDto(r),HttpStatus.OK);
 		
+	}
+	
+	@GetMapping(value = "/by-page")
+	public ResponseEntity<Page<ReviewDTO>> getAll(Pageable pageable){
 		
+		Page<Review> page = reviewService.findAll(pageable);
+		List<ReviewDTO> listDto = toReviewDTOList(page.toList());
+		Page<ReviewDTO> pageDto = new PageImpl<>(listDto,page.getPageable(),page.getTotalElements());
 		
+		return new ResponseEntity<>(pageDto,HttpStatus.OK);
+	
 	}
 
 }

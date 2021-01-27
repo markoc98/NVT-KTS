@@ -11,6 +11,9 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -27,6 +30,7 @@ import com.nwt_kts_project.CulturalOfferings.dto.UserLoginDTO;
 import com.nwt_kts_project.CulturalOfferings.dto.UserTokenStateDTO;
 import com.nwt_kts_project.CulturalOfferings.model.Review;
 import com.nwt_kts_project.CulturalOfferings.service.ReviewService;
+import com.nwt_kts_project.CulturalOfferings.utility.PageImplementation;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -166,4 +170,26 @@ public class ReviewControllerIntegrationTest {
 		 assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
 		 assertEquals(size - 1, reviewService.findAll().size());
 	    }
+	 
+//	 @Test
+//	 public void testFindAllPagable() {
+//		 login("user","user"); //role user
+//		 HttpHeaders headers = new HttpHeaders();
+//		 headers.add("Authorization", this.accessToken); 
+//		 
+//		 HttpEntity<ReviewDTO> httpEntity = new HttpEntity<ReviewDTO>(headers);
+//
+//		 ParameterizedTypeReference<PageImplementation<ReviewDTO>> paramTypeRef = new ParameterizedTypeReference<PageImplementation<ReviewDTO>>() {
+//		};
+//		
+//		ResponseEntity<PageImplementation<ReviewDTO>> responseEntity = restTemplate.exchange(
+//				"/reviews/by-page?page=0&size=10", HttpMethod.GET,httpEntity,paramTypeRef);
+//		
+//		Page<ReviewDTO> reviews = responseEntity.getBody();
+//		
+//		assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+//		assertEquals(DB_REVIEWS_SIZE, reviews.getNumberOfElements());
+//		
+//		    
+//	 }
 }
