@@ -22,6 +22,7 @@ import org.springframework.http.ResponseEntity;
 
 import com.nwt_kts_project.CulturalOfferings.Pages.LoginPage;
 import com.nwt_kts_project.CulturalOfferings.Pages.MapPage;
+import com.nwt_kts_project.CulturalOfferings.Pages.UserProfilePage;
 
 public class MapE2ETest {
 	
@@ -31,6 +32,7 @@ public class MapE2ETest {
 	
 	private MapPage mapPage;
 	private LoginPage loginPage;
+	private UserProfilePage userProfile;
 	
 	@Before
 	public void setup() throws InterruptedException {
@@ -192,13 +194,196 @@ public class MapE2ETest {
 			
 	}
 	
+	@Test
+	public void testDialogSubscribe() throws InterruptedException {
+		
+		driver.get(HOME_PAGE+ "/maps");
+		justWait();
+		
+		this.mapPage.ensureIsPageDisplayed();
+		
+		justWait();
+		
+		Select categories = new Select(driver.findElement(By.id("selectCategory")));
+		
+		List<WebElement> offers = driver.findElements(By.id("tableOffers"));
+		justWait();
+		
+		this.mapPage.getSearchLocation().sendKeys("Novi Sad");
+		justWait();
+		categories.selectByVisibleText("Events");
+		categories.selectByIndex(0);
+		justWait();
+		this.mapPage.getSearchButton().click();
+		
+		justWait();
+		
+		WebElement rows = driver.findElement(By.xpath("//*[@id='tableOffers']/tbody/tr[1]"));
+		rows.click();
+		justWait();
+		
+		this.mapPage.ensureIsDialogDisplayed();
+		justWait();
+		
+		this.mapPage.getSubButton().click();
+		justWait();
+		
+		
+		Boolean isPresent = driver.findElement(By.id("unsubscribeButton")).isDisplayed();
+		System.out.println(isPresent);
+		
+		assertEquals(true, isPresent);
+			
+	}
+	
+	@Test
+	public void testDialogUnsubscribe() throws InterruptedException {
+		
+		driver.get(HOME_PAGE+ "/maps");
+		justWait();
+		
+		this.mapPage.ensureIsPageDisplayed();
+		
+		justWait();
+		
+		Select categories = new Select(driver.findElement(By.id("selectCategory")));
+		
+		List<WebElement> offers = driver.findElements(By.id("tableOffers"));
+		justWait();
+		
+		this.mapPage.getSearchLocation().sendKeys("Novi Sad");
+		justWait();
+		categories.selectByVisibleText("Institutions");
+		categories.selectByIndex(2);
+		justWait();
+		this.mapPage.getSearchButton().click();
+		
+		justWait();
+		
+		WebElement rows = driver.findElement(By.xpath("//*[@id='tableOffers']/tbody/tr[1]"));
+		rows.click();
+		justWait();
+		
+		this.mapPage.ensureIsDialogDisplayed();
+		justWait();
+		
+		this.mapPage.getUnsubButton().click();
+		justWait();
+		
+		
+		Boolean isPresent = driver.findElement(By.id("subscribeButton")).isDisplayed();
+		//System.out.println(isPresent);
+		
+		assertEquals(true, isPresent);
+			
+	}
+	
+	@Test
+	public void testLeaveRating() throws InterruptedException {
+		
+		driver.get(HOME_PAGE+ "/maps");
+		justWait();
+		
+		this.mapPage.ensureIsPageDisplayed();
+		
+		justWait();
+		
+		Select categories = new Select(driver.findElement(By.id("selectCategory")));
+		
+		List<WebElement> offers = driver.findElements(By.id("tableOffers"));
+		justWait();
+		
+		this.mapPage.getSearchLocation().sendKeys("Novi Sad");
+		justWait();
+		categories.selectByVisibleText("Institutions");
+		categories.selectByIndex(2);
+		justWait();
+		this.mapPage.getSearchButton().click();
+		
+		justWait();
+		
+		WebElement rows = driver.findElement(By.xpath("//*[@id='tableOffers']/tbody/tr[1]"));
+		rows.click();
+		justWait();
+		
+		this.mapPage.ensureIsDialogDisplayed();
+		justWait();
+		
+		WebElement rejt = driver.findElement(By.id("star5"));
+		rejt.click();
+		justWait();
+		
+		Alert alert = driver.switchTo().alert();
+		String txt = alert.getText();
+		alert.accept();
+		assertEquals("Review added!",txt);
+			
+	}
+	
+	@Test
+	public void testLeaveComment() throws InterruptedException {
+		
+		driver.get(HOME_PAGE+ "/maps");
+		justWait();
+		
+		this.mapPage.ensureIsPageDisplayed();
+		
+		justWait();
+		
+		Select categories = new Select(driver.findElement(By.id("selectCategory")));
+		
+		List<WebElement> offers = driver.findElements(By.id("tableOffers"));
+		justWait();
+		
+		this.mapPage.getSearchLocation().sendKeys("Novi Sad");
+		justWait();
+		categories.selectByVisibleText("Institutions");
+		categories.selectByIndex(2);
+		justWait();
+		this.mapPage.getSearchButton().click();
+		
+		justWait();
+		
+		WebElement rows = driver.findElement(By.xpath("//*[@id='tableOffers']/tbody/tr[1]"));
+		rows.click();
+		justWait();
+		
+		this.mapPage.ensureIsDialogDisplayed();
+		justWait();
+		
+		
+//		WebElement ratingElem = driver.findElement(By.id("star5"));
+//		ratingElem.click();
+//		
+//		justWait();
+		
+		this.mapPage.getTextAreaComment().sendKeys("Testing-Generate new comment.");
+		justWait();
+		WebElement comment = driver.findElement(By.id("leaveComment"));
+		comment.click();
+		justWait();
+		
+		Alert alert = driver.switchTo().alert();
+		String txt = alert.getText();
+		alert.accept();
+		assertEquals("Review added!",txt);
+			
+	}
+	
+	@Test
+    public void testShowMyProfile() throws InterruptedException {
+		
+		
+		
+		
+    }
 	
 		
 	
 	private void justWait() throws InterruptedException {
         synchronized (driver)
         {
-            driver.wait(3000);
+            driver.wait(2000);
         }
     }
 

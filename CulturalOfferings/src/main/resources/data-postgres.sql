@@ -66,7 +66,6 @@ INSERT INTO cultural_offerings (location, name, description, rating,category_id,
 
 
 --INSERT INTO user_cultural_offering (user_id, cultural_offering_id) VALUES (1,1);
-INSERT INTO user_cultural_offering (user_id, cultural_offering_id) VALUES (2,1);
 INSERT INTO user_cultural_offering (user_id, cultural_offering_id) VALUES (2,2);
 INSERT INTO user_cultural_offering (user_id, cultural_offering_id) VALUES (2,3);
 INSERT INTO user_cultural_offering (user_id, cultural_offering_id) VALUES (2,4);
