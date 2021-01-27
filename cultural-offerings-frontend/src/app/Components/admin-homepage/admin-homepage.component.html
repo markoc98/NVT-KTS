@@ -1,10 +1,10 @@
 <html>
     <body>
         <div><button class="signOut" mat-raised-button (click)="signOut()">Sign out</button></div>
-        <mat-tab-group mat-align-tabs="center">
-        <mat-tab label="Cultural Offerings"><app-cultoff-table></app-cultoff-table></mat-tab>
-        <mat-tab label="Categories"><app-cat-table></app-cat-table></mat-tab>
-        <mat-tab label="Newsletter"><app-news-table></app-news-table></mat-tab>
+        <mat-tab-group mat-align-tabs="center" id="tabs">
+        <mat-tab label="Cultural Offerings" id="tabCultOff"><app-cultoff-table></app-cultoff-table></mat-tab>
+        <mat-tab label="Categories" id="tabCat"><app-cat-table></app-cat-table></mat-tab>
+        <mat-tab label="Newsletter" id="tabNews"><app-news-table></app-news-table></mat-tab>
         </mat-tab-group>
 
     </body>

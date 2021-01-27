@@ -9,7 +9,7 @@
               <button mat-raised-button (click) = "openAddDialog()" class="addButton">Add</button>
               
               <div class="mat-elevation-z8">
-                <table mat-table [dataSource]="dataSource" matSort>
+                <table mat-table [dataSource]="dataSource" matSort id="categoryTable">
               
                   <!-- ID Column -->
                   <ng-container matColumnDef="id">
