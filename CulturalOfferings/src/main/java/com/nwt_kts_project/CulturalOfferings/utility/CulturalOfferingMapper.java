@@ -13,6 +13,10 @@ public class CulturalOfferingMapper implements MapperInterface<CulturalOffering,
         return new CulturalOffering(dto.getId(), dto.getLocation(), dto.getName(), dto.getDescription());
     }
 
+    public CulturalOffering toEntityCreate(CulturalOfferingDTO dto){
+        return new CulturalOffering(dto.getName(), dto.getLocation() , dto.getDescription(), dto.getCategoryType());
+    }
+
     @Override
     public CulturalOfferingDTO toDto(CulturalOffering entity) {
         return new CulturalOfferingDTO(entity.getId(), entity.getLocation(), entity.getName(), entity.getDescription(),entity.getCategory(),entity.getRating(),entity.getLatitude(),entity.getLongitude());

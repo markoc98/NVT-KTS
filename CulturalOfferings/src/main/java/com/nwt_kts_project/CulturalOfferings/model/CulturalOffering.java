@@ -69,6 +69,14 @@ public class CulturalOffering {
         this.description = description;
         this.rating = rating;
     }
+
+    public CulturalOffering(String name, String location, String description, Category categoryType)
+    {
+        this.name = name;
+        this.location = location;
+        this.description = description;
+        this.category = categoryType;
+    }
     
  
 	public CulturalOffering(Long id, String location, String name, String description, double rating,

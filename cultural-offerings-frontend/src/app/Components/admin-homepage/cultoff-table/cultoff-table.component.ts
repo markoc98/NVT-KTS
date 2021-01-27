@@ -10,6 +10,7 @@ import { pipe } from 'rxjs';
 import { Router } from '@angular/router';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FormControl, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { CategoryService } from 'src/app/Services/category.service';
 
 
 @Component({
@@ -28,7 +29,7 @@ export class CultoffTableComponent implements AfterViewInit, OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor(private culturalOfferingService: CulturalOfferingService, private Router: Router, public dialog: MatDialog, private ref: ChangeDetectorRef) {
+  constructor(private categoryService: CategoryService, private culturalOfferingService: CulturalOfferingService, private Router: Router, public dialog: MatDialog, private ref: ChangeDetectorRef) {
     this.dataSource = new MatTableDataSource<CulturalOfferFullModel>();
   }
   
@@ -66,6 +67,14 @@ export class CultoffTableComponent implements AfterViewInit, OnInit {
     this.dataSource.data = responseData.content;
   }
 
+  public async getCategoryType(id: number){
+    return this.categoryService.getCategoryById(id);
+  }
+
+  public async createCultOff(data){
+    return this.culturalOfferingService.createCulturalOffering(data);
+  }
+
   openEditDialog(id): void {
     const dialogRef = this.dialog.open(CultOffEditDialog, {
       width: '250px',
@@ -94,12 +103,9 @@ export class CultoffTableComponent implements AfterViewInit, OnInit {
     dialogRef.afterClosed().subscribe(async result => {
       if(result != undefined)
       {
-          // let responseData = await this.culturalOfferingService.updateCulturalOffering(id, result) as CulturalOfferFullModel;
-          // let index = this.dataSource.data.findIndex(obj => obj.id == id)
-          // this.dataSource.data.splice(index, 1);
-          // this.dataSource.data.push(responseData);
-          // this.dataSource.data.sort((a: CulturalOfferFullModel, b:CulturalOfferFullModel) => a.id - b.id);          
-          // this.dataSource.data = this.dataSource.data;
+        let responseData = await this.createCultOff(result) as CulturalOfferFullModel;
+        this.dataSource.data.push(responseData);
+        this.dataSource.data = this.dataSource.data;
       }
     });
   }
@@ -126,19 +132,44 @@ export class CultOffEditDialog{
     }
 }
 
+export class Category{
+  id: number;
+  name: string;
+}
+
+export class CategoryList{
+  "content" : Category[]
+}
+
+export class AddDialogData{
+  name: string;
+  location: string;
+  description: string;
+  categoryType: Category;
+}
+
 @Component({
   selector: 'cultoff-add-dialog',
   templateUrl: './add-dialog/cultoff-add-dialog.component.html',
   styleUrls: ['./add-dialog/cultoff-add-dialog.component.scss']
 })
-export class CultOffAddDialog{
-  categories: []
+export class CultOffAddDialog implements OnInit{
+  categories: Category[]
   categoryControl = new FormControl('', Validators.required);
 
-  constructor(public dialogRef: MatDialogRef<CultOffAddDialog>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData){}
+  constructor(private categoryService: CategoryService,public dialogRef: MatDialogRef<CultOffAddDialog>,
+    @Inject(MAT_DIALOG_DATA) public data: AddDialogData){}
+  
+    ngOnInit(): void {
+      this.getCategories();
+    }
 
     onNoClick(): void {
       this.dialogRef.close();
+    }
+
+    public async getCategories(){
+      let responseData = await this.categoryService.getCategories() as CategoryList;
+      this.categories = responseData.content;
     }
 }
