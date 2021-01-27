@@ -45,9 +45,15 @@ public class NewsletterService implements ServiceInterface<Newsletter> {
 //        if(n.getId() != null) {
 //        	throw new Exception("Newsletter already exists.");
 //        }
+<<<<<<< HEAD
 //       CulturalOffering culturalOffering = culturalOfferingService.findOne(n.getCulturalOffering().getId());
 //
 //       sendMails(culturalOffering, n);
+=======
+       // CulturalOffering culturalOffering = culturalOfferingService.findOne(n.getCulturalOffering().getId());
+
+       // sendMails(culturalOffering, n);
+>>>>>>> 923d46dc3426493e4ab9c92c81772e14adb2588c
 
         return newsRepo.save(n);
     }

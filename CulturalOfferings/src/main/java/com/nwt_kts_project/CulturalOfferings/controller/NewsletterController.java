@@ -71,7 +71,7 @@ public class NewsletterController {
     	try {
 			newsletter = newsletterMapper.toEntity(newsletterDTO);
 			newsletter.setCulturalOffering(co);
-			newNews= newsletterService.create(newsletter);
+			newNews = newsletterService.create(newsletter);
     	}catch (Exception e) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
