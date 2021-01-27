@@ -100,7 +100,8 @@ public class Review {
 	}
 
 	public void setCulturalOffering(CulturalOffering culturalOffering) {
-		culturalOffering = culturalOffering;
+
+        this.culturalOffering = culturalOffering;
 	}
 
 	@Override

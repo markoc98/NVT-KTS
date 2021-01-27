@@ -145,8 +145,8 @@ public class ReviewController {
 
         return new ResponseEntity<>(reviewMapper.toDto(review), HttpStatus.OK);
     }
-    
-	@PreAuthorize("haseRole('ROLE_USER')")
+
+	@PreAuthorize("hasRole('ROLE_USER')")
 	@RequestMapping(value="/getbycultoff/{cultOfferingId}",method = RequestMethod.GET)
 	public ResponseEntity<List<ReviewDTO>> getReviewByCultOffID(@PathVariable Long cultOfferingId) {
 		
@@ -154,14 +154,14 @@ public class ReviewController {
 		List<Review> found = new ArrayList<Review>();
 		
 		for(Review r : reviewList) {
-			if(r.getCulturalOffering().getId() == cultOfferingId) {
+			if(r.getCulturalOffering().getId().equals(cultOfferingId)) {
 				found.add(r);
 			}
 		}
 		
 		List<ReviewDTO> dtoList = toReviewDTOList(found);
 		
-		return new ResponseEntity<>(dtoList,HttpStatus.FOUND);		
+		return new ResponseEntity<>(dtoList,HttpStatus.OK);
 		
 	}
 	
@@ -185,9 +185,11 @@ public class ReviewController {
 		
 		for(Review r : reviews) {
 			if(r.getCulturalOffering().getId() == cultOffId ) {
-				count++;
+				++count;
 			}
 		}
+
+		System.out.println(review.getRating());
 		
 		newRating = (oldRating*count + review.getRating())/(count+1);
 		
