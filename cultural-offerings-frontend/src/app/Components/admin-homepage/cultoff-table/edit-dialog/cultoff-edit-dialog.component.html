@@ -2,18 +2,18 @@
 <div mat-dialog-content>
   <mat-form-field>
     <mat-label>Name:</mat-label>
-    <input matInput [(ngModel)]="data.name">
+    <input matInput [(ngModel)]="data.name" id="cultOffNameEdit">
   </mat-form-field>
   <mat-form-field>
     <mat-label>Location:</mat-label>
-    <input matInput [(ngModel)]="data.location">
+    <input matInput [(ngModel)]="data.location" id="cultOffLocationEdit">
   </mat-form-field>
   <mat-form-field>
     <mat-label>Description:</mat-label>
-    <input matInput [(ngModel)]="data.description">
+    <input matInput [(ngModel)]="data.description" id="cultOffDescriptionEdit">
   </mat-form-field>
 </div>
 <div mat-dialog-actions>
-  <button mat-button (click)="onNoClick()">No Thanks</button>
-  <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Ok</button>
+  <button mat-button (click)="onNoClick()" id="editCultOffButtonNo">No Thanks</button>
+  <button mat-button [mat-dialog-close]="data" cdkFocusInitial id="editCultOffButtonOk">Ok</button>
 </div>
