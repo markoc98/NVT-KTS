@@ -163,6 +163,17 @@ public class NewsletterController {
 
     	return new ResponseEntity<>(pageNewsletterDTOS,HttpStatus.OK);
     }
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@RequestMapping(value="pageable", method = RequestMethod.GET)
+	public ResponseEntity<List<NewsletterDTO>> getAllNewslettersPageable(Pageable pageable){
+		//List<Newsletter> newsletters = newsletterService.findAll();
+
+		Page<Newsletter> page = newsletterService.findAll(pageable);
+		List<NewsletterDTO> newsletterDTOS = toNewsletterDTOList(page.toList());
+		//Page<NewsletterDTO> pageNewsletterDTOS = new PageImpl<>(newsletterDTOS,page.getPageable(),page.getTotalElements());
+
+		return new ResponseEntity<>(newsletterDTOS,HttpStatus.OK);
+	}
 
 	@PreAuthorize("hasRole('ROLE_USER')")
 	@RequestMapping(value="/culturalOffer/{culturalOfferId}",method = RequestMethod.GET)

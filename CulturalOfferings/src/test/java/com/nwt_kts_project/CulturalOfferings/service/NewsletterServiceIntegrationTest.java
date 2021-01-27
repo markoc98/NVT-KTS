@@ -29,7 +29,7 @@ public class NewsletterServiceIntegrationTest {
 	@Test
 	public void testFindAllNews() {
 		List<Newsletter> newsList = newsService.findAll();
-		assertEquals(1, newsList.size());
+		assertEquals(2, newsList.size());
 		
 	}
 	

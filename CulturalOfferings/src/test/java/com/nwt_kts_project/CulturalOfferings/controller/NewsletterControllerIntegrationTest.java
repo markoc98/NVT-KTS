@@ -79,7 +79,7 @@ public class NewsletterControllerIntegrationTest {
 
 
         ResponseEntity<NewsletterDTO[]> responseEntity =
-                restTemplate.exchange("/api/newsletters/", HttpMethod.GET, httpEntity, NewsletterDTO[].class);
+                restTemplate.exchange("/api/newsletters/pageable?page=0&size=2", HttpMethod.GET, httpEntity, NewsletterDTO[].class);
 
         NewsletterDTO[] newsletter = responseEntity.getBody();
 

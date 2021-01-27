@@ -109,6 +109,19 @@ public class ReviewController {
 
 		return new ResponseEntity<>(pageReviewDTOS, HttpStatus.OK);
     }
+
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@RequestMapping(value="pageable",method = RequestMethod.GET)
+	public ResponseEntity<List<ReviewDTO>> getAllReviewsPageable(Pageable pageable){
+		//List<Review> reviews = reviewService.findAll();
+
+		Page<Review> page = reviewService.findAll(pageable);
+		List<ReviewDTO> reviewDTOS = toReviewDTOList(page.toList());
+		//Page<ReviewDTO> pageReviewDTOS = new PageImpl<>(reviewDTOS,page.getPageable(),page.getTotalElements());
+
+
+		return new ResponseEntity<>(reviewDTOS, HttpStatus.OK);
+	}
 	
 	private List<ReviewDTO> toReviewDTOList(List<Review> reviewList){
 		List<ReviewDTO> reviewsDTO = new ArrayList<>(); 
