@@ -42,31 +42,8 @@ public class NewsletterService implements ServiceInterface<Newsletter> {
 
     @Override
     public Newsletter create(Newsletter n) throws Exception {
-//        if(n.getId() != null) {
-//        	throw new Exception("Newsletter already exists.");
-//        }
-//       CulturalOffering culturalOffering = culturalOfferingService.findOne(n.getCulturalOffering().getId());
-//
-//       sendMails(culturalOffering, n);
-       // CulturalOffering culturalOffering = culturalOfferingService.findOne(n.getCulturalOffering().getId());
-
-       // sendMails(culturalOffering, n);
 
         return newsRepo.save(n);
-    }
-
-    private void sendMails(CulturalOffering culturalOffering, Newsletter n) {
-        Set<User> subscribers = culturalOffering.getSubscribedUsers();
-
-        for(User subscriber : subscribers) {
-            SimpleMailMessage mailMessage = new SimpleMailMessage();
-            mailMessage.setTo(subscriber.getEmail());
-            mailMessage.setSubject(n.getTitle());
-            mailMessage.setFrom("culturalofferings@gmail.com");
-            mailMessage.setText(n.getContent());
-
-            emailSenderService.sendMail(mailMessage);
-        }
     }
 
     @Override
