@@ -165,7 +165,7 @@ public class ReviewController {
 		
 	}
 	
-	//@PreAuthorize("hasRole('ROLE_USER')")
+	@PreAuthorize("hasRole('ROLE_USER')")
 	@RequestMapping(value="/setRating/{userId}/{cultOffId}",method = RequestMethod.POST) 
 	public ResponseEntity<?> setRatingForOffer(@RequestBody ReviewDTO reviewDTO,@PathVariable Long userId,@PathVariable Long cultOffId) throws Exception{
 		
