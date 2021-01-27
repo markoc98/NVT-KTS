@@ -25,9 +25,10 @@
         </div>
         <label class="rating-label" >Leave a rating</label>
         <div class="comment">
-          <textarea class="comment-text-area" rows="4" cols="50" name="comment" [(ngModel)]="comment" (input)="inputComment($event)" >
-            Leave a comment here...
+          <textarea placeholder=" Leave a comment here..." class="comment-text-area" rows="4" cols="50" name="comment" [(ngModel)]="comment" (input)="inputComment($event)" >
+
           </textarea>
+          <input type="file" (change)="onFileChanged($event)">
           <button mat-raised-button color="primary" id="leaveComment"type="button" (click)="sendReview()">Leave a comment</button>
         </div>
       </div>

@@ -41,6 +41,13 @@ export class DialogWindowComponent implements OnInit {
   public reviews: Review[];
   public user: User;
 
+  selectedFile: File;
+  retrievedImage: any;
+  base64Data: any;
+  retrieveResonse: any;
+  message: string;
+  imageName: any;
+  loggedIn: boolean;
 
   constructor(@Inject(MAT_DIALOG_DATA) public dialogData: any,
               private userService:UserServiceService,
@@ -52,19 +59,28 @@ export class DialogWindowComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.isSubbed();
+
     this.getNewsletter();
     this.getReviews();
-    this.getUser();
+
+    this.loggedIn = this.isLoggedIn();
     this.comment = "";
     this.name = this.dialogData.name;
     this.location = this.dialogData.location;
     this.description = this.dialogData.description;
     this.rating = this.dialogData.rating;
     this.review.culturalOfferingID = this.dialogData.id;
+    this.getUser();
+    this.isSubbed();
 
   }
-
+  public isLoggedIn(): boolean{
+    if(window.sessionStorage.getItem(USER_KEY)){
+      return true;
+    }else{
+      return false;
+    }
+  }
   updateRating(newRating : number) {
 
     this.newRating = newRating;
@@ -74,6 +90,10 @@ export class DialogWindowComponent implements OnInit {
 
   sendReview() {
     console.log(this.review);
+    const uploadImageData = new FormData();
+    uploadImageData.append('imageFile', this.selectedFile, this.selectedFile.name);
+
+
     this.review.rating = this.newRating;
     this.review.comment = this.comment;
     this.review.userId = window.sessionStorage.getItem(USER_KEY);
@@ -154,4 +174,8 @@ export class DialogWindowComponent implements OnInit {
 
   }
 
+  public onFileChanged(event) {
+    //Select File
+    this.selectedFile = event.target.files[0];
+  }
 }
