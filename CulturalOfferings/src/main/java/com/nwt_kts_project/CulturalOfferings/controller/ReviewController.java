@@ -167,7 +167,7 @@ public class ReviewController {
 	
 	@PreAuthorize("hasRole('ROLE_USER')")
 	@RequestMapping(value="/setRating/{userId}/{cultOffId}",method = RequestMethod.POST) 
-	public ResponseEntity<?> setRatingForOffer(@RequestBody ReviewDTO reviewDTO,@PathVariable Long userId,@PathVariable Long cultOffId) throws Exception{
+	public ResponseEntity<ReviewDTO> setRatingForOffer(@RequestBody ReviewDTO reviewDTO,@PathVariable Long userId,@PathVariable Long cultOffId) throws Exception{
 		
 		User user = userService.findOne(userId);
 		CulturalOffering cultOff = cultService.findOne(cultOffId);
@@ -196,10 +196,10 @@ public class ReviewController {
 		
 		cultOff.setRating(newRating);
 		cultService.update(cultOff, cultOffId);
-		reviewService.create(review);
+		Review r = reviewService.create(review);
 		
 		
-		return new ResponseEntity<>(HttpStatus.OK);
+		return new ResponseEntity<ReviewDTO>(reviewMapper.toDto(r),HttpStatus.OK);
 		
 		
 		
