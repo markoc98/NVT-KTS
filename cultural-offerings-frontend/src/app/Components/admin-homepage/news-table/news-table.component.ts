@@ -112,6 +112,5 @@ export class NewsAddDialog implements OnInit{
   public async getCultOffs(){
     let responseData = await this.cultOffService.getCulturalOfferings() as CultOffList;
     this.cultOfferings = responseData.content;
-    console.log(this.cultOfferings);
   }
 }

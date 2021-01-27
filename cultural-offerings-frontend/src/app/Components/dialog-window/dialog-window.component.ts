@@ -114,6 +114,7 @@ export class DialogWindowComponent implements OnInit {
     let response: Review;
     try{
       response = await this.reviewService.setRatingforOffer(this.review, window.sessionStorage.getItem(USER_KEY), this.review.culturalOfferingID) as Review;
+      alert("Review added!");
       }catch (error){
         console.error(error);
     }

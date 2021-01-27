@@ -6,10 +6,10 @@
                 <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Mia" #input>
               </mat-form-field>
 
-              <button mat-raised-button (click) = "openAddDialog()" class="addButton">Add</button>
+              <button mat-raised-button (click) = "openAddDialog()" class="addButton" id="addCultOffButton">Add</button>
               
               <div class="mat-elevation-z8">
-                <table mat-table [dataSource]="dataSource" matSort>
+                <table mat-table [dataSource]="dataSource" matSort id="cultOffTable">
               
                   <!-- ID Column -->
                   <ng-container matColumnDef="id">
@@ -49,12 +49,12 @@
                   
                   <ng-container matColumnDef="edit">
                     <th mat-header-cell *matHeaderCellDef> Edit </th>
-                    <th mat-cell *matCellDef="let row"><button mat-raised-button (click)="openEditDialog(row.id)">Edit</button></th>
+                    <th mat-cell *matCellDef="let row"><button mat-raised-button (click)="openEditDialog(row.id)" id="editCultOffButton">Edit</button></th>
                   </ng-container>
 
                   <ng-container matColumnDef="delete">
                     <th mat-header-cell *matHeaderCellDef> Delete </th>
-                    <th mat-cell *matCellDef="let row"><button mat-raised-button (click) = "deleteCultural(row.id)">Delete</button></th>
+                    <th mat-cell *matCellDef="let row"><button mat-raised-button (click) = "deleteCultural(row.id)" id="deleteCultOffButton">Delete</button></th>
                   </ng-container>
 
 

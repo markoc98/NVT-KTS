@@ -6,7 +6,7 @@ import {MatInputModule} from "@angular/material/input";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { CultOffAddDialog, CultOffEditDialog, CultoffTableComponent } from './cultoff-table/cultoff-table.component';
 import { NewsAddDialog, NewsTableComponent } from './news-table/news-table.component';
-import { CatTableComponent } from './cat-table/cat-table.component';
+import { CatAddDialog, CatTableComponent } from './cat-table/cat-table.component';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatDialogModule } from '@angular/material/dialog';
@@ -22,7 +22,8 @@ import { MatTabsModule } from '@angular/material/tabs';
     CatTableComponent,
     CultOffEditDialog,
     CultOffAddDialog,
-    NewsAddDialog
+    NewsAddDialog,
+    CatAddDialog
   ],
   exports: [
     AdminHomepageComponent,
