@@ -189,9 +189,10 @@ public class MapE2ETest {
 		Boolean isPresent = driver.findElements(By.id("dialogWindow")).size() > 0;
 		
 		assertEquals(true, isPresent);
-		
-		
+			
 	}
+	
+	
 		
 	
 	private void justWait() throws InterruptedException {

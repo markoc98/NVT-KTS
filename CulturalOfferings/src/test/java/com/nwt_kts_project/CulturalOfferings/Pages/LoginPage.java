@@ -12,8 +12,6 @@ public class LoginPage {
 
     private WebDriver driver;
 
-    private LoginPage loginPage;
-
     @FindBy(id = "username")
     private WebElement username;
 
