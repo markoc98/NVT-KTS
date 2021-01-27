@@ -25,14 +25,16 @@
         </div>
         <label class="rating-label" >Leave a rating</label>
         <div class="comment">
-          <textarea class="comment-text-area" rows="4" cols="50" name="comment" [(ngModel)]="comment" (input)="inputComment($event)" >
-            Leave a comment here...
+          <textarea placeholder=" Leave a comment here..." class="comment-text-area" rows="4" cols="50" name="comment" [(ngModel)]="comment" (input)="inputComment($event)" >
+
           </textarea>
+          <input type="file" (change)="onFileChanged($event)">
           <button mat-raised-button color="primary" id="leaveComment"type="button" (click)="sendReview()">Leave a comment</button>
         </div>
       </div>
       <div class="info-image">
-        <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
+        <img *ngIf="this.coImage" mat-card-image [src]="coImage" alt="Photo of a Shiba Inu">
+        <img *ngIf="!this.coImage" mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
       </div>
     </div>
     <div class="news-area">
@@ -52,7 +54,7 @@
       </div>
     </div>
   <div class="reviews-area">
-    <div *ngFor="let review of reviews" class="review">
+    <div *ngFor="let review of reviews" class="review" >
       <mat-card class="review-card">
         <div class="header-content">
           <mat-card-header>
@@ -65,7 +67,8 @@
             </p>
           </mat-card-content>
         </div>
-        <img class="review-image" mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
+        <img *ngIf="retrievedImage" class="review-image" mat-card-image [src]="retrievedImage" alt="Photo of a Shiba Inu">
+        <img *ngIf="!retrievedImage" class="review-image" mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
       </mat-card>
       <mat-divider></mat-divider>
     </div>

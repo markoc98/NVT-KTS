@@ -34,7 +34,7 @@ export class ReviewService {
        headers: headers_object
      };
 
-    return this.http.post('api/reviews/setRating/'+userId + "/" + cultOffId, JSON.stringify(review),httpOptions);
+    return this.http.post('api/reviews/setRating/'+userId + "/" + cultOffId, JSON.stringify(review),httpOptions).toPromise();
    }
 
 
