@@ -37,12 +37,16 @@ public class LoginE2ETest {
 
         driver.get("http://localhost:4200/login");
 
-        justWait();
+        justWait(2000);
 
-        loginPage.getEmail().sendKeys("user");
+        loginPage.getUsername().sendKeys("user");
         loginPage.getPassword().sendKeys("user");
+
+        loginPage.ensureIsClickableLoginBtn();
         loginPage.getLoginBtn().click();
-        justWait();
+
+        justWait(5000);
+
         loginPage.ensureIsNotVisibleUsername();
 
         assertEquals("http://localhost:4200/maps", driver.getCurrentUrl());
@@ -54,12 +58,12 @@ public class LoginE2ETest {
 
         driver.get("http://localhost:4200/login");
 
-        justWait();
+        justWait(2000);
 
-        loginPage.getEmail().sendKeys("admin");
+        loginPage.getUsername().sendKeys("admin");
         loginPage.getPassword().sendKeys("admin");
         loginPage.getLoginBtn().click();
-        justWait();
+        justWait(3000);
         loginPage.ensureIsNotVisibleUsername();
 
         assertEquals("http://localhost:4200/admin-homepage", driver.getCurrentUrl());
@@ -71,22 +75,35 @@ public class LoginE2ETest {
 
         driver.get("http://localhost:4200/login");
 
-        justWait();
+        justWait(2000);
 
-        loginPage.getEmail().sendKeys("radenijeuser");
+        loginPage.getUsername().sendKeys("radenijeuser");
         loginPage.getPassword().sendKeys("losasifra");
         loginPage.getLoginBtn().click();
-        justWait();
+        justWait(2000);
         Alert alert = driver.switchTo().alert();
         String text = alert.getText();
-        System.out.println(text);
         assertEquals("Wrong username or password!", text);
 
     }
-    private void justWait() throws InterruptedException {
+
+    @Test
+    public void dontHaveAccount() throws InterruptedException {
+
+        driver.get("http://localhost:4200/login");
+
+        justWait(1000);
+        this.loginPage.getLink().click();
+        justWait(1000);
+
+        assertEquals("http://localhost:4200/register", driver.getCurrentUrl());
+
+    }
+
+    private void justWait(int milliseconds) throws InterruptedException {
         synchronized (driver)
         {
-            driver.wait(3000);
+            driver.wait(milliseconds);
         }
     }
 }
