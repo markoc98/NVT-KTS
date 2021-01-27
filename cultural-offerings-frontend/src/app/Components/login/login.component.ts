@@ -62,7 +62,7 @@ export class LoginComponent implements OnInit {
   }
 
   private goToHomePage() {
-    this.router.navigate([''])
+    this.router.navigate(['maps'])
   }
 
   private goAdminPage() {

@@ -35,7 +35,7 @@ export class DialogWindowComponent implements OnInit {
   public location : string;
   public description : string;
   public rating : number;
-  public review : Review = {rating: 0, comment: "" ,userId : "0", pictures: [], culturalOfferingID: 0};
+  public review : Review = {id: 0,rating: 0, comment: "" ,userId : "0", picture: [], culturalOfferingID: 0};
   public comment : string;
   public newRating;
   public newsletters: Newsletter[];
