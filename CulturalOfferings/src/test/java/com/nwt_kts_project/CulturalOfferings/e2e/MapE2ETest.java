@@ -14,7 +14,9 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
@@ -103,9 +105,12 @@ public class MapE2ETest {
 		this.mapPage.ensureIsPageDisplayed();
 		justWait();
 		
+		
+		
 		Select categories = new Select(driver.findElement(By.id("selectCategory")));
 		
 		List<WebElement> offers = driver.findElements(By.id("tableOffers"));
+		
 		justWait();
 		
 		this.mapPage.getSearchLocation().sendKeys("");
@@ -120,17 +125,74 @@ public class MapE2ETest {
 		String txt = alert.getText();
 		alert.accept();
 		assertEquals(HOME_PAGE + "/maps", this.driver.getCurrentUrl());
-		//assertEquals(0, offers.size());
+		assertEquals(1, offers.size());
 		assertEquals("Culutral Offering with given location does not exist.",txt);
+	
+	}
+	
+	@Test
+	public void testWrongInput() throws InterruptedException {
 		
+		driver.get(HOME_PAGE+ "/maps");
+		justWait();
 		
+		this.mapPage.ensureIsPageDisplayed();
+		justWait();
 		
+		Select categories = new Select(driver.findElement(By.id("selectCategory")));
+		categories.selectByVisibleText("Events");
+		categories.selectByIndex(0);
+		this.mapPage.getSearchLocation().sendKeys("11TESTTEST111");
+		this.mapPage.getSearchButton().click();
 		
+		justWait();
+		List<WebElement> offers = driver.findElements(By.id("tableOffers"));
+		
+		justWait();
+		
+		assertEquals(HOME_PAGE + "/maps", this.driver.getCurrentUrl());
+		assertEquals(1, offers.size());
+			
+	}
+	
+	@Test
+	public void testSwitchToDialog() throws InterruptedException {
+		
+		driver.get(HOME_PAGE+ "/maps");
+		justWait();
+		
+		this.mapPage.ensureIsPageDisplayed();
+		
+		justWait();
+		
+		Select categories = new Select(driver.findElement(By.id("selectCategory")));
+		
+		List<WebElement> offers = driver.findElements(By.id("tableOffers"));
+		justWait();
+		
+		this.mapPage.getSearchLocation().sendKeys("Novi Sad");
+		justWait();
+		categories.selectByVisibleText("Institutions");
+		categories.selectByIndex(2);
+		justWait();
+		this.mapPage.getSearchButton().click();
+		
+		justWait();
+		
+		WebElement rows = driver.findElement(By.xpath("//*[@id='tableOffers']/tbody/tr[1]"));
+		rows.click();
+		justWait();
+		
+		this.mapPage.ensureIsDialogDisplayed();
+		justWait();
+		
+		Boolean isPresent = driver.findElements(By.id("dialogWindow")).size() > 0;
+		
+		assertEquals(true, isPresent);
 		
 		
 	}
-	
-	
+		
 	
 	private void justWait() throws InterruptedException {
         synchronized (driver)
