@@ -6,7 +6,7 @@
                 <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Mia" #input>
               </mat-form-field>
 
-              <button mat-raised-button (click) = "openAddDialog()" class="addButton">Add</button>
+              <button mat-raised-button (click) = "openAddDialog()" class="addButton" id = "catAddButton">Add</button>
               
               <div class="mat-elevation-z8">
                 <table mat-table [dataSource]="dataSource" matSort id="categoryTable">

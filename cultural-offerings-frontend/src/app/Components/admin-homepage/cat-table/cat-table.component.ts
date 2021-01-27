@@ -90,10 +90,16 @@ export class CatTableComponent implements OnInit, AfterViewInit {
     dialogRef.afterClosed().subscribe(async result => {
       if(result != undefined)
       {
-        let responseData = await this.createCategoryType(result) as CategoryType;
-        responseData.categoryName = result.category.name;
-        this.dataSource.data.push(responseData);
-        this.dataSource.data = this.dataSource.data;
+        try{
+          let responseData = await this.createCategoryType(result) as CategoryType;
+          responseData.categoryName = result.category.name;
+          this.dataSource.data.push(responseData);
+          this.dataSource.data = this.dataSource.data;
+        }
+        catch{
+          alert("Couldn't create category");
+        }
+        
       }
     });
   }

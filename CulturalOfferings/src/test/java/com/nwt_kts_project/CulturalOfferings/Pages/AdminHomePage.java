@@ -12,7 +12,7 @@ public class AdminHomePage {
 	private WebDriver driver;
 	
 	//CULT OFF
-	
+
 	@FindBy(id = "cultOffTable")
     private WebElement cultOffTable;
 	
@@ -81,6 +81,25 @@ public class AdminHomePage {
 	
 	@FindBy(id = "deleteCultOffButton")
     private WebElement deleteCultOffButton;
+
+	//category
+	@FindBy(id = "catAddButton")
+	private WebElement catAddButton;
+
+	@FindBy(id = "newsAddButton")
+	private WebElement newsAddButton;
+
+	public WebElement getNewsAddButton() {
+		return newsAddButton;
+	}
+
+	public void setNewsAddButton(WebElement newsAddButton) {
+		this.newsAddButton = newsAddButton;
+	}
+
+	public void ensureIsDisplayedAddNewsButton(){
+		(new WebDriverWait(driver, 30)).until(ExpectedConditions.elementToBeClickable(By.id("newsAddButton")));
+	}
 	
 	// getters and setters for cult off
 
@@ -261,9 +280,15 @@ public class AdminHomePage {
 		super();
 		this.driver = driver;
 	}
-	
-	
-	
+
+	public WebElement getCatAddButton() {
+		return catAddButton;
+	}
+
+	public void setCatAddButton(WebElement catAddButton) {
+		this.catAddButton = catAddButton;
+	}
+
 	public WebElement getTabs() {
 		return tabs;
 	}
@@ -271,6 +296,11 @@ public class AdminHomePage {
 	public void setTabs(WebElement tabs) {
 		this.tabs = tabs;
 	}
+
+	public void ensureIsDisplayedAddCatButton(){
+		(new WebDriverWait(driver, 30)).until(ExpectedConditions.elementToBeClickable(By.id("catAddButton")));
+	}
+
 
 	public void ensureIsDisplayedEditCultOffButton() {
         (new WebDriverWait(driver, 30)).until(ExpectedConditions.elementToBeClickable(By.id("editCultOffButton")));
