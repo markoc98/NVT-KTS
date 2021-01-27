@@ -20,4 +20,15 @@ export class CategoryService {
     return this.http.get("api/categories",httpOptions).toPromise();
 
   }
+
+  getCategoryById(id: number)
+  {
+    let headers_object = new HttpHeaders().set("Authorization", "Bearer " + window.sessionStorage.getItem(TOKEN_KEY));
+
+    const httpOptions = {
+      headers: headers_object
+    };
+    
+    return this.http.get("api/categories/" + id,httpOptions).toPromise();
+  }
 }

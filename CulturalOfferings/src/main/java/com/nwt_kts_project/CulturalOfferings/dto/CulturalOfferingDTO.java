@@ -22,6 +22,7 @@ public class CulturalOfferingDTO {
         this.name = name;
         this.description = description;
     }
+
     
     public CulturalOfferingDTO(Long id2, String location2, String name2, String description2, Category category) {
 		super();
