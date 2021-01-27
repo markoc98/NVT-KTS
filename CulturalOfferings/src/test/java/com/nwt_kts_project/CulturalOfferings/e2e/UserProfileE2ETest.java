@@ -116,9 +116,9 @@ public class UserProfileE2ETest {
         List<WebElement> rows = driver.findElements(By.xpath("//*[@id='subscription-table']/tbody/tr/td[1]"));
         System.out.println("rows: " +  rows.size());
 
-        //uzmemo trenutni broj elemenata
-        WebElement rowTodelete = driver.findElement(By.xpath("//*[@id='subscription-table']/tbody/tr[2]/td[2]"));
-        rowTodelete.click();
+        //uzmemo drugi red i drugu celiju gde se nalazi dugme
+        WebElement rowToUnsub = driver.findElement(By.xpath("//*[@id='subscription-table']/tbody/tr[2]/td[2]"));
+        rowToUnsub.click();
         justWait(2000);
 
         //uzmemo novi broj elemenata
