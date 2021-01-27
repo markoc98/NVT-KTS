@@ -13,7 +13,7 @@ import { CatTableComponent } from './Components/admin-homepage/cat-table/cat-tab
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent},
-  { path: '', component: MapsComponent},
+  { path: '', component: LoginComponent},
   {path: 'maps',component:MapsComponent},
   {path: 'user-profile', component:UserProfileComponent},
   {path: 'admin-homepage', component:AdminHomepageComponent},

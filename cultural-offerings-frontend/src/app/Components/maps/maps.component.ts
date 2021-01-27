@@ -140,4 +140,3 @@ export class MapsComponent implements OnInit {
     this.router.navigate(['/register']);
   }
 }
-

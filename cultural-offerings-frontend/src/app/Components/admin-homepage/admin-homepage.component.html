@@ -1,36 +1,10 @@
 <html>
     <body>
-
-        <div class="filters">
-            <input type="checkbox" id="events" value="events">
-            <label for="events"> Events</label>
-            <input type="checkbox" id="cgs" value="cgs">
-            <label for="cgs"> Cultural goods</label>
-            <input type="checkbox" id="insts" value="insts">
-            <label for="insts"> Institutions</label>
-            <p>treba da dodas sve filtere</p>
-        </div>
-
-        <div class = "add-btns1">
-            <button class="btn1">Add a cultural offering</button>
-            <button class = "btn2">Add a newsletter</button>
-        </div>
-
-        <div class = "add-btns2">
-            <button class = "btn3">Add a category</button>
-            <button class = "btn4">Add a category type</button>
-            <p>treba da namestis da rade dugmici tj da odradis te funkcije i dodas dijaloge</p>
-
-        </div>
-
-        <div class="search">
-            <input class="search-bar" type="text" placeholder="Search">
-            <button class="search-btn" type="submit" onclick=pretrazi()>Go</button>
-            <p>namesti da rade filteri i search za tabelu</p>
-        </div>
-
-        <p>
-            ovde dodaj tabove za tabele, samo na sredinu stranice, i u tabelama namesti dugmice za edit i delete da rade, i u tabeli za kategorije treba da se doda da radi ono za view types
-        </p>
+        <mat-tab-group mat-align-tabs="center">
+        <mat-tab label="Cultural Offerings"><app-cultoff-table></app-cultoff-table></mat-tab>
+        <mat-tab label="Second">Content 2</mat-tab>
+        <mat-tab label="Third">Content 3</mat-tab>
+        </mat-tab-group>           
+        
     </body>
 </html>

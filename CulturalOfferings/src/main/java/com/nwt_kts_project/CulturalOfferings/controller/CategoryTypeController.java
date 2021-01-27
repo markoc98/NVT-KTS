@@ -57,6 +57,28 @@ public class CategoryTypeController {
 
         return new ResponseEntity<>(pageCategoryTypeDTOS, HttpStatus.OK);
     }
+
+    //GET ZAHTEV ZA DOBAVLJANJE SVIH TIPOVA KATEGORIJA
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @RequestMapping(value="/getbycategoryid/{catId}" ,method = RequestMethod.GET)
+    public ResponseEntity<List<CategoryTypeDTO>> getAllCategoryTypes(@PathVariable Long catId, Pageable pageable) {
+
+        Page<CategoryType> page = categoryTypeService.findAll(pageable);
+        //List<CategoryType> categoryTypes = categoryTypeService.findAll();
+        List<CategoryTypeDTO> categoryTypeDTOS = toCategoryTypeDTOList(page.toList());
+        Page<CategoryTypeDTO> pageCategoryTypeDTOS = new PageImpl<>(categoryTypeDTOS,page.getPageable(),page.getTotalElements());
+
+        List<CategoryType> novaLista = new ArrayList<>();
+        for(CategoryType type: page)
+        {
+            if(type.getCategory().getId() == catId)
+            {
+                novaLista.add(type);
+            }
+        }
+        List<CategoryTypeDTO> typesForBE = toCategoryTypeDTOList(novaLista);
+        return new ResponseEntity<>(typesForBE, HttpStatus.OK);
+    }
     
     private List<CategoryTypeDTO> toCategoryTypeDTOList(List<CategoryType> categoryTypes){
         List<CategoryTypeDTO> categoryTypeDTOS = new ArrayList<>();

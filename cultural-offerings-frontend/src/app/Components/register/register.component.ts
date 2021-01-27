@@ -60,7 +60,7 @@ export class RegisterComponent implements OnInit {
 
   }
   private goToHomePage() {
-    this.router.navigate([''])
+    this.router.navigate(['login'])
   }
 }
 

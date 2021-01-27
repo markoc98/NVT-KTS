@@ -38,7 +38,6 @@ export class LoginComponent implements OnInit {
       response = await this.Auth.login(this.username,this.password) as IResponse;
       let accessToken = response.accessToken;
       this.TokenStorage.saveToken(accessToken);
-      console.log(accessToken)
       this.TokenStorage.saveUser(response.userID);
       if(response.userID == '1')
       {
@@ -50,6 +49,7 @@ export class LoginComponent implements OnInit {
     }
     catch(error) {
       console.error(error);
+      alert("Wrong username or password!");
     }
   }
 
@@ -62,7 +62,7 @@ export class LoginComponent implements OnInit {
   }
 
   private goToHomePage() {
-    this.router.navigate([''])
+    this.router.navigate(['maps'])
   }
 
   private goAdminPage() {

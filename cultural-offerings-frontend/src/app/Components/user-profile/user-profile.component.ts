@@ -70,7 +70,7 @@ export class UserProfileComponent implements OnInit {
   }
 
   goHome() {
-    this.router.navigate([''])
+    this.router.navigate(['maps'])
   }
 }
 

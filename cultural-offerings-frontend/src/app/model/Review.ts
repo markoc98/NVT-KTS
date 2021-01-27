@@ -1,6 +1,7 @@
 export interface Review {
+    "id": number;
     "rating" : number,
-    "pictures" : Array<object>,
+    "picture" : any,
     "comment" : string,
     "userId" : string,
     "culturalOfferingID" : number

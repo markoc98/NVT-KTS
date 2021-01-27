@@ -23,7 +23,12 @@ import {RegisterModule} from "./Components/register/register.module";
 import { EventEmitterService } from './event-emitter.service';
 import { MatDialogModule } from '@angular/material/dialog';
 import { DialogWindowComponent } from './Components/dialog-window/dialog-window.component';
-import { MatTableModule } from '@angular/material/table';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import { CdkTableModule } from '@angular/cdk/table';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 import {MatCard, MatCardModule} from "@angular/material/card";
 import {MatDividerModule} from "@angular/material/divider";
 
@@ -52,11 +57,12 @@ import {MatDividerModule} from "@angular/material/divider";
     RegisterModule,
     MatTableModule,
     MatCardModule,
-    MatDividerModule
-
+    MatDividerModule,
+    MatTableModule,
+    MatButtonModule,
 
   ],
-  exports: [AppComponent],
+  exports: [AppComponent, MatTableModule],
   providers: [HttpClient,
               EventEmitterService],
   bootstrap: [AppComponent]

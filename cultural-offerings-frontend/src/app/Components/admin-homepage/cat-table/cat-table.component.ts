@@ -7,6 +7,7 @@ import { CategoryService } from 'src/app/Services/category.service';
   templateUrl: './cat-table.component.html',
   styleUrls: ['./cat-table.component.scss']
 })
+
 export class CatTableComponent implements OnInit {
 
   public cats;
